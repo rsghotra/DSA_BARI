@@ -3,6 +3,11 @@
 using namespace std;
 
 int main() {
-    cout << "Welcome C++ course of Abdul Bari!" << endl;
-    return 0;
+    int sum=0;
+    int A[]={1,2,3,4,5,6};
+
+    for(auto x: A) {
+        sum = sum+x;
+    }
+    cout << sum;
 }
