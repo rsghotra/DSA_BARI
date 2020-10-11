@@ -9,16 +9,16 @@
             "command": "g++",
             "args": [
                 "-g",
-                "${workspaceFolder}/Fibonacci/main.cpp",
+                "${workspaceFolder}/PascalTriangle/main.cpp",
                 "-o",
-                "Fibonacci/main"
+                "PascalTriangle/main"
             ],
             "problemMatcher":[]
         },
         {
             "label": "run",
             "type":  "shell",
-            "command": "${workspaceFolder}/Fibonacci/main",
+            "command": "${workspaceFolder}/PascalTriangle/main",
             "dependsOn":[
                 "build"
             ],
