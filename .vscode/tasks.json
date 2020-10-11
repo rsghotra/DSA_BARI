@@ -9,16 +9,16 @@
             "command": "g++",
             "args": [
                 "-g",
-                "${workspaceFolder}/Power/main.cpp",
+                "${workspaceFolder}/Fibonacci/main.cpp",
                 "-o",
-                "Power/main"
+                "Fibonacci/main"
             ],
             "problemMatcher":[]
         },
         {
             "label": "run",
             "type":  "shell",
-            "command": "${workspaceFolder}/Power/main",
+            "command": "${workspaceFolder}/Fibonacci/main",
             "dependsOn":[
                 "build"
             ],
