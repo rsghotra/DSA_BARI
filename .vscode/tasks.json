@@ -9,16 +9,16 @@
             "command": "g++",
             "args": [
                 "-g",
-                "${workspaceFolder}/HelloWorld/main.cpp",
+                "${workspaceFolder}/Factorial/main.cpp",
                 "-o",
-                "HelloWorld/main"
+                "Factorial/main"
             ],
             "problemMatcher":[]
         },
         {
             "label": "run",
             "type":  "shell",
-            "command": "${workspaceFolder}/HelloWorld/main",
+            "command": "${workspaceFolder}/Factorial/main",
             "dependsOn":[
                 "build"
             ],
