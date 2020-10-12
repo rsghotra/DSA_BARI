@@ -9,16 +9,16 @@
             "command": "g++",
             "args": [
                 "-g",
-                "${workspaceFolder}/TaylorSeries_Horner_Iter/main.cpp",
+                "${workspaceFolder}/StaticDynamic/main.cpp",
                 "-o",
-                "TaylorSeries_Horner_Iter/main"
+                "StaticDynamic/main"
             ],
             "problemMatcher":[]
         },
         {
             "label": "run",
             "type":  "shell",
-            "command": "${workspaceFolder}/TaylorSeries_Horner_Iter/main",
+            "command": "${workspaceFolder}/StaticDynamic/main",
             "dependsOn":[
                 "build"
             ],
