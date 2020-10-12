@@ -9,16 +9,16 @@
             "command": "g++",
             "args": [
                 "-g",
-                "${workspaceFolder}/PascalTriangle/main.cpp",
+                "${workspaceFolder}/TaylorSeries_Horner_Iter/main.cpp",
                 "-o",
-                "PascalTriangle/main"
+                "TaylorSeries_Horner_Iter/main"
             ],
             "problemMatcher":[]
         },
         {
             "label": "run",
             "type":  "shell",
-            "command": "${workspaceFolder}/PascalTriangle/main",
+            "command": "${workspaceFolder}/TaylorSeries_Horner_Iter/main",
             "dependsOn":[
                 "build"
             ],
