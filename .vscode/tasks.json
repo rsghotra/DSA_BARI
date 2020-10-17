@@ -9,16 +9,16 @@
             "command": "g++",
             "args": [
                 "-g",
-                "${workspaceFolder}/StaticDynamic/main.cpp",
+                "${workspaceFolder}/2DArray/main.cpp",
                 "-o",
-                "StaticDynamic/main"
+                "2DArray/main"
             ],
             "problemMatcher":[]
         },
         {
             "label": "run",
             "type":  "shell",
-            "command": "${workspaceFolder}/StaticDynamic/main",
+            "command": "${workspaceFolder}/2DArray/main",
             "dependsOn":[
                 "build"
             ],
