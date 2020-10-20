@@ -9,16 +9,16 @@
             "command": "g++",
             "args": [
                 "-g",
-                "${workspaceFolder}/ArrayADT_Stack/main.cpp",
+                "${workspaceFolder}/RangeSumBST/main.cpp",
                 "-o",
-                "ArrayADT_Stack/main"
+                "RangeSumBST/main"
             ],
             "problemMatcher":[]
         },
         {
             "label": "run",
             "type":  "shell",
-            "command": "${workspaceFolder}/ArrayADT_Stack/main",
+            "command": "${workspaceFolder}/RangeSumBST/main",
             "dependsOn":[
                 "build"
             ],

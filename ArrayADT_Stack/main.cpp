@@ -19,8 +19,52 @@ void append(Array*, int);
 void display(Array*);
 void insert(Array*, int, int);
 int  remove(Array*, int);
+int linearSearch(const Array*, int key);
+int linearSearch_Transpose(Array*, int key);
+int lineraSearch_MoveFront(Array*, int key);
 
 // >========> Functions
+
+void swap(int* x, int* y) {
+    int temp = *x;
+    *x = *y;
+    *y = temp;
+}
+
+int linearSearch(const Array* a, int key) {
+    for(int i=0;i< a->length;i++) {
+        if(a->A[i]==key) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+int linearSearch_Transpose(Array* a, int key) {
+    //In transpose method - when we find the key we move it to one
+    //Index up so that next time it is search - algo have to to 1 less comparison
+    for(int i=0;i< a->length;i++) {
+        if(a->A[i]==key) {
+            //Move the element 1 position up
+            swap(&a->A[i-1], &a->A[i]);
+            return i;
+        }
+    }
+    return -1;
+}
+
+int linearSearch_MoveFront(Array* a, int key) {
+    //In transpose method - when we find the key we move it to head
+    //Index up so that next time it is search - algo have can get it O(1)
+    for(int i=0;i< a->length;i++) {
+        if(a->A[i]==key) {
+            //Move the element 1 position up
+            swap(&a->A[i], &a->A[0]);
+            return i;
+        }
+    }
+    return -1;
+}
 
 void append(Array* ptr, int val) {
     //first we will check if there is a space available or not
@@ -95,5 +139,14 @@ int main() {
     display(&stru);
     std::cout << "Removed element "<<remove(&stru, 0) << std::endl;
     display(&stru);
+
+    std::cout<<">======>Linear Search:"<<std::endl;
+    std::cout<<"Element  found at: " << linearSearch(&stru, 4) << std::endl;
+
+     std::cout<<">======>Linear Search Transpose:"<<std::endl;
+    std::cout<<"Element  found at: " << linearSearch(&stru, 4) << std::endl;
+
+    std::cout<<">======>Linear Search Move Front:"<<std::endl;
+    std::cout<<"Element  found at: " << linearSearch(&stru, 4) << std::endl;
     return 0;
 }
