@@ -9,16 +9,16 @@
             "command": "g++",
             "args": [
                 "-g",
-                "${workspaceFolder}\\Trees\\main.cpp",
+                "${workspaceFolder}\\ArrayIsSorted\\main.cpp",
                 "-o",
-                "Trees\\main"
+                "ArrayIsSorted\\main"
             ],
             "problemMatcher":[]
         },
         {
             "label": "run",
             "type":  "shell",
-            "command": "${workspaceFolder}\\Trees\\main",
+            "command": "${workspaceFolder}\\ArrayIsSorted\\main",
             "dependsOn":[
                 "build"
             ],
