@@ -9,16 +9,16 @@
             "command": "g++",
             "args": [
                 "-g",
-                "${workspaceFolder}/RangeSumBST/main.cpp",
+                "${workspaceFolder}\\Trees\\main.cpp",
                 "-o",
-                "RangeSumBST/main"
+                "Trees\\main"
             ],
             "problemMatcher":[]
         },
         {
             "label": "run",
             "type":  "shell",
-            "command": "${workspaceFolder}/RangeSumBST/main",
+            "command": "${workspaceFolder}\\Trees\\main",
             "dependsOn":[
                 "build"
             ],
