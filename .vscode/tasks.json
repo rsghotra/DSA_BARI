@@ -9,16 +9,16 @@
             "command": "g++",
             "args": [
                 "-g",
-                "${workspaceFolder}\\ArrayIsSorted\\main.cpp",
+                "${workspaceFolder}\\SetOperationOnArray\\main.cpp",
                 "-o",
-                "ArrayIsSorted\\main"
+                "SetOperationOnArray\\main"
             ],
             "problemMatcher":[]
         },
         {
             "label": "run",
             "type":  "shell",
-            "command": "${workspaceFolder}\\ArrayIsSorted\\main",
+            "command": "${workspaceFolder}\\SetOperationOnArray\\main",
             "dependsOn":[
                 "build"
             ],
