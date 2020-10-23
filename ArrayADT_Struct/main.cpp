@@ -20,17 +20,28 @@ void append(Array*, int);
 void display(Array*);
 void insert(Array*, int, int);
 int  remove(Array*, int);
+void reverse(Array*);
+void swap(int*, int*);
 int get(Array*, int);
 void set(Array*, int, int);
+float avg(Array* arr);
 int max(Array*);
 int min(Array*);
 int sum(Array*);
+int sum_recursive(Array* a, int n);
 int linearSearch(const Array*, int key);
 int linearSearch_Transpose(Array*, int key);
 int lineraSearch_MoveFront(Array*, int key);
 int binarySearch_Iterative(Array*, int);
 int binarySearch_Recursive(Array*, int, int, int);
-void reverse(Array*);
+Array* merge(Array, Array);
+Array* Union(Array, Array);
+Array* Intersection(Array, Array);
+Array* Difference(Array, Array);
+bool isSorted(Array);
+void Rearrange(Array*);
+void insert_in_sorted_array(Array*, int);
+void Rearrange(Array*);
 
 
 // >========> Functions
@@ -220,6 +231,187 @@ void display(Array* a) {
         std::cout<<a->A[i]<<" ";
     }
     std::cout<<std::endl;
+}
+
+Array* Union(Array arr1, Array arr2) {
+    //Union of two sets means the resulting sets will have all the unique elements from both A and B.
+    // ||==> Watchout; Three indexes will be used. An array will be created
+    Array* arr3 = new Array;
+    int i = 0, j = 0, k = 0;
+    //Loop will stop when one of the list is exhausted.
+    while(i<arr1.length && j<arr2.length) {
+        if(arr1.A[i] < arr2.A[j]) {
+            arr3->A[k] =  arr1.A[i];
+            k++;
+            i++;
+        } else if(arr1.A[i] > arr2.A[j]) {
+            arr3->A[k] =  arr2.A[j];
+            k++;
+            j++;
+        } else {
+            arr3->A[k] =  arr1.A[i];
+            k++;
+            i++;
+            j++;
+        }
+    }
+    //at this time one of the list must be exhausted
+    while(i < arr1.length) {
+        arr3->A[k] =  arr1.A[i];
+        k++;
+        i++;
+    }
+    while(j < arr2.length) {
+        arr3->A[k] =  arr2.A[j];
+        k++;
+        j++;
+    }
+    //Remember we had not yet set the size or length of array3
+    arr3->length=k;
+    arr3->size=10;
+    return arr3;
+}
+
+Array* Intersection(Array arr1, Array arr2) {
+    // Intersection of Two Sets Means: Only common elements of Set A and Set B
+    // ||==> Watchout; Three indexes will be used. An array will be created
+    Array* arr3 = new Array;
+    int i = 0, j = 0, k = 0;
+    //Loop will stop when one of the list is exhausted.
+    while(i<arr1.length && j<arr2.length) {
+        if(arr1.A[i] < arr2.A[j]) {
+            // ||==> Watchout; K is not increasing
+            i++;
+        } else if(arr1.A[i] > arr2.A[j]){
+            j++;
+        } else {
+            //when equal means this the element we are going to push
+            arr3->A[k] =  arr1.A[i];
+            i++;
+            j++;
+            k++;
+        }
+    }
+    //jadon list hi muk gayi te fer baaki elements da achaar pauna
+
+    //Remember we had not yet set the size or length of array3
+    arr3->length=k;
+    arr3->size=10;
+    return arr3;
+}
+
+Array* Difference(Array arr1, Array arr2) {
+    // ||==> Watchout; Three indexes will be used. An array will be created
+    // Difference of SetA-SetB = Those elements which are in set A but not in B.
+    Array* arr3 = new Array;
+    int i = 0, j = 0, k = 0;
+    //Loop will stop when one of the list is exhausted.
+    while(i<arr1.length && j<arr2.length) {
+        if(arr1.A[i] < arr2.A[j]) {
+            arr3->A[k] =  arr1.A[i];
+            k++;
+            i++;
+            // we do not want to copy any thing from Set B
+        } else if(arr1.A[i] > arr2.A[j]){
+            j++;
+        } else {
+            i++;
+            j++;
+        }
+    }
+    //at this time one of the list must be exhausted
+    while(i < arr1.length) {
+        arr3->A[k] =  arr1.A[i];
+        k++;
+        i++;
+    }
+    //Not required to merge remaining elements of Set B
+    //Remember we had not yet set the size or length of array3
+    arr3->length=k;
+    arr3->size=10;
+    return arr3;
+}
+
+bool isSorted(Array a) {
+    // ||==> Watchout; We are traversing until second last element due to forward copy operations.
+    // ||==> Watchout: We start from the beginning
+    for(int i=0;i<a.length-1;i++)  {
+        if(a.A[i]>a.A[i+1]) return false;
+    }
+    return true;
+}
+
+void insert_in_sorted_array(Array* arr, int val) {
+    //weeding out invalid and only going in if length < size
+    if(arr->length < arr->size) {
+        // ||==> Watchout; TRAVERSING FROM BACK TO FRONT UNTIL VAL < A[i]
+        // ||==> Watchout: We start from the END. ACTUALLY AT LENGTH
+        int i = arr->length-1;
+        while(i>=0 && arr->A[i] > val) {
+            //perform forward copy; reduce value of i
+            arr->A[i+1]=arr->A[i];
+            i--;
+        }
+        arr->A[i+1]=val;
+        arr->length++;
+    }
+}
+
+/*
+Function which rearranges the array in such a way that all the negative 
+*/
+void Rearrange(Array* arr) {
+    // ||==> Watchout; Two indexes will be used 
+    //i is hunting for positive number and will increase until it see a negative number
+    //j is hunting for negative number
+    //we must stop unil i is less than j
+    //i starts from 0
+    //j starts from the end of the array
+    int i=0;
+    int j=arr->length-1;
+    while(i<j) {
+        while(arr->A[i] < 0) i++;
+        //||==> Watchout; j--
+        while(arr->A[j] >= 0) j--;
+        if(i<j) {
+            int temp = arr->A[j];
+            arr->A[j] = arr->A[i];
+            arr->A[i] = temp;
+        }
+    }
+}
+
+Array* merge(Array arr1, Array arr2) {
+    // ||==> Watchout; Three indexes will be used. An array will be created
+    Array* arr3 = new Array;
+    int i = 0, j = 0, k = 0;
+    //Loop will stop when one of the list is exhausted.
+    while(i<arr1.length && j<arr2.length) {
+        if(arr1.A[i] < arr2.A[j]) {
+            arr3->A[k] =  arr1.A[i];
+            k++;
+            i++;
+        } else {
+            arr3->A[k] =  arr2.A[j];
+            k++;
+            j++;
+        }
+    }
+    //at this time one of the list must be exhausted
+    while(i < arr1.length) {
+        arr3->A[k] =  arr1.A[i];
+        k++;
+        i++;
+    }
+    while(j < arr2.length) {
+        arr3->A[k] =  arr2.A[j];
+        k++;
+        j++;
+    }
+    //Remember we had not yet set the size or length of array3
+    arr3->length=arr1.length+arr2.length;
+    arr3->size=10;
+    return arr3;
 }
 
 int main() {
