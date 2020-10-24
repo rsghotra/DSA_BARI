@@ -21,7 +21,7 @@ int length(char* input) {
 int main() {
     char name[] = {'W', 'E', 'L', 'C', 'O', 'M', 'E', '\0'};//automating heap memory allocation
     //power of string printing
-    cout << "==>Input String: WELCOME.\n";
+    cout << "==>Input String: " << name << endl;
     cout << "==>Length of String is: " << length(name);
     return 0;
 }
