@@ -5,7 +5,7 @@ using namespace std;
 *************LENGTH**********
 */
 
-int length(char* input) {
+int length(const char* input) {
     /* - careful this is very spohiticated
        - ARRAY INDEX USE PROBLEM
     INPUT:
@@ -40,6 +40,15 @@ int max(int arr[], int n) {
         if(arr[i]>m) m=arr[i];
     }
     return m;
+}
+
+/*
+*************SWAP**********
+*/
+void swap(char* a, char* b) {
+    char temp=*a;
+    *a=*b;
+    *b=temp;
 }
 
 /*
@@ -109,9 +118,9 @@ void anagrams_bitset(const char* str1, const char* str2) {
     int i = 0, a=0;
     for(i;str1[i]!='\0';i++) {
         a=1;
-        //reduction to find the target index which we neec to set
+        //reduction to find the target index which we neec to set.
         a = a << str1[i] - 97;
-        //Merge operation does not require redue check as it will set the bit
+        //Merge operation does not require redue check as it will set the bit.
         H = a | H;//MERGING
         //Now we need to perform Merging here in order to set he desired bit.
     }
@@ -127,8 +136,8 @@ void anagrams_bitset(const char* str1, const char* str2) {
             H = a ^ H;
         }
     }
-    //we must check for the case when one of the string is of smaller length
-    //Therefore, if everything went well then H must be back to zero position
+    //we must check for the case when one of the string is of smaller length.
+    //Therefore, if everything went well then H must be back to zero position.
     if(H==0) {
         cout << "Anagrams!" << endl;
     } else {
@@ -286,6 +295,146 @@ void _validator() {
     validator(inp1);
 }
 
+/*
+*************REVERSOR**********
+*/
+void reversor(char* str1) {
+    if(str1==nullptr) return;
+    int i=0, j=length(str1) - 1;
+    cout << "Reversor(";
+    cout<< str1;
+    cout<<")==>";
+    for(i,j;i<j;i++,j--) {
+        swap(&str1[i],&str1[j]);
+    }
+    cout << str1 << endl;
+}
+
+void _reversor() {
+    char inp1[100], inp2[100];
+    cout <<"For Reversor Problem there exists ONLY ONE AND EFFICIENT solution. IN-PLACE SWAP"<<endl;
+    cout <<"Program will prompt for input string of max length of 99."<<endl;
+    cout <<"Please enter first  string:=> ";
+    cin.ignore();
+    cin.getline(inp1, 100);
+    reversor(inp1);
+}
+
+/*
+*************COMPAREROR**********
+*/
+
+int compareror(const char* str1, const char* str2) {
+    int i=0, j=0;
+    for(i,j; str1[i]!='\0' && str2[j]; i++, j++) {
+        if(str1[i] != str2[j]) {
+            break;
+        }
+    }
+    //Must ensure the edge case is covered when one of the string is smaller than other.
+    if(str1[i]=='\0' && str2[j] == '\0') {
+        cout << "Same Strings!"<<endl;
+        return 0;
+    } else if(str1[i] < str2[j]) {
+        cout <<"First string is samller than second string."<<endl;
+        return -1;
+    } else {
+        cout <<"First string is larger than second string."<<endl;
+        return 1;
+    }
+}
+
+void _compareror() {
+    char inp1[100], inp2[100];
+    cout <<"For Compareror Problem there exists ONLY ONE AND EFFICIENT solution. Using Loops. Two strings must be of same lengths to be equal."<<endl;
+    cout <<"Program will prompt for input string of max length of 99."<<endl;
+    cout <<"Please enter first  string:=> ";
+    cin.ignore();
+    cin.getline(inp1, 100);
+    cout <<"Please enter second string:=> ";
+    cin.getline(inp2, 100);
+    compareror(inp1, inp2);
+}
+
+/*
+*************ISPALINDROME**********
+*/
+
+void ispalindrome(const char* str1) {    
+    int i=0, j=length(str1)-1;
+    for(i,j; i<j; i++, j--) {
+        if(str1[i] != str1[j]) {
+            cout << "Not Palindrome."<<endl;
+            return;
+        }
+    }
+    cout << "Palindrome." << endl;
+}
+
+void _ispalindrome() {
+    char inp1[100];
+    cout <<"Palindrome Problem IS EXACTLY SAME AS REVERSING ARRAY IN PLACE. YOU CHECK FROM BOTH ENDS IF CHARS ARE SAME. INSTEAD OF SWAP. WE CHECK."<<endl;
+    cout <<"Program will prompt for input string of max length of 99."<<endl;
+    cout <<"Please enter first  string:=> ";
+    cin.ignore();
+    cin.getline(inp1, 100);
+    ispalindrome(inp1);
+}
+
+/*
+*************VOWELCALC**********
+*/
+
+void vowelcalc(const char* str1) {
+    int vowels=0,consonants=0,i=0;
+    //check for vowel
+    for(i;str1[i]!='\0';i++) {
+        if(str1[i] == 65 || str1[i] == 97 || str1[i] == 'E' || str1[i]=='e' || str1[i] == 'I' || str1[i]=='i' ||
+         str1[i] == 'O' || str1[i]=='o'|| str1[i] == 'U' || str1[i]=='u') {
+             vowels++;
+         } else if((str1[i] >= 65 && str1[i] <=90) || (str1[i] >= 97 && str1[i] <= 122)) {
+             consonants++;
+         }
+    }
+    cout << "Total Vowels Found: " << vowels << endl;
+    cout << "Total Consonants Found: " << consonants << endl;
+}
+
+void _vowelcalc() {
+    char inp1[100];
+    cout <<"Vowel & Consonants Calculator Problem IS BEST solved using ASCII character code check."<<endl;
+    cout <<"Program will prompt for input string of max length of 99."<<endl;
+    cout <<"Please enter first  string:=> ";
+    cin.ignore();
+    cin.getline(inp1, 100);
+    vowelcalc(inp1);
+}
+
+/*
+*************WORDCALC**********
+*/
+
+void wordcalc(const char* str1) {
+    int spaces=0, i=0;
+    for(i;str1[i]!='\0';i++) {
+        //checking if incoming character is a space and ALSO previous visited character was not space as well to avoid duplicate space detection.
+        if(str1[i]==' ' && str1[i-1]!=' ') {
+            spaces++;
+        }
+    }
+    //By the formula - number of words must be space+1
+    cout << "Number of words in given string is: " << spaces+1 << endl;
+}
+
+void _wordcalc() {
+    char inp1[100];
+    cout <<"WORD CALCULATOR Problem IS BEST solved SPACE+1 startegy. In each properly structured if there are S spaces then number of words are S+1;"<<endl;
+    cout <<"Program will prompt for input string of max length of 99."<<endl;
+    cout <<"Please enter first  string:=> ";
+    cin.ignore();
+    cin.getline(inp1, 100);
+    wordcalc(inp1);
+}
 
 int main() {
     int choice=0;
@@ -298,9 +447,13 @@ int main() {
         cout << "5. Togglecaser:Converts a given string to lower case USING ASCII MATH."<<endl;
         cout << "6. Validator: Validates if given input string only contains numbers and alphabets."<<endl;
         cout << "7. Reversor: Reverses the string in-place."<<endl;
+        cout << "8. Compareror: Compares two string and tells if first is equal, less or greater than the second string."<<endl;
+        cout << "9. Palindrome: Analyze given string and tells if it a palindrome or not."<<endl;
+        cout << "10.Vowel&Consonants Calculator:Tells given string is consists of how many vowels and how many consonants."<<endl;
+        cout << "11.Word Calculator:Tells how many words the given string consists of."<<endl;
         cout << "-1. To Exit." << endl;
         cin >> choice;
-    } while(choice != -1 && choice >= 1 && choice <=2 && choice !=3 && choice !=4 && choice !=5 && choice !=6);
+    } while(choice != -1 && !(choice >= 1 && choice <=11));
 
     switch(choice) {
         case 1:
@@ -325,20 +478,19 @@ int main() {
             _reversor();
             break;
         case 8:
-            _comparator();
+            _compareror();
             break;
-        // case 9:
-        //     _duplicatehunter();
-        //     break;
-        // case 10:
-        //     _vowelcalc();
-        //     break;
-        // case 11:
-        //     _wordcalc();
-        //     break;
+        case 9:
+            _ispalindrome();
+            break;
+        case 10:
+            _vowelcalc();
+            break;
+        case 11:
+            _wordcalc();
+            break;
         // case 12:
-        // //palindrome and reverse are similar
-        //     _ispalindrome();
+        //     _duplicatehunter();
         //     break;
         // case 13:
         //     _permutatestring();
