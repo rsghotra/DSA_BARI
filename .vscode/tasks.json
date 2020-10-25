@@ -9,16 +9,16 @@
             "command": "g++",
             "args": [
                 "-g",
-                "${workspaceFolder}\\Strings\\main.cpp",
+                "${workspaceFolder}\\ArrayADT_Struct\\main.cpp",
                 "-o",
-                "Strings\\main"
+                "ArrayADT_Struct\\main"
             ],
             "problemMatcher":[]
         },
         {
             "label": "run",
             "type":  "shell",
-            "command": "${workspaceFolder}\\Strings\\main",
+            "command": "${workspaceFolder}\\ArrayADT_Struct\\main",
             "dependsOn":[
                 "build"
             ],

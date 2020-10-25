@@ -185,7 +185,6 @@ void _areanagrams() {
 /*
 *************UPPERCASER**********
 */
-
 void uppercaser(char str1[]) {
     int i=0;
     if(str1 == nullptr) return;

@@ -64,6 +64,8 @@ class Array {
         Array* Union(Array);
         Array* Intersection(Array);
         Array* Difference(Array);
+
+        //Find a Single Missing Element in a sorted array.
 };
 
 // >========> Functions
@@ -435,6 +437,8 @@ void Array::Rearrange() {
         }
     }
 }
+
+
 
 int main()
 {

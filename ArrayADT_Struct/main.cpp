@@ -42,6 +42,8 @@ bool isSorted(Array);
 void Rearrange(Array*);
 void insert_in_sorted_array(Array*, int);
 void Rearrange(Array*);
+void FindSingleMissingFormula(const Array*);
+void FindSingleMissingIndex(const Array*);
 
 
 // >========> Functions
@@ -92,6 +94,11 @@ int min(Array* a) {
 int sum_recursive(Array* a, int n) {
     if(n < 0) return 0;
     else return sum_recursive(a, n-1) + n;
+}
+
+int sum_n(int n) {
+    if(n < 0) return 0;
+    else return sum_n(n-1) + n;
 }
 
 int sum(Array* a) {
@@ -227,8 +234,9 @@ void reverse(Array* a) {
 void display(Array* a) {
     std::cout<<"Array Size: "<<a->size<<"; Array Length: "<<a->length<<std::endl;
     std::cout<<"Displaying Array."<<std::endl;
+    cout << "| ";
     for(int i=0;i<a->length;i++) {
-        std::cout<<a->A[i]<<" ";
+        std::cout<<a->A[i]<<" | ";
     }
     std::cout<<std::endl;
 }
@@ -414,57 +422,77 @@ Array* merge(Array arr1, Array arr2) {
     return arr3;
 }
 
+/*
+*************FINDS SINGLE MISSING ELEMENT IN SORTED ARRAY**********
+*/
+
+void FindSingleMissingFormula(const Array* arr) {
+    int low=arr->A[0];
+    int high=arr->A[arr->length-1];
+    int i=0,foundSum=0,shouldBeSum=0,subSum=0;
+    for(i;i<arr->length;i++) {
+        foundSum+=arr->A[i];
+    }
+    shouldBeSum = (high*(high+1))/2;
+    //means sequence of first n natural numbers;
+    //standard formula
+    if(low!=0) {
+        subSum=sum_n(low-1);
+        shouldBeSum=shouldBeSum-subSum;
+    }
+    cout << "Missing element is: " << (shouldBeSum - foundSum) << endl;
+}
+
+void FindSingleMissingIndex(const Array* arr) {
+    int i=0;
+    int diff = arr->A[i] - i;
+    for(i;i<arr->length;i++) {
+        if(arr->A[i] - i !=diff) {
+            cout << "Missing Element: " << diff+i << endl;
+            break;
+        }
+    }
+}
+
+void _FindSingleMissingInSorted() {
+    Array stru={{1,2,3,4,6,7,8,9,10}, 10, 9}; //in stack
+    cout <<"Find Missing Element IN A SORTED LIST problem has TWO soultions: BY FORMULA OR ITERATIVE. BOTH HAS INDEX MATH INVOLVED."<<endl;
+    cout << "Input Array: ";
+    display(&stru);
+    int choice=0;
+    do {
+        cout << "1. Formula Solution: O(n);" << endl;
+        cout << "2. Index Manipulation Solution: O(n);" << endl;
+        cout << "-1. Exit." << endl;
+        cin >> choice;
+    } while(choice != -1 && choice != 1 && choice !=2);
+    switch(choice) {
+        case 1:
+            FindSingleMissingFormula(&stru);
+            break;
+        case 2:
+            FindSingleMissingIndex(&stru);
+            break;
+        default:
+            break;
+    }
+}
+
 int main() {
-    Array stru={{2,3,4,5,6}, 10, 5}; //in stack
-    display(&stru);
-    append(&stru, 7);
-    display(&stru);
-    insert(&stru, 3, 15);
-    display(&stru);
-    insert(&stru, -3, 25);
-    display(&stru);
-    std::cout << "Removed element "<<remove(&stru, 3) << std::endl;
-    display(&stru);
-    std::cout << "Removed element "<<remove(&stru, 9) << std::endl;
-    display(&stru);
-    std::cout << "Removed element "<<remove(&stru, 0) << std::endl;
-    display(&stru);
+    int choice=0;
+    do {
+        cout<<"Welcome to Wonderwold of String. What would you like to do today?" << endl;
+        cout << "1. Missing Element: Find Single Missing Element in a sorted array." << endl;
+        cout << "-1. To Exit." << endl;
+        cin >> choice;
+    } while(choice != -1 && !(choice >= 1 && choice <=1));
 
-    std::cout<<">======>Linear Search:"<<std::endl;
-    std::cout<<"Element  found at: " << linearSearch(&stru, 14/2) << std::endl;
-
-    std::cout<<">======>Linear Search Transpose:"<<std::endl;
-    std::cout<<"Element  found at: " << linearSearch(&stru, 14/2) << std::endl;
-
-    std::cout<<">======>Linear Search Move Front:"<<std::endl;
-    std::cout<<"Element  found at: " << linearSearch(&stru, 14/2) << std::endl;
-
-    std::cout<<">======>Binary Search Iterative"<<std::endl;
-    std::cout<<"Element  found at: " << binarySearch_Iterative(&stru, 14/2) << std::endl;
-
-    std::cout<<">======>get(index):"<<std::endl;
-    std::cout<<"get(index):: " << get(&stru, 3) << std::endl;
-
-    std::cout<<">======>set(index, val):"<< std::endl;
-    std::cout<<"set(index, val):: ";
-    set(&stru, 0, 19);
-    std::cout<<std::endl;
-
-    std::cout<<">======>max():"<<std::endl;
-    std::cout<<"max():: " << max(&stru) << std::endl;
-
-    std::cout<<">======>min():"<<std::endl;
-    std::cout<<"min():: " << min(&stru) << std::endl;
-
-    std::cout<<">======>sum():"<<std::endl;
-    std::cout<<"sum():: " << sum(&stru) << std::endl;
-
-    std::cout<<">======>avg():"<<std::endl;
-    std::cout<<"avg():: " << avg(&stru) << std::endl;
-    std::cout<<">======>reversing and displaying array:"<<std::endl;
-    std::cout<<"reverse():: " <<  std::endl;
-    display(&stru);
-    reverse(&stru); 
-    display(&stru);
+    switch(choice) {
+        case 1:
+            _FindSingleMissingInSorted();
+            break;
+        case -1:
+            cout << "Thank You for Visiting the World of String! :)" << endl; 
+    }
     return 0;
 }
