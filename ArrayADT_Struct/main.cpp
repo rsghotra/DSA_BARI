@@ -2,7 +2,12 @@
 Array Abstract Data Type:
  - We will implement Array Class
  - Every operation and every property
-
+ - HASH DECLRATION GUIDELINES: SET SIZE TO MAX ELEMENT IN THE ARRAY.
+ - FOLLOWING THINGS ARE KNOWN TO THE QUESTION:
+            - Min Element in the array.
+            - Max Element in the array.
+            - Caveat: Must create Hash of Size: MAX+1
+            - MUST INITIALIZE THE HASH TO ZERO: //https://stackoverflow.com/questions/2204176/how-to-initialise-memory-with-new-operator-in-c 
 */
 #include <iostream>
 using namespace std;
@@ -17,7 +22,7 @@ struct Array {
 // >========> Functions Signtures
 
 void append(Array*, int);
-void display(Array*);
+void display(const Array*);
 void insert(Array*, int, int);
 int  remove(Array*, int);
 void reverse(Array*);
@@ -25,8 +30,8 @@ void swap(int*, int*);
 int get(Array*, int);
 void set(Array*, int, int);
 float avg(Array* arr);
-int max(Array*);
-int min(Array*);
+int max(const Array*);
+int min(const Array*);
 int sum(Array*);
 int sum_recursive(Array* a, int n);
 int linearSearch(const Array*, int key);
@@ -67,24 +72,24 @@ void set(Array* a, int index, int val) {
     }
 }
 
-int max(Array* a) {
+int max(const Array* a) {
     //seeding
     int max=a->A[0];
     int i;
     for(i=1;i<a->length;i++) {
-        if(max > a->A[i]) {
+        if(max < a->A[i]) {
             max=a->A[i];
         }
     }
     return max;
 }
 
-int min(Array* a) {
+int min(const Array* a) {
     //seeding
     int min=a->A[0];
     int i;
     for(i=1;i<a->length;i++) {
-        if(min < a->A[i]) {
+        if(min > a->A[i]) {
             min=a->A[i];
         }
     }
@@ -231,7 +236,7 @@ void reverse(Array* a) {
     }
 }
 
-void display(Array* a) {
+void display(const Array* a) {
     std::cout<<"Array Size: "<<a->size<<"; Array Length: "<<a->length<<std::endl;
     std::cout<<"Displaying Array."<<std::endl;
     cout << "| ";
@@ -478,21 +483,404 @@ void _FindSingleMissingInSorted() {
     }
 }
 
-int main() {
+/*
+*************FINDS MULTIPLE MISSING ELEMENTS IN SORTED ARRAY**********
+*/
+
+void FindMissingElemsInSorted(const Array* arr) {
+    cout << "Missing Elements: ";
+    int i=0, diff=arr->A[i]-i;
+    for(i;i<arr->length;i++) {
+        if(arr->A[i]-i != diff) {
+            //if list is sorted than difference will be greater than zero
+            while(diff < arr->A[i]-i) {
+                cout << diff + i << " ";
+                diff++;
+            }
+        }
+    }
+    cout << endl;
+}
+
+void _FindMissingElemsInSorted() {
+    Array stru={{6,7,8,9,11,12,15,16,17,18,19}, 11, 11}; //in stack
+    cout <<"FINDING ALL MISSING ELEMENTS IN A SORTED ARRAY HAS ONE EASY SOLUTION: SEE AS \"INDEX VS VALUE PROBLEM.\""<<endl;
+    cout << "Input Array: ";
+    display(&stru);
+    FindMissingElemsInSorted(&stru);
+}
+
+/*
+*************FINDS MULTIPLE MISSING ELEMENTS IN AN UNSORTED ARRAY**********
+*/
+
+void FindMissingElemsInUnSorted(const Array* arr) {
+    cout << "Missing Elements: ";
+    int i=0;
+    display(arr);
+    int mx=max(arr);
+    int* H=new int[mx+1];
+    //initializing the HASH to zero
+    //we will not used 0th index as our logic is build on zero index.
+    //Initializing the HASH array with 1.
+    for(i;i<=mx;i++) {
+        H[i] = 0;
+    }
+    i=0;
+    for(i;i<arr->length;i++) {
+        H[arr->A[i]]++;
+    }
+    i=1;
+    for(i;i<=mx;i++) {
+        if(H[i]==0) {
+            cout << i << " ";
+        }
+    }
+    cout << endl;
+    delete [] H;
+    H=0;
+}
+void _FindMissingElemsInUnSorted() {
+    Array stru={{3,7,4,9,12,6,1,11,2,10}, 10, 10}; //in stack
+    cout <<"FINDING ALL MISSING ELEMENTS IN AN UNSORTED ARRAY: USE HASH ALWAYS. SEQUENCE MUST NOT CONTAINS ZERO, HANDLES DUPLICATES.\""<<endl;
+    cout << "Input Array: ";
+    display(&stru);
+    FindMissingElemsInUnSorted(&stru);
+}
+/*
+*************FINDS DUPLICATES IN A SORTED ARRAY**********
+*/
+
+void DuplicateFinderSorted(const Array* arr) {
+    cout << "Duplicate Elements: ";
+    //must also ensure to handle continuous duplicates and not re-printing them;
+    int i=0, lastDuplicate=0;
+    for(i;i<arr->length-1;i++) {
+        if(arr->A[i] == arr->A[i+1] && lastDuplicate!=arr->A[i]) {
+            cout << arr->A[i] << " ";
+            lastDuplicate=arr->A[i];
+        }
+    }
+    cout << endl;
+}
+
+void _DuplicateFinderSorted() {
+    Array stru={{3,6,8,8,10,12,15,15,15,20}, 10, 10}; //in stack
+    cout <<"FINDING DUPLICATES FROM A SORTED ARRAY HAS SINGLE ITERATIVE SOLUTION.\""<<endl;
+    cout << "Input Array: ";
+    display(&stru);
+    DuplicateFinderSorted(&stru);
+}
+
+/*
+*************FINDS & COUNT DUPLICATES IN A SORTED ARRAY**********
+*/
+
+void DuplicateHunterSorted_Iterative(const Array* arr) {
+    int i=0,j=0;
+    for(i;i<arr->length-1;i++) {
+        if(arr->A[i]==arr->A[i+1]) {
+            j=i+1;
+            while(arr->A[j]==arr->A[i]) {
+                j++;
+            }
+            //now it is time to print the element and number of repetitions.
+            cout << "Element " << arr->A[i] << " is repeating " << j-i << " times." << endl;
+            //at this time - we ARE going MAKE i jump to one location before the j. Which will be last duplicated entry of current elements.
+            i=j-1;
+        }
+    }
+}
+
+void DuplicateHunterSorted_Hash(const Array* arr) {
+    /*
+        >--> As it is a hash question on an Array. Alaways remember that we have these things known:
+            - Min Element in the array.
+            - Max Element in the array.
+            - Caveat: Must create Hash of Size: MAX+1 & INITIALIZE THEM TO ZERO
+    */
+    int i;
+    int minElem=min(arr);
+    int maxElem=max(arr);
+    int* H = new int[maxElem+1]();
+    i=0;
+    for(i;i<arr->length;i++) {
+        H[arr->A[i]]++;
+    }
+    //Iterating over hash and printing.
+    //setting the starting hash to min element.
+    i=minElem;
+    for(i;i<maxElem+1;i++) {
+        if(H[i] > 1) {
+            cout << "Element " << i << " is repeating " << H[i] << " times." << endl;
+        }
+    }
+    delete[] H;
+    H=0;
+}
+
+void _DuplicateHunterSorted() {
+    Array stru={{3,6,8,8,10,12,15,15,15,20}, 10, 10}; //in stack
+    cout <<"Find & Counting Missing Element IN A SORTED LIST problem has TWO soultions: ITERATIVE(O(N)) & HASHING (O(N)))."<<endl;
+    cout << "Input Array: ";
+    display(&stru);
     int choice=0;
     do {
-        cout<<"Welcome to Wonderwold of String. What would you like to do today?" << endl;
-        cout << "1. Missing Element: Find Single Missing Element in a sorted array." << endl;
-        cout << "-1. To Exit." << endl;
+        cout << "1. Iterative Solution: Since the list is SORTED. Therefore, the solution is O(n)." << endl;
+        cout << "2. Hash Solution: Obviously O(n) with O(n) S(n) BUT IS FAST;" << endl;
+        cout << "-1. Exit." << endl;
         cin >> choice;
-    } while(choice != -1 && !(choice >= 1 && choice <=1));
-
+    } while(choice != -1 && choice != 1 && choice !=2);
     switch(choice) {
         case 1:
-            _FindSingleMissingInSorted();
+            DuplicateHunterSorted_Iterative(&stru);
             break;
-        case -1:
-            cout << "Thank You for Visiting the World of String! :)" << endl; 
+        case 2:
+            DuplicateHunterSorted_Hash(&stru);
+            break;
+        default:
+            break;
     }
+}
+
+/*
+*************FINDS & COUNT DUPLICATES IN AN UNSORTED ARRAY**********
+*/
+
+void DuplicateHunterUnSorted_Iterative(Array* arr) {
+    int i=0;
+    //Copying the array as we will modify the array to mark it.
+    Array temp;
+    temp.length=arr->length;
+    temp.size=arr->size;
+    for(i;i<arr->length-1;i++) {
+        temp.A[i] = arr->A[i];
+    }
+    i=0;
+    int j, occurence;
+    for(i;i<temp.length-1;i++) {
+        j=i+1;
+        occurence=1;
+        for(j;j<temp.length;j++) {
+            //element -1 means that it is marked that element is seen
+            if(temp.A[i]==temp.A[j] && temp.A[j] != -1) {
+                occurence++;
+                temp.A[j] = -1;
+            }
+        }
+        if(occurence>1) {
+            cout << "Element " << temp.A[i] << " is repeating " << occurence << " times." << endl;
+        }
+    }
+}
+
+void DuplicateHunterUnSorted_Hash(const Array* arr) {
+    int i=0;
+    int minElem=min(arr);
+    int maxElem=max(arr);
+    int* H = new int[maxElem+1]();
+    for(i;i<arr->length;i++) {
+        H[arr->A[i]]++;
+    }
+    i=minElem;
+    for(i;i<maxElem+1;i++) {
+        if(H[i] > 1) {
+            cout << "Element " << i << " is repeating " << H[i] << " times." << endl;
+        }
+    }
+    delete [] H;
+    H=0;
+}
+
+void _DuplicateHunterUnSorted() {
+    Array stru={{8,3,6,4,6,5,6,8,7,2}, 10, 10}; //in stack
+    cout <<"Find Missing Element IN AN UNSORTED LIST HAS TWO SOLUTIONS: ITERATIVE- O(N2) - Obviously; Only god can find duplicates; HASH - O(N);O(N)"<<endl;
+    cout << "Input Array: ";
+    display(&stru);
+    int choice=0;
+    while(choice != -1) {
+        do {
+        cout << "1. Iterative Solution: O(N2). Setting seen duplicate elements to -1 startegy." << endl;
+        cout << "2. Hashing Solution: T(n)=O(n); S(n)=O(n);" << endl;
+        cout << "-1. Exit." << endl;
+        cin >> choice;
+        } while(choice != -1 && choice != 1 && choice !=2);
+        switch(choice) {
+            case 1:
+                DuplicateHunterUnSorted_Iterative(&stru);
+                break;
+            case 2:
+                DuplicateHunterUnSorted_Hash(&stru);
+                break;
+            default:
+                break;
+        }
+    }
+}
+
+/*
+*************FINDS PAIR OF ELEMENTS WITH SUM K IN AN UNSORTED ARRAY**********
+*/
+void FindPairSumUnsorted_Iterative(Array* arr, int k) {
+    int i=0,j;
+    for(i;i<arr->length-1;i++) {
+        j=i+1;
+        for(j;j<arr->length;j++) {
+            if(arr->A[i]+arr->A[j]==k) {
+                cout << arr->A[i] << "+" << arr->A[j]<<"="<<k<<endl;
+            }
+        }
+    }
+    cout << endl;
+}
+
+void FindPairSumUnsorted_Hash(const Array* arr, int k) {
+    int miElem=min(arr);
+    int maElem=max(arr);
+    int* H = new int[maElem+1]();
+    int i = 0;
+    for(i;i<arr->length;i++) {
+        H[arr->A[i]]++;
+    }
+    i=miElem;
+    for(i;i<maElem;i++) {
+        if(H[i]!=0 && H[k-i]!=0) {
+            cout << "Pair Found: ";
+            cout << i << "+" << (k-i) <<"="<<k<<endl;
+        }
+    }
+}
+
+void _FindPairSumUnsorted() {
+    Array stru={{6,3,8,10,16,7,5,2,9,14}, 10, 10}; //in stack
+    cout <<"Finding PAIR SUM IN AN UNSORTED LIST HAS TWO SOLUTIONS: ITERATIVE- O(N2) & HASH - O(N);O(N)"<<endl;
+    cout << "Input Array: ";
+    display(&stru);
+    int choice=0;
+    while(choice != -1) {
+        do {
+        cout << "1. Iterative Solution: O(N2)." << endl;
+        cout << "2. Hashing Solution: T(n)=O(n); S(n)=O(n);" << endl;
+        cout << "-1. Exit." << endl;
+        cin >> choice;
+        } while(choice != -1 && choice != 1 && choice !=2);
+        switch(choice) {
+            case 1:
+                FindPairSumUnsorted_Iterative(&stru, 10);
+                break;
+            case 2:
+                FindPairSumUnsorted_Hash(&stru, 10);
+                break;
+            default:
+                break;
+        }
+    }
+}
+
+/*
+*************FINDS PAIR OF ELEMENTS WITH SUM K IN A SORTED ARRAY**********
+*/
+
+void FindPairSumSorted_iterative(Array* arr, int k) {
+    //As we will not be increasing or decreaing counter in every iteration
+    //Hence, we will use while loop
+    int i=0, j=arr->length-1;
+    while(i<j) {
+        if(arr->A[i]+arr->A[j]==k) {
+            cout << arr->A[i] << "+" << arr->A[j]<<"="<<k<<endl;
+            i++;
+            j--;
+        } else if(arr->A[i]+arr->A[j] < k) {
+            i++;
+        } else {
+            j--;
+        }
+    }
+    cout << endl;
+ }
+
+void _FindPairSumSorted() {
+    Array stru={{1,3,4,5,6,8,9,10,12,14}, 10, 10}; //in stack
+    cout <<"PAIR SUM IN A SORTED ARRAY HAS ONE SOLUTION ONLY: ITERATIVE- O(N). Very Sophisticated."<<endl;
+    FindPairSumSorted_iterative(&stru, 10);
+}
+
+/*
+*************FINDS MIN-MAX OF UNSORTED ARRAY IN ONE GO**********
+*/
+
+void FindMinMaxUnsorted(Array* arr) {
+    int i=1;
+    //SEED MUST BE FIRST ELEMENT OF THE ARRAY
+    int miVal=arr->A[0];
+    int maVal=arr->A[0];
+    for(i;i<arr->length;i++) {
+        if(arr->A[i] < miVal) {
+           miVal=arr->A[i]; 
+        } else if(arr->A[i] > maVal) {
+            maVal=arr->A[i];
+        }
+    }
+    cout << "*Min Val Element: " << miVal << endl;
+    cout << "*Max Val Element: " << maVal << endl;
+ }
+
+void _FindMinMaxUnsorted() {
+    Array stru={{8,3,6,4,6,5,6,8,7,2}, 10, 10}; //in stack
+    cout <<"Find MIN-MAX IN AN UNSORTED ARRAY HAS ONE SOLUTION ONLY: ITERATIVE- O(N) & 2(n-1) worst case comparison."<<endl;
+    cout << "Input Array: ";
+    display(&stru);
+    FindMinMaxUnsorted(&stru);
+}
+
+int main() {
+    int choice=0;
+        do {
+            cout<<"\n\n==============Wonderwold of Array============" << endl;
+            cout<<"Welcome! What would you like to do today?" << endl;
+            cout << "1. Find Single Missing Element in A SORTED array." << endl;
+            cout << "2. Find All Missing Elements in A SORTED array." << endl;
+            cout << "3. Find All Missing Elements in AN UNSORTED array."<<endl;
+            cout << "4. Find Duplicates in a SORTED array."<<endl;
+            cout << "5. Find & Count Duplicates in a SORTED array."<<endl;
+            cout << "6. Find & Count Duplicates in AN UNSORTED array."<<endl;
+            cout << "7. Find Pair Sum in a SORTED array."<<endl;
+            cout << "8. Find Pair Sum in AN UNSORTED array."<<endl;
+            cout << "9. Find MAX and MIN in A SINGLE SCAN."<<endl;
+            cout << "-1. To Exit." << endl;
+            cin >> choice;
+        } while(choice != -1 && !(choice >= 1 && choice <=9));
+
+        switch(choice) {
+            case 1:
+                _FindSingleMissingInSorted();
+                break;
+            case 2:
+                _FindMissingElemsInSorted();
+                break;
+            case 3:
+                _FindMissingElemsInUnSorted();
+                break;
+            case 4:
+                _DuplicateFinderSorted();
+                break;
+            case 5:
+                _DuplicateHunterSorted();
+                break;
+            case 6:
+                _DuplicateHunterUnSorted();
+                break;
+            case 7:
+                _FindPairSumSorted();
+                break;
+            case 8:
+                _FindPairSumUnsorted();
+                break;
+            case 9:
+                _FindMinMaxUnsorted();
+                break;
+            case -1:
+                cout << "Thank You for Visiting the World of Arrays! :)" << endl; 
+        }
     return 0;
 }
