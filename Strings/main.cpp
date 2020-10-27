@@ -435,6 +435,161 @@ void _wordcalc() {
     wordcalc(inp1);
 }
 
+/*
+*************DUPLICATE CHARACTER FINDER AND COUNTER**********
+*/
+
+void duplicatehunter_hash(const char* str1) {
+    int i=0;
+    //assuming only lowecase character;  Miust initialize HASH to zero
+    int H[26] = {0};
+    //first fill the hash
+    for(i;str1[i]!='\0';i++) {
+        //REDUCE OPERAION WILL TAKE PLACE
+        H[str1[i]-97]++;
+    }
+    //Traversing HASH and going over finding duplicates and its counts
+    i=0;
+    for(i;i<26;i++) {
+        if(H[i] > 1) {
+            cout << "Character " << char(i+97)<< " is occuring " << H[i] << " times.";
+        }
+    }
+    cout << endl;
+}
+
+void duplicatehunter_bitset(const char* str1) {
+    cout << "Duplicates: ";
+    int i=0;
+    /*assuming lower case characters.
+        NO REDUCE Operation will take place here. INSTEAD WE WILL USE LEFT SHIFT
+        Trace the character and decide on which index the bit must be SET(MERGER|OR)
+    */
+   //SHOOT: PIT FALL. INITIALIZE THE HASH WITH ZERO
+    int H=0;
+    int a=0;
+    //filling the HASH or setting the bit will be done by merging
+    for(i;str1[i]!='\0';i++) {
+        a=1;
+        //perform left shit to as many indexes
+        a = a << str1[i] - 97;
+        /*
+            Here we will first need to CHECK if the BIT IS ALREADY SET OR NOT BY PERFORMING MASKING
+            IF IT IS SET THEN CHARACTER IS DUPLICATE
+        */
+       //SHOOT: PIT FALL: & has lower precedence than >
+       if((a&H) > 0) {
+           cout << str1[i] << " ";
+       } else {
+           //perform ORING to set the bit
+            H = a | H;
+       }
+    }
+}
+
+void _duplicatehunter() {
+    char inp1[100];
+    cout <<"For Duplicate Character Problems- ASSUMING ALL LOWER SIZE CHARACTER. There exists three soultions but we are NOT implementing iterative."<<endl;
+    int choice=0;
+    do {
+        cout << "1. Hash Table Solution: O(n), O(n): Creating a hash table of size 26 representing each alphabet. ASSUMING ALL LOWER CASE; HANDLE DUPLICATES & EXTRA SPACES" << endl;
+        cout << "2. BitSet Duplicate Finder: Classic use of bitwise operations. Assuming incoming string is lower characters." << endl;
+        cout << "-1. Exit." << endl;
+        cin >> choice;
+    } while(choice != -1 && choice != 1 && choice !=2);
+    
+    cout <<"Program will prompt for two strings of max length of 99."<<endl;
+    cout <<"Please enter first  string:=> ";
+    cin.ignore();
+    cin.getline(inp1, 100);
+
+    switch(choice) {
+        case 1:
+            duplicatehunter_hash(inp1);
+            break;
+        case 2:
+            duplicatehunter_bitset(inp1);
+            break;
+        case -1:
+            cout << "Thank You"<<endl;
+            break;
+        default:
+            break;
+    }
+}
+
+/*
+*************STRING PERMUTATOR**********
+*/
+
+void stringpermutator_backtracking(char S[], int k) {
+    static int A[4];
+    static char Result[4];
+    int i=0;
+    if(S[k]=='\0') {
+        Result[k]='\0';
+        cout << Result << " ";
+    } 
+    else {
+        for(i;S[i]!='\0';i++) {
+            if(A[i]==0) { //element unseen
+                Result[k] = S[i];
+                A[i]=1;
+                stringpermutator_backtracking(S, k+1);
+                A[i]=0;
+            }
+        }
+    }
+}
+
+void stringpermutator_swap(char S[], int l, int h) {
+    int i;
+    if(l==h) {
+        cout << S << " ";
+    } else {
+        for(i=l;i<=h;i++) {
+            swap(S[l], S[i]);
+            stringpermutator_swap(S, l+1, h);
+            swap(S[l], S[i]);
+        }
+    }
+}
+
+void _permutatestring() {
+    char inp1[100];
+    cout <<"String Permutation Problem- There exists seven soultions. Each will be implemented as the course progresses."<<endl;
+    int choice=0;
+    do {
+        cout << "1. Using Swapping Elements" << endl;
+        cout << "2. BackTracking" << endl;
+        cout << "3. Using Sorting" << endl;
+        cout << "4. Using Hashmap" << endl;
+        cout << "5. Using Arrays" << endl;
+        cout << "6. Using Sliding Window" << endl;
+        cout << "-1. Exit." << endl;
+        cin >> choice;
+    } while(choice != -1 && choice != 1 && choice !=2);
+    
+    cout <<"Program will prompt for a strings of max length of 99."<<endl;
+    cout <<"Please enter first  string:=> ";
+    cin.ignore();
+    cin.getline(inp1, 100);
+
+    switch(choice) {
+        case 1:
+            stringpermutator_swap(inp1, 0, length(inp1)-1);
+            break;
+        case 2:
+            stringpermutator_backtracking(inp1, 0);
+            break;
+        case -1:
+            cout << "Thank You"<<endl;
+            break;
+        default:
+            break;
+    }
+}
+
 int main() {
     int choice=0;
     do {
@@ -450,9 +605,11 @@ int main() {
         cout << "9. Palindrome: Analyze given string and tells if it a palindrome or not."<<endl;
         cout << "10.Vowel&Consonants Calculator:Tells given string is consists of how many vowels and how many consonants."<<endl;
         cout << "11.Word Calculator:Tells how many words the given string consists of."<<endl;
+        cout << "12.Duplicate Finder & Counter: Using HASH TABLE OR BITSET - WE SOLVE THIS PROBLEM NICELY"<<endl;
+        cout << "13.Permutator: Prints permutations of given string. MANY SOLUTIONS."<<endl;
         cout << "-1. To Exit." << endl;
         cin >> choice;
-    } while(choice != -1 && !(choice >= 1 && choice <=11));
+    } while(choice != -1 && !(choice >= 1 && choice <=13));
 
     switch(choice) {
         case 1:
@@ -488,12 +645,12 @@ int main() {
         case 11:
             _wordcalc();
             break;
-        // case 12:
-        //     _duplicatehunter();
-        //     break;
-        // case 13:
-        //     _permutatestring();
-        //     break;
+        case 12:
+            _duplicatehunter();
+            break;
+        case 13:
+            _permutatestring();
+            break;
         case -1:
             cout << "Thank You for Visiting the World of String! :)" << endl; 
     }

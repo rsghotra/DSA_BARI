@@ -9,7 +9,7 @@
             "name": "(gdb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}\\ArrayADT_Struct\\main.exe",
+            "program": "${workspaceFolder}\\Strings\\main.exe",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
