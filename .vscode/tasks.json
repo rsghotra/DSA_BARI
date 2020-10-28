@@ -9,16 +9,16 @@
             "command": "g++",
             "args": [
                 "-g",
-                "${workspaceFolder}\\Strings\\main.cpp",
+                "${workspaceFolder}\\Matrices\\main.cpp",
                 "-o",
-                "Strings\\main"
+                "Matrices\\main"
             ],
             "problemMatcher":[]
         },
         {
             "label": "run",
             "type":  "shell",
-            "command": "${workspaceFolder}\\Strings\\main",
+            "command": "${workspaceFolder}\\Matrices\\main",
             "dependsOn":[
                 "build"
             ],
