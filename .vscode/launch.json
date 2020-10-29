@@ -9,7 +9,7 @@
             "name": "(gdb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}\\Strings\\main.exe",
+            "program": "${workspaceFolder}\\Matrices\\main.exe",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",

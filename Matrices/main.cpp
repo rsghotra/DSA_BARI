@@ -19,6 +19,9 @@ struct Matrix {
     int n;
 };
 
+void set_lower_tri(Matrix* M, int i, int j, int k, bool row);
+void set_upper_tri(Matrix* M, int i, int j, int k, bool row);
+int get_upper_tri(const Matrix* M, int i, int j, bool row);
 /*
 *************CREATE A DIAGONAL MATRIX**********
 */
@@ -67,8 +70,6 @@ void display_diagonal(Matrix m) {
         cout << endl;
     }
 }
-
-
 
 void _diagonal_matrix() {
     string theoretical = "Definition: Matrices which are NxN dimensions and in which only diagnoal elements i.e. where r=c is non-zero. All other elements are 0.";
@@ -134,55 +135,225 @@ void _diagonal_matrix() {
 *************Lower Triangular Matrix**********
 */
 
-void create_lower_triangular(Matrix* M) {
+void create_lower_tri(Matrix* M, bool row) {
+    int n;
+    cout << "Enter dimension:: ";
+    cin >> n;
+    M->n=n;
+    /*
+        Lower Triangular Matrix Number of Non-Zero Elements.
+    */
+    //Number of elements are same for row - major or colom major.
+    M->A = new int[n*(n+1)/2]();
+    
+    //Taking Elements and Calling Set Function.
+    //Watch out for starting index
+    int k;
+    for(int i=1; i<= M->n;i++) {
+        for(int j=1;j<=M->n;j++) {
+            cin >> k;
+            if(row) {
+                set_lower_tri(M, i, j, k, true);
+            } else {
+                set_lower_tri(M, i, j, j, false);
+            }
+        }
+    }
+}
+
+void set_lower_tri(Matrix* M, int i, int j, int k, bool row) {
+    //only those indexes will have elements where i >= j
+    int index;
+    if(i>=j) {
+        if(row) {
+            index = i*(i-1)/2 + j-1;
+        } else {
+            index = M->n*(j-1) - (j-2)*(j-1)/2 + (i-j);
+        }
+        M->A[index] = k;
+    } 
+    //Else matrix is already initialized to 0.
+}
+
+int get_lower_tri(const Matrix* M, int i, int j, bool row) {
+    int index;
+    if(i>=j) {
+        if(row) {
+            index = i*(i-1)/2 + (j-1);
+        } else {
+            index = M->n*(j-1) - (j-1)*(j-2)/2 + (i-j);
+        }
+        return M->A[index];
+    }
+    //ELSE RETURNING 0 iS MANDATORY AS THIS IS THE CRUX OF THE ALGO. 
+    else {
+        return 0;
+    }
+}
+
+void display_lower_tri(const Matrix* M, bool row) {
+    //Watch out please starting from 1
+    for(int i=1;i<=M->n;i++) {
+        for(int j=1;j<=M->n;j++) {
+            if(row) {
+                cout << get_lower_tri(M, i, j, true) << " ";
+            } else {
+                cout << get_lower_tri(M, i, j, false) << " ";
+            }
+        }
+        cout << endl;
+    }
+}
+
+/*
+    - Lower Triangular Matrix Callers
+*/
+
+void row_major_caller_lower_tri(Matrix* M) {
+    create_lower_tri(M,true);
+    cout << "Row Major Lower Triangular Matrix is Set. Displaying Now: " << endl;
+    cout << ">===>MATRIX:" << endl;
+    display_lower_tri(M, true);
 
 }
 
-void set_lower_triangular(Matrix* M) {
-    
-}
-
-void get_lower_triangular(Matrix M) {
-    
-}
-
-void display_lower_triangular(Matrix M) {
-    
+void col_major_caller_lower_tri(Matrix* M) {
+    create_lower_tri(M,false);
+    cout << "Col Major Lower Triangular Matrix is Set. Displaying Now: " << endl;
+    cout << ">===>MATRIX:" << endl;
+    display_lower_tri(M,false);
 }
 
 void _lower_triangular_matrix() {
-    cout << "Welcome to Lower triangular marix. What would you like to do?" << endl;
+    cout << "Lower Triangular Matrix: M[i][j] == 0 if i < j; M[i][j] != 0 if i >= j;" << endl;
+    cout << "LTM could be stored as either Row Major or Colom Major."<<endl;
+    int choice=0,done=0;
     Matrix M;
+    do {
+        cout << "1. Row Major Setting: i*(i-1)/2 + j-1" << endl;
+        cout << "2. Col Major Setting: n*(j-1) - (j-2)*(j-1)/2 + (i-j)" << endl;
+        cin >> choice;
+    }while(choice != 1 && choice !=2);
 
-    int choice=0, done=0;
-    while(done!=1) {
-        do {
-            cout << "1. Creator: Create a Lower Triangular Matrix of asked dimension filled initialized to zero." << endl;
-            cout << "2. Setter: Sets element in the matrix at given index." << endl;
-            cout << "3. Getter: Fetches an element from asked indicies." << endl;
-            cout << "4. Display: Prints a diagonal matrix." << endl;
-            cout << "-1. Exit." << endl;
-            cin >> choice;
-        } while(choice != -1 && !(choice >= 1 && choice <=4));
-        switch(choice) {
-            case 1:
-                create_lower_triangular(&M);
-                break;
-            case 2:
-                set_lower_triangular(&M);
-                break;
-            case 3:
-                get_lower_triangular(M);
-                break;
-            case 4:
-                display_lower_triangular(M);
-                break;
-        }
-        if(choice==-1) done=1;
+    if(choice == 1) {
+        row_major_caller_lower_tri(&M);
+    } else {
+        col_major_caller_lower_tri(&M);
     }
-
-    delete[] M.A;
+    delete [] M.A;
 }
+
+// /*
+// *************Upper Triangular Matrix**********
+// */
+
+void create_upper_tri(Matrix* M, bool row) {
+    int n;
+    cout << "Enter dimension:: ";
+    cin >> n;
+    M->n=n;
+    /*
+        Upper Triangular Matrix Number of Non-Zero Elements.
+    */
+    //Number of elements are same for row - major or colom major.
+    M->A = new int[n*(n+1)/2]();
+    int k;
+    //Taking Elements and Calling Set Function.
+    //Watch out for starting index
+    for(int i=1;i<=M->n;i++) {
+        for(int j=1;j<=M->n;j++) {
+            cin >> k;
+            if(row) {
+                set_upper_tri(M, i, j, k, true);
+            } else {
+                set_upper_tri(M, i, j, k, false);
+            }
+        }
+    }
+}
+
+void set_upper_tri(Matrix* M, int i, int j, int k, bool row) {
+    int index;
+    if(i<=j) {
+        if(row) {
+            index = (i-1)*(M->n) - (i-2)*(i-1)/2 + (j-i); 
+        } else {
+            //careful it is alway in -
+            index = j*(j-1)/2 + i-1;
+        }
+        M->A[index] = k;
+    } else {
+        M->A[index] = 0;
+    }
+}
+
+int get_upper_tri(const Matrix* M, int i, int j, bool row) {
+    int index;
+    if(i<=j) {
+        if(row) {
+            index = (i-1)*(M->n) - (i-2)*(i-1)/2 + (j-i);
+        } else {
+            index = j*(j-1)/2 + (i-1);
+        }
+        return M->A[index];
+    } else {
+        return 0;
+    }
+}
+
+void display_upper_tri(const Matrix* M, bool row) {
+    //Watch out index starting from 1.
+    for(int i=1;i<=M->n;i++) {
+        for(int j=1;j<=M->n;j++) {
+            if(row) {
+                cout << get_upper_tri(M, i, j, true) << " ";
+            } else {
+                cout << get_upper_tri(M, i, j, false) << " ";
+            }
+        }
+        cout << endl;
+    }
+}
+
+void row_major_caller_upper_tri(Matrix* M) {
+    create_upper_tri(M,true);
+    cout << "Row Major Upper Triangular Matrix is Set. Displaying Now: " << endl;
+    cout << ">===>MATRIX:" << endl;
+
+    display_upper_tri(M, true);
+
+}
+
+void col_major_caller_upper_tri(Matrix* M) {
+    create_upper_tri(M,false);
+    cout << "Col Major Upper Triangular Matrix is Set. Displaying Now: " << endl;
+    cout << ">===>MATRIX:" << endl;
+    display_upper_tri(M,false);
+}
+
+void _upper_triangular_matrix() {
+    cout << "Upper Triangular Matrix: M[i][j] == 0 if i > j; M[i][j] != 0 if i <= j." << endl;
+    cout << "UTM could be stored as either Row Major or Colom Major."<<endl;
+    cout << "Note: As there are more elements in colums of a Upper triangular matrix. Therefore, coloum major formula will be simpler." << endl;
+    int choice=0,done=0;
+    Matrix M;
+    do {
+        cout << "1. Row Major Setting(i will be King): (i-1)*n - (i-1)*(i-2)/2 + (j-i)" << endl;
+        cout << "2. Col Major Setting(j will be King): j*(j-1)/2 + (i-1)" << endl;
+        cin >> choice;
+    }while(choice != 1 && choice !=2);
+
+    if(choice == 1) {
+        row_major_caller_upper_tri(&M);
+    } else {
+        col_major_caller_upper_tri(&M);
+    }
+    delete [] M.A;
+}
+
+/*
+    - MAIN
+*/
 
 int main() {
     int choice=0;
@@ -206,10 +377,10 @@ int main() {
             break;
         case 2:
             _lower_triangular_matrix();
-        //     break;
-        // case 3:
-        //     _upper_triangular_matrix();
-        //     break;
+            break;
+        case 3:
+            _upper_triangular_matrix();
+            break;
         // case 4:
         //     _symmetric_matrix();
         //     break;
@@ -221,9 +392,6 @@ int main() {
         //     break;
         // case 7:
         //     _toeplitz_matrix();
-        //     break;
-        // case 8:
-        //     _sparse_matrix();
         //     break;
         case -1:
             cout << "Thank You for Visiting the World of String! :)" << endl; 
