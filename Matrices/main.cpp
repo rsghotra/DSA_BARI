@@ -394,7 +394,7 @@ int main() {
         //     _toeplitz_matrix();
         //     break;
         case -1:
-            cout << "Thank You for Visiting the World of String! :)" << endl; 
+            cout << "Thank You for Visiting the World of Matrices! :)" << endl; 
     }
 
 }

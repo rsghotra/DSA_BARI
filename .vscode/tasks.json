@@ -9,16 +9,16 @@
             "command": "g++",
             "args": [
                 "-g",
-                "${workspaceFolder}\\Matrices\\main.cpp",
+                "${workspaceFolder}\\SparseMatrix\\main.cpp",
                 "-o",
-                "Matrices\\main"
+                "SparseMatrix\\main"
             ],
             "problemMatcher":[]
         },
         {
             "label": "run",
             "type":  "shell",
-            "command": "${workspaceFolder}\\Matrices\\main",
+            "command": "${workspaceFolder}\\SparseMatrix\\main",
             "dependsOn":[
                 "build"
             ],
