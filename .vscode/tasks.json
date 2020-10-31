@@ -9,16 +9,16 @@
             "command": "g++",
             "args": [
                 "-g",
-                "${workspaceFolder}\\SparseMatrix\\main.cpp",
+                "${workspaceFolder}\\Polynomial\\main.cpp",
                 "-o",
-                "SparseMatrix\\main"
+                "Polynomial\\main"
             ],
             "problemMatcher":[]
         },
         {
             "label": "run",
             "type":  "shell",
-            "command": "${workspaceFolder}\\SparseMatrix\\main",
+            "command": "${workspaceFolder}\\Polynomial\\main",
             "dependsOn":[
                 "build"
             ],
