@@ -9,16 +9,16 @@
             "command": "g++",
             "args": [
                 "-g",
-                "${workspaceFolder}\\Polynomial\\main.cpp",
+                "${workspaceFolder}\\TridiagonalMatrix_C\\main.cpp",
                 "-o",
-                "Polynomial\\main"
+                "TridiagonalMatrix_C\\main"
             ],
             "problemMatcher":[]
         },
         {
             "label": "run",
             "type":  "shell",
-            "command": "${workspaceFolder}\\Polynomial\\main",
+            "command": "${workspaceFolder}\\TridiagonalMatrix_C\\main",
             "dependsOn":[
                 "build"
             ],
