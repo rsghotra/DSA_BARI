@@ -9,16 +9,16 @@
             "command": "g++",
             "args": [
                 "-g",
-                "${workspaceFolder}\\TridiagonalMatrix_C\\main.cpp",
+                "${workspaceFolder}\\ToeplitzMatrix_C++\\main.cpp",
                 "-o",
-                "TridiagonalMatrix_C\\main"
+                "ToeplitzMatrix_C++\\main"
             ],
             "problemMatcher":[]
         },
         {
             "label": "run",
             "type":  "shell",
-            "command": "${workspaceFolder}\\TridiagonalMatrix_C\\main",
+            "command": "${workspaceFolder}\\ToeplitzMatrix_C++\\main",
             "dependsOn":[
                 "build"
             ],
