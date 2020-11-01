@@ -9,16 +9,16 @@
             "command": "g++",
             "args": [
                 "-g",
-                "${workspaceFolder}\\ToeplitzMatrix_C++\\main.cpp",
+                "${workspaceFolder}\\SymmetryMatrix_C++\\main.cpp",
                 "-o",
-                "ToeplitzMatrix_C++\\main"
+                "SymmetryMatrix_C++\\main"
             ],
             "problemMatcher":[]
         },
         {
             "label": "run",
             "type":  "shell",
-            "command": "${workspaceFolder}\\ToeplitzMatrix_C++\\main",
+            "command": "${workspaceFolder}\\SymmetryMatrix_C++\\main",
             "dependsOn":[
                 "build"
             ],

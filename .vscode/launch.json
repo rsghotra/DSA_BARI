@@ -9,7 +9,7 @@
             "name": "(gdb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}\\ToeplitzMatrix_C++\\main.exe",
+            "program": "${workspaceFolder}\\SymmetryMatrix_C++\\main.exe",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
