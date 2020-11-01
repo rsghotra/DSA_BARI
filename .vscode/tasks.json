@@ -9,16 +9,16 @@
             "command": "g++",
             "args": [
                 "-g",
-                "${workspaceFolder}\\SymmetryMatrix_C++\\main.cpp",
+                "${workspaceFolder}\\LinkedList\\main.cpp",
                 "-o",
-                "SymmetryMatrix_C++\\main"
+                "LinkedList\\main"
             ],
             "problemMatcher":[]
         },
         {
             "label": "run",
             "type":  "shell",
-            "command": "${workspaceFolder}\\SymmetryMatrix_C++\\main",
+            "command": "${workspaceFolder}\\LinkedList\\main",
             "dependsOn":[
                 "build"
             ],
