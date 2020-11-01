@@ -58,8 +58,41 @@ void display_reverse_recursive(Node* ptr) {
     }
 }
 
+int length_iterative(Node* ptr) {
+    int count = 0;
+    while(ptr) {
+        count++;
+        ptr = ptr->next;
+    }
+    return count;
+}
+
+int length_recursive(Node* ptr) {
+    if(ptr==0) {
+        return 0;
+    }
+    return 1 + length_recursive(ptr->next);
+}
+
+int sum_iterative(Node* ptr) {
+
+}
+
+int sum_recursive(Node* ptr) {
+
+}
+
+int max_iterative(Node* ptr) {
+
+}
+
+//watch out - head recursion
+int max_recursive(Node* ptr) {
+
+}
+
 int main() {
-    int A[] = {13,7,5,9,11};
+    int A[] = {13,7,5,9,11, 16};
     create(A, 5);
     display_iterative(first);
     cout << "Displaying - Recursive." << endl;
@@ -68,5 +101,8 @@ int main() {
     cout << "Displaying - Reverse - Recursive." << endl;
     display_reverse_recursive(first);
     cout << endl;
+    cout << "Length - Iterative. " << length_iterative(first) << endl;
+    cout << "Length - Recursive. " << length_recursive(first) << endl;
+
     return 0;
 }
