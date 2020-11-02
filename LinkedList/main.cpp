@@ -113,9 +113,80 @@ int max_recursive(Node* ptr) {
     return x;
 }
 
+Node* search_iterative_move_head(Node* ptr, int key) {
+    if(ptr==0) return NULL;
+    //when element is present at head then while loops' logic breaks down.
+    if(ptr->data == key) return ptr;
+    Node* tail = ptr;
+    while(ptr) {
+        if(ptr->data == key) {
+            cout << "Element found. ";
+            tail->next = ptr->next;
+            ptr->next=first;
+            first = ptr;
+            return ptr;
+        }
+        tail = ptr;
+        ptr = ptr->next;
+    }
+    return nullptr;
+}
+
+Node* search_recursive(Node* ptr, int key) {
+    //if you are searching then the terminative condition will have successul case as well
+    if(ptr==0)  {
+        cout << "Element not found. ";
+        return nullptr;
+    }
+    if(ptr->data == key) {
+        cout << "Element found. ";
+        return ptr;
+    }
+    search_recursive(ptr->next, key);
+}
+
+Node* search_iterative(Node* ptr, int key) {
+    while(ptr) {
+        if(ptr->data == key) {
+            cout << "Element found. ";
+            return ptr;
+        }
+        ptr = ptr->next;
+    }
+    cout << "Element not found. ";
+    return nullptr;
+}
+
+void insert_after(Node* ptr, int pos, int k) {
+    //we need to handle insert at 0 sepratrely
+    if(pos >= 0) {
+        Node* tmp;
+        tmp->data = k;
+        if(pos==0) {
+            cout << "Inserting at HEAD." << endl;
+            tmp->next = first;
+            first = tmp;
+        } else {
+            //ptr is pointing to temp
+            for(int i=0;i<pos-1 && ptr != 0;i++) {
+                ptr = ptr->next;
+            }
+            //means a valid index
+            if(ptr) {
+                tmp->next = ptr->next;
+                ptr->next = tmp;
+            } else {
+                cout << "In-valid index supplied." << endl;
+            }
+        }
+    } else{
+        cout << "Negative index supplied."<<endl;
+    }
+}
+
 int main() {
     int A[] = {13,7,5,9,11,16};
-    create(A, 5);
+    create(A,6);
     display_iterative(first);
     cout << "Displaying - Recursive." << endl;
     display_recursive(first);
@@ -133,5 +204,13 @@ int main() {
     cout << "Max - Iterative. " << max_iterative(first) << endl;
     cout << "Max - Recursive. " << max_recursive(first) << endl;
 
+    cout << "Search - Iterative. " << search_iterative(first, 13) << endl;
+    cout << "Search - Recursive. " << search_recursive(first, 7) << endl;
+    cout << "Search - Iterative - Move First. " << search_iterative_move_head(first, 16) << endl;
+    display_recursive(first);
+    cout << endl;
+    cout << "Insert After - Iterative. " << endl;
+    insert_after(first, 2, 17);
+    display_recursive(first);
     return 0;
 }
