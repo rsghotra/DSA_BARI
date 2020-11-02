@@ -200,6 +200,62 @@ void insert_last(int val) {
     }
 }
 
+void insert_sorted(Node* ptr, int x) {
+    /*
+        - Inserting in a sorted list has three cases:
+            1. Inserting when list is NULL
+            2. Inserting before head
+            3. Inserting at any other location
+    */
+   //As this function will definitely ADD a NODE. WE can create it now
+   Node* node = new Node;
+   node->data = x;
+   node->next = 0;
+   Node* tail = 0;
+
+   //First special case:
+   if(first==0) {
+       first = node;
+   } else {
+       while(ptr != 0 && ptr->data < x) {
+           tail = ptr;
+           ptr = ptr->next;
+       }
+       //Second special case - when the element to be inserted is the smalles element
+       if(ptr == first) {
+           node->next = first;
+           first = node;
+       } else {
+           node->next = tail->next;
+           tail->next = node;
+       }
+   }
+}
+
+int delete_index(int pos) {
+    /*
+        Delete an element by its position. It has three cases:
+            1. Delete when list is NULL
+            2. Delete HEAD, i.e. pos=1
+            3. Delete from anywhere else
+    */
+   //NULL CASES
+}
+
+bool isSorted(Node* ptr) {
+    int x = -65000;
+    while(ptr) {
+        if(ptr->data < x) {
+            //unsorted list detected
+            return false;
+        } else {
+            x = ptr->data;
+            ptr = ptr->next;
+        }
+    }
+    return true;
+}
+
 int main() {
     int A[] = {13,7,5,9,11,16};
     create(A,6);
@@ -238,5 +294,26 @@ int main() {
     insert_last(11);
     display_recursive(first);
 
+    cout << "\nInserting in a sorted linked list now." << endl;
+    first = 0;
+    insert_sorted(first, 20);
+    insert_sorted(first, 19);
+    insert_sorted(first, 26);
+    insert_sorted(first, 99);
+    insert_sorted(first, 1);
+    display_recursive(first);
+    cout << "\nDelete from a Linked List from a position." << endl;
+    delete_index(1);
+    display_recursive(first);
+    cout << endl;
+    delete_index(6);
+    display_recursive(first);
+    delete_index(4);
+    cout << endl;
+    display_recursive(first);
+
+    cout << "\nCheck if linked list is sorted" << endl;
+    if(isSorted(first)) cout << ">==>Sorted Linked List." << endl;
+    else cout << ">==>Unsorted List." << endl;
     return 0;
 }
