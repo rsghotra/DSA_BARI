@@ -8,6 +8,7 @@ struct Node {
 
 //make it global so that every function can have access to it.
 Node* first=NULL;
+Node* last=NULL;
 
 void create(int A[], int n) {
     int i;
@@ -184,6 +185,21 @@ void insert_after(Node* ptr, int pos, int k) {
     }
 }
 
+void insert_last(int val) {
+    //create node
+    Node* temp = new Node();
+    temp->data = val;
+    temp->next = 0;
+
+    //NODE IS CREATED MUST FIRST HANDLE WHEN THERE IS NO NODE AND ITITIATE THE POINTER THERE AFTER
+    if(first == 0) {
+        first = last = temp;
+    } else {
+        last->next = temp;
+        last = temp;
+    }
+}
+
 int main() {
     int A[] = {13,7,5,9,11,16};
     create(A,6);
@@ -212,5 +228,15 @@ int main() {
     cout << "Insert After - Iterative. " << endl;
     insert_after(first, 2, 17);
     display_recursive(first);
+
+    cout << "\nCreating a Linked List by inserting at last every time" << endl;
+    first = 0;
+    insert_last(30);
+    insert_last(7);
+    insert_last(13);
+    insert_last(19);
+    insert_last(11);
+    display_recursive(first);
+
     return 0;
 }
