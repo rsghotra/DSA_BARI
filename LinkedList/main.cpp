@@ -256,6 +256,90 @@ bool isSorted(Node* ptr) {
     return true;
 }
 
+void remove_duplicates(Node* ptr) {
+    Node* currentPtr = ptr;
+    Node* nextPtr = ptr->next;
+    //no worry about first being changes in this algo
+    if(currentPtr == 0 || nextPtr == 0) return;
+
+    while(nextPtr) {
+        if(currentPtr->data == nextPtr->data) {
+            // it is a duplicate
+            currentPtr->next = nextPtr->next;
+            nextPtr=0;
+            nextPtr=currentPtr->next;
+        } else {
+            currentPtr=currentPtr->next;
+            nextPtr=nextPtr->next;
+        }
+    }
+}
+
+void reverse_ll_array(Node* ptr) {
+    /*
+        - in-efficient and cumbersome
+        - create an array of linked list length
+        - traverse the linked list and fill the array with linked list
+        - then reverse traverse the array and fill the linked list
+    */
+   int* A = new int[length_recursive(ptr)];
+   int i=0;
+   while(ptr) {
+       A[i]=ptr->data;
+       ptr=ptr->next;
+       i++;
+   }
+   //taking ptr back to first
+   ptr=first;
+   i--;
+   while(ptr) {
+       ptr->data = A[i];
+       ptr = ptr->next;
+       i--;
+   }
+}
+
+void reverse_ll_sliding(Node* ptr) {
+    /*
+        - Sliding pointer algorithm:
+        - Two requirements-Reverese Links + Change First
+        - Three pointers are used at a time.
+        - P is in lead.
+        - Q is the position where reversal will happen
+        - Loop will end when Lead pointer reaches null
+        - When loop ends: Change First to Q
+    */
+    Node* p = ptr; //leader;
+    Node* q = 0;
+    Node* r = 0;
+
+    while(p) {
+        //Slide
+        r = q;
+        q = p;
+        p = p->next;
+        //reverse
+        q->next = r;
+    }
+    first = q;
+}
+
+void _reverse_ll_recursive(Node* ptr, Node* tail) {
+    if(ptr== 0) {
+        first = tail;
+        return;
+    } else {
+        _reverse_ll_recursive(ptr->next, ptr);
+        ptr->next = tail;
+    }
+
+}
+
+void reverse_ll_recursive(Node* ptr) {
+    Node* tail = 0;
+    _reverse_ll_recursive(ptr, tail);
+}
+
 int main() {
     int A[] = {13,7,5,9,11,16};
     create(A,6);
@@ -301,6 +385,14 @@ int main() {
     insert_sorted(first, 26);
     insert_sorted(first, 99);
     insert_sorted(first, 1);
+    insert_sorted(first, 99);
+    insert_sorted(first, 19);
+    insert_sorted(first, 99);
+    insert_sorted(first, 99);
+    insert_sorted(first, 1);
+    insert_sorted(first, 26);
+    insert_sorted(first, 11);
+
     display_recursive(first);
     cout << "\nDelete from a Linked List from a position." << endl;
     delete_index(1);
@@ -315,5 +407,24 @@ int main() {
     cout << "\nCheck if linked list is sorted" << endl;
     if(isSorted(first)) cout << ">==>Sorted Linked List." << endl;
     else cout << ">==>Unsorted List." << endl;
+
+    cout << "Removing duplicates from a sorted Linked List" << endl;
+    remove_duplicates(first);
+    display_iterative(first);
+
+    cout << "\nReversing Linked List Now." << endl;
+
+    cout << "Reverse - Array" << endl;
+    reverse_ll_array(first);
+    display_iterative(first);
+
+    cout << "Reverse - Sliding Pointers" << endl;
+    reverse_ll_sliding(first);
+    display_iterative(first);
+
+    cout << "Reverse - Recursive" << endl;
+    reverse_ll_recursive(first);
+    display_iterative(first);
+
     return 0;
 }
