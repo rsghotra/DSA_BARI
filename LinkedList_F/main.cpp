@@ -26,6 +26,27 @@ int max_recursive(Node*);
 /*
     Third Tukdi
 */
+Node* insert_at_last(Node* ptr, int x) {
+    //this routine will always insert a node.
+    //therefore, creating it now
+    Node* node = new Node;
+    node->data = x;
+    node->next = 0;
+
+    if(ptr == 0) {
+        //list is empty
+        ptr = node;
+    } else {
+        Node* last=ptr;
+        Node* first=ptr;
+        while(first) {
+            last = first;
+            first = first->next;
+        }
+        last->next = node;
+    }
+    return ptr;
+}
 
 
 /*
@@ -155,7 +176,8 @@ int max_recursive(Node* ptr) {
 }
 
 /*
-- create linked list by always insertint at last
+- Linear Search Linked List
+
 */
 Node* insert_at_last(Node* ptr, int val) {
     //creating node as a node will always be inserted
@@ -178,45 +200,39 @@ Node* insert_at_last(Node* ptr, int val) {
     return ptr;
 }
 
-Node* insert_after(Node* ptr, int pos, int val) {
-    /*
-    - Cases:
-        - inserting at head
-        - inserting at any given position
-        - NOT inserting when given POS is invalid. Greater than length of the LL
-    */
-
-   if(pos == 1) {
-       Node* node = new Node;
-       node->data = val;
-       node->next = 0;
-       if(!ptr) {
-           //means this node will be head node
-           ptr = node;
-           return ptr;
-       } else {
-           node->next = ptr;
-           ptr = node;
-           return ptr;
-       }
-   } else if(pos > 1) {
-       Node* temp= ptr;
-       int i;
-       for(i=0;i< pos-1 && temp;i++) {
-           temp = temp->next;
-       }
-       if(!temp) {
-           cout << "End of list has reached. Hence, invalid index." << endl;
-           return ptr;
-       } else {
-           Node* node = new Node;
-           node->data = val;
-           node->next = temp->next;
-           temp->next = node;
-       }
-   }
-   return ptr;
+Node* l_search_iterative(Node* ptr, int x) {
+    if(ptr==0) return nullptr;
+    while(ptr) {
+        if(ptr->data == x)
+            return ptr;
+        ptr = ptr->next;
+    }
+    return nullptr;
 }
+
+Node* l_search_recursive(Node* ptr, int x) {
+    if(ptr==0) return 0;
+    if(ptr->data == x) return ptr;
+    l_search_recursive(ptr->next, x);
+}
+
+Node* l_search_move_head(Node* ptr, int x) {
+    Node* p = ptr;
+    Node* q = ptr;
+    if(p == 0) return nullptr;
+    while(p) {
+        if(p->data == x) {
+            q->next = p->next;
+            p->next = ptr;
+            ptr = p;
+            return ptr;
+        }
+        q = p;
+        p = p->next;
+    }
+    return ptr;
+}
+
 
 int main() {
     int A[10] = {22, 33, 11, 9, 99, 770, 10, 8, 18, 3};
@@ -260,31 +276,20 @@ int main() {
             - implement linear search in LL
             - implement transpose strategy to improve LL search operation
     */
-    cout <<"Creating Linked List by always inserting element at last: " << endl;
-    Node* L2=0;
-    L2 = insert_at_last(L2, 12);
-    display_I(L2);
-    L2 = insert_at_last(L2, 22);
-    display_I(L2);
-    L2 = insert_at_last(L2, 22);
-    display_I(L2);
-    L2 = insert_at_last(L2, 22);
-    display_I(L2);
-    L2 = insert_at_last(L2, 22);
+    cout <<">==>Inserting element to Linked List: " << endl;
+    Node* L2 = 0;
+    L2 = insert_at_last(L2, 23);
+    L2 = insert_at_last(L2, 26);
     display_I(L2);
 
-    cout <<"Inserting node at given position" << endl;
-    L1 = insert_after(L1, 2, 9);
-    display_I(L1);
-    
-    L1 = insert_after(L1, 5, 29);
-    display_I(L1);
+    cout << ">==>Linear search - Iterative." << endl;
+    l_search_iterative(L1, 77) == nullptr ? (cout << "Element not found in the list." << endl) : (cout << "Element found in the list." << endl);
 
-    L1 = insert_after(L1, 8, 31);
-    display_I(L1);
+    cout << ">==>Linear search - Recursive." << endl;
+    l_search_recursive(L1, 770) == nullptr ? (cout << "Element not found in the list." << endl) : (cout << "Element found in the list." << endl);
 
-    L1 = insert_after(L1, 20, 21);
+    cout << ">==>Linear Search - Move to Head." << endl;
+    L1 = l_search_move_head(L1, 77);
     display_I(L1);
-
     return 0;
 }
