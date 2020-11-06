@@ -9,6 +9,7 @@ struct Node {
 //make it global so that every function can have access to it.
 Node* first=NULL;
 Node* last=NULL;
+Node* second=NULL;
 
 void create(int A[], int n) {
     int i;
@@ -200,6 +201,21 @@ void insert_last(int val) {
     }
 }
 
+void insert_last(int val, bool sList) {
+    //create node
+    Node* temp = new Node();
+    temp->data = val;
+    temp->next = 0;
+
+    //NODE IS CREATED MUST FIRST HANDLE WHEN THERE IS NO NODE AND ITITIATE THE POINTER THERE AFTER
+    if(second == 0) {
+        second = last = temp;
+    } else {
+        last->next = temp;
+        last = temp;
+    }
+}
+
 void insert_sorted(Node* ptr, int x) {
     /*
         - Inserting in a sorted list has three cases:
@@ -340,6 +356,13 @@ void reverse_ll_recursive(Node* ptr) {
     _reverse_ll_recursive(ptr, tail);
 }
 
+void concat_lists(Node* ptr1, Node* ptr2) {
+    while(ptr1->next != 0) {
+        ptr1=ptr1->next;
+    }
+    ptr1->next = ptr2;
+}
+
 int main() {
     int A[] = {13,7,5,9,11,16};
     create(A,6);
@@ -377,7 +400,7 @@ int main() {
     insert_last(19);
     insert_last(11);
     display_recursive(first);
-
+    last=0;
     cout << "\nInserting in a sorted linked list now." << endl;
     first = 0;
     insert_sorted(first, 20);
@@ -426,5 +449,15 @@ int main() {
     reverse_ll_recursive(first);
     display_iterative(first);
 
+    cout << "Concatenate Two LLs" << endl;
+    insert_last(29, true);
+    insert_last(17, true);
+    insert_last(27, true);
+    insert_last(18, true);
+    insert_last(21,true);
+    display_recursive(second);
+    concat_lists(first, second);
+    cout << endl;
+    display_iterative(first);
     return 0;
 }
