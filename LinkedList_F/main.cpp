@@ -154,6 +154,11 @@ int max_recursive(Node* ptr) {
     }
 }
 
+/*
+- create linked list by always insertint at last
+*/
+
+
 int main() {
     int A[10] = {22, 33, 11, 9, 99, 770, 10, 8, 18, 3};
 
@@ -196,6 +201,7 @@ int main() {
             - implement linear search in LL
             - implement transpose strategy to improve LL search operation
     */
-
+    cout <<"Inserting element to Linked List: " << endl;
+    
     return 0;
 }
