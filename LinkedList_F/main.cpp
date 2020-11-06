@@ -22,33 +22,6 @@ int sum_recursive(Node*);
 int max_iterative(Node*);
 int max_recursive(Node*);
 
-
-/*
-    Third Tukdi
-*/
-Node* insert_at_last(Node* ptr, int x) {
-    //this routine will always insert a node.
-    //therefore, creating it now
-    Node* node = new Node;
-    node->data = x;
-    node->next = 0;
-
-    if(ptr == 0) {
-        //list is empty
-        ptr = node;
-    } else {
-        Node* last=ptr;
-        Node* first=ptr;
-        while(first) {
-            last = first;
-            first = first->next;
-        }
-        last->next = node;
-    }
-    return ptr;
-}
-
-
 /*
 =====>Functions STARTS BELOW
 */
@@ -289,7 +262,7 @@ int main() {
     l_search_recursive(L1, 770) == nullptr ? (cout << "Element not found in the list." << endl) : (cout << "Element found in the list." << endl);
 
     cout << ">==>Linear Search - Move to Head." << endl;
-    L1 = l_search_move_head(L1, 77);
+    L1 = l_search_move_head(L1, 9);
     display_I(L1);
     return 0;
 }
