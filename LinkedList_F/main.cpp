@@ -23,6 +23,16 @@ int max_iterative(Node*);
 int max_recursive(Node*);
 
 /*
+    Third Tukdi
+*/
+
+Node* l_search_move_head(Node*, int);
+Node* l_search_iterative(Node*, int);
+Node* l_search_recursive(Node*, int);
+Node* insert_at_last(Node*, int);
+Node* insert_at(Node*, int, int);
+
+/*
 =====>Functions STARTS BELOW
 */
 
@@ -149,7 +159,7 @@ int max_recursive(Node* ptr) {
 }
 
 /*
-- Linear Search Linked List
+- Insert AT LAST
 
 */
 Node* insert_at_last(Node* ptr, int val) {
@@ -172,6 +182,10 @@ Node* insert_at_last(Node* ptr, int val) {
     }
     return ptr;
 }
+
+/*
+Linear Search in LL
+*/
 
 Node* l_search_iterative(Node* ptr, int x) {
     if(ptr==0) return nullptr;
@@ -206,6 +220,33 @@ Node* l_search_move_head(Node* ptr, int x) {
     return ptr;
 }
 
+Node* insert_at(Node* ptr, int pos, int x) {
+    Node* node = new Node;
+    node->data = x;
+    node->next = 0;
+    if(pos==1) {
+        //special case - if freaking list is empty
+        if(!ptr) {
+            ptr = node;
+        } else {
+            node->next = ptr;
+            ptr = node;
+        }
+    } else {
+        //now the case could be that the asked position is just not there
+        Node* p = ptr;
+        for(int i=0; i<pos-1&&p;i++) {
+            p = p->next;
+        }
+        if(!p) {
+            cout << "Invalid index." << endl;
+            return ptr;
+        }
+        node->next = p->next;
+        p->next = node;
+    }
+    return ptr;
+}
 
 int main() {
     int A[10] = {22, 33, 11, 9, 99, 770, 10, 8, 18, 3};
@@ -264,5 +305,16 @@ int main() {
     cout << ">==>Linear Search - Move to Head." << endl;
     L1 = l_search_move_head(L1, 9);
     display_I(L1);
+
+    /*
+        Fourth Tukdi
+            - Insert in a sorted LL
+            - Check if LL is sorted
+            - Delete Node from any given position
+            - Remove Duplicated From LL
+    */
+   cout << ">==>Inserting at any given position." << endl;
+   L1 = insert_at(L1, 10, 20);
+   display_I(L1);
     return 0;
 }
