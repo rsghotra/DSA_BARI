@@ -30,8 +30,13 @@ Node* l_search_move_head(Node*, int);
 Node* l_search_iterative(Node*, int);
 Node* l_search_recursive(Node*, int);
 Node* insert_at_last(Node*, int);
-Node* insert_at(Node*, int, int);
 
+/*
+    Fourth Tukdi
+*/
+bool is_sorted(Node*);
+Node* delete_at(Node*, int);
+Node* insert_at(Node*, int, int);
 /*
 =====>Functions STARTS BELOW
 */
@@ -248,9 +253,57 @@ Node* insert_at(Node* ptr, int pos, int x) {
     return ptr;
 }
 
+/*
+    - IS LIST SORTED
+*/
+
+bool is_sorted(Node* ptr) {
+    int x = -32000;
+    if(!ptr) return true;
+    while(ptr) {
+        if(ptr->data < x) return false;
+        x = ptr->data;
+        ptr = ptr->next;
+    }
+    return true;
+}
+
+/*
+    DELETE an element from a given position.
+*/
+
+Node* delete_at(Node* ptr, int pos) {
+    int x;
+    if(ptr == 0) {
+        cout << "Linked List supplied was empty." << endl;
+        return nullptr;
+    }
+    if(pos == 1) {
+        //Deleting head is a special case
+        Node* p = ptr;
+        ptr = ptr->next;
+        delete p;
+    } else {
+        Node* p = ptr;
+        Node* q = 0;
+        for(int i=0;i<pos-1 && p;i++) {
+            q = p;
+            p = p->next;
+        }
+        if(!p) {
+            cout << "Invalid Index is given." << endl;
+            return ptr;
+        } else {
+            q->next = p->next;
+            delete p;
+        }
+    }
+    return ptr;
+}
+
+
 int main() {
     int A[10] = {22, 33, 11, 9, 99, 770, 10, 8, 18, 3};
-
     /*
         First Tukdi:
             - create linked list using array
@@ -294,6 +347,7 @@ int main() {
     Node* L2 = 0;
     L2 = insert_at_last(L2, 23);
     L2 = insert_at_last(L2, 26);
+    L2 = insert_at_last(L2, 30);
     display_I(L2);
 
     cout << ">==>Linear search - Iterative." << endl;
@@ -313,8 +367,18 @@ int main() {
             - Delete Node from any given position
             - Remove Duplicated From LL
     */
-   cout << ">==>Inserting at any given position." << endl;
-   L1 = insert_at(L1, 10, 20);
-   display_I(L1);
+    cout << ">==>Inserting at any given position." << endl;
+    L1 = insert_at(L1, 10, 20);
+    display_I(L1);
+    
+    cout << ">==>Checking if LL is sorted." << endl;
+    is_sorted(L2) == true ? (cout << "Linked List is sorted." << endl) : (cout << "Linked List is not sorted." << endl);
+    display_I(L2);
+
+    cout << ">==>Deleting Node from a given position." << endl;
+    L1 = delete_at(L1, 11);
+    L1 = delete_at(L1, 1);
+    L1 = delete_at(L1, 3);
+    display_I(L1);
     return 0;
 }
