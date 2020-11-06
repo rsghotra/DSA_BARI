@@ -157,7 +157,66 @@ int max_recursive(Node* ptr) {
 /*
 - create linked list by always insertint at last
 */
+Node* insert_at_last(Node* ptr, int val) {
+    //creating node as a node will always be inserted
+    Node* node = new Node;
+    node->data = val;
+    node->next = 0;
+    //node is ready
+    if(!ptr) {
+        ptr = node;
+    } else {
+        Node* pqr = ptr;
+        Node* tail = ptr;
+        //tail will follow pqr
+        while(pqr) {
+            tail = pqr;
+            pqr = pqr->next;
+        }
+        tail->next = node;
+    }
+    return ptr;
+}
 
+Node* insert_after(Node* ptr, int pos, int val) {
+    /*
+    - Cases:
+        - inserting at head
+        - inserting at any given position
+        - NOT inserting when given POS is invalid. Greater than length of the LL
+    */
+
+   if(pos == 1) {
+       Node* node = new Node;
+       node->data = val;
+       node->next = 0;
+       if(!ptr) {
+           //means this node will be head node
+           ptr = node;
+           return ptr;
+       } else {
+           node->next = ptr;
+           ptr = node;
+           return ptr;
+       }
+   } else if(pos > 1) {
+       Node* temp= ptr;
+       int i;
+       for(i=0;i< pos-1 && temp;i++) {
+           temp = temp->next;
+       }
+       if(!temp) {
+           cout << "End of list has reached. Hence, invalid index." << endl;
+           return ptr;
+       } else {
+           Node* node = new Node;
+           node->data = val;
+           node->next = temp->next;
+           temp->next = node;
+       }
+   }
+   return ptr;
+}
 
 int main() {
     int A[10] = {22, 33, 11, 9, 99, 770, 10, 8, 18, 3};
@@ -201,7 +260,31 @@ int main() {
             - implement linear search in LL
             - implement transpose strategy to improve LL search operation
     */
-    cout <<"Inserting element to Linked List: " << endl;
+    cout <<"Creating Linked List by always inserting element at last: " << endl;
+    Node* L2=0;
+    L2 = insert_at_last(L2, 12);
+    display_I(L2);
+    L2 = insert_at_last(L2, 22);
+    display_I(L2);
+    L2 = insert_at_last(L2, 22);
+    display_I(L2);
+    L2 = insert_at_last(L2, 22);
+    display_I(L2);
+    L2 = insert_at_last(L2, 22);
+    display_I(L2);
+
+    cout <<"Inserting node at given position" << endl;
+    L1 = insert_after(L1, 2, 9);
+    display_I(L1);
     
+    L1 = insert_after(L1, 5, 29);
+    display_I(L1);
+
+    L1 = insert_after(L1, 8, 31);
+    display_I(L1);
+
+    L1 = insert_after(L1, 20, 21);
+    display_I(L1);
+
     return 0;
 }
