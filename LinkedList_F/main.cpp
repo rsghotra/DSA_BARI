@@ -381,11 +381,60 @@ Node* concat(Node* L1, Node* L2) {
 }
 
 Node* merge_sorted(Node* L1, Node* L2) {
+    if(L1 == 0 && L2 != 0) return L2;
+    if(L2 == 0 && L1 != 0) return L1;
+    if(L1 == 0 && L1 == 0) return nullptr;
 
+    //Using two pointers
+    Node* third;
+    Node* last;
+    if(L1->data < L2->data) {
+        third = L1;
+        last = L1;
+        L1 = L1->next;
+    } else {
+        third = L2;
+        last = L2;
+        L2=L2->next;
+    }
+    //Node the head is initialized properly
+    while(L1 && L2) {
+        if(L1->data <L2->data) {
+            last->next = L1;
+            last = L1;
+            L1 = L1->next;
+        } else {
+            last->next = L2;
+            last = L2;
+            L2 = L2->next;
+        }
+    }
+    //at this time one of list is exhausted
+    if(L1) {
+        last->next = L1;
+    }
+    if(L2) {
+        last->next = L2;
+    }
+    return third;
+}
+
+bool isLoop(Node* ptr) {
+    if(!ptr) return false;
+    if(!ptr->next) return false;
+    Node* p = ptr;
+    Node* q = ptr;
+    do{
+        q = q->next;
+        p = p->next;
+        p = p ? p->next : p; 
+    }while(p && q && p != q);
+    if(p==q) return true;
+    else return false;
 }
 
 int main() {
-    int A[10] = {22, 33, 11, 9, 99, 770, 10, 8, 18, 3};
+    int A[10] = {3, 9, 11, 13, 19, 21, 24, 47, 59, 61};
     /*
         First Tukdi:
             - create linked list using array
@@ -433,6 +482,7 @@ int main() {
     L2 = insert_at_last(L2, 3);
     L2 = insert_at_last(L2, 4);
     L2 = insert_at_last(L2, 4);
+    L2 = insert_at_last(L2, 99);
     display_I(L2);
 
     cout << ">==>Linear search - Iterative." << endl;
@@ -469,8 +519,6 @@ int main() {
     cout << ">==>Removing duplicates from a sorted linked list." <<endl;
     remove_duplicates(L2);
     display_I(L2);
-
-
     /*
     Fifth Tukdi
         - Reverse Linked List Using Sliding Pointer Algorithm
@@ -481,22 +529,47 @@ int main() {
     cout << "Reversing using sliding pointers" << endl;
     display_I(L1);
     L1 = reverse_using_sliding_ptrs(L1);
+    L1 = reverse_using_sliding_ptrs(L1);
     display_I(L1);
 
     // cout << "Reversing LL using Recursion" << endl;
     // Reverse_Recursive(L1, L1->next);
     // display_I(head);
-    cout << ">==>Concatenating Two Lists." << endl;
-    L1 = concat(L1, L2);
-    display_I(L1);
 
+    cout << ">==>Merging two sorted LL." << endl;
+    display_I(L1);
+    display_I(L2);
+    Node* L3 = merge_sorted(L1, L2);
+    display_I(L3);
+
+    // cout << ">==>Concatenating Two Lists." << endl;
+    // L1 = concat(L1, L2);
+    // display_I(L1);
    /*
     Sixth Tukdi
         - Check if LL has a loop
         - Finding Middle Element
         - Finding Intersection
     */
+//    cout << "Finding LOOP in a Linked List" << endl;
+//    Node* t = L1->next->next->next->next;
+//    Node* p = L1;
+//    while(p->next){
+//        p=p->next;
+//    }
+//    p->next=t;
+//     if(isLoop(L2)) {
+//         cout << "Loop Exists." << endl;
+//         return;
+//     } else {
+//         cout << "No Loop found" << endl;
+//         return;
+//     }
 
-
+   /*
+    Seventh Tukdi
+        - Sparse Matrix: Representation, Creation, Display, Add
+        - Polynomial represenatation
+   */
     return 0;
 }
