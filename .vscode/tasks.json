@@ -9,16 +9,16 @@
             "command": "g++",
             "args": [
                 "-g",
-                "${workspaceFolder}/Circular_LL/main.cpp",
+                "${workspaceFolder}/Doubly_LL/main.cpp",
                 "-o",
-                "Circular_LL/main"
+                "Doubly_LL/main"
             ],
             "problemMatcher":[]
         },
         {
             "label": "run",
             "type":  "shell",
-            "command": "${workspaceFolder}/Circular_LL/main",
+            "command": "${workspaceFolder}/Doubly_LL/main",
             "dependsOn":[
                 "build"
             ],
