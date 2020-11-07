@@ -333,6 +333,56 @@ void remove_duplicates(Node* ptr) {
     }
 }
 
+Node* reverse_using_sliding_ptrs(Node* ptr) {
+    Node* head = 0;
+    if(!ptr) return head;
+    if(!ptr->next) return ptr;
+
+    //Seed values are important
+    //Interesting use of three pointers
+    Node* p = ptr;
+    Node* q = 0;
+    Node* r = 0;
+
+    //reversing of links will happen  on Q.
+    while(p) {
+        r = q;
+        q = p;
+        p = p->next;
+        q->next = r;
+    }
+    //Now set set head to Q;
+    head = q;
+    return head;
+}
+
+Node* head;
+void Reverse_Recursive(Node* p, Node* q) {
+    //q is following p 
+    if(p) {
+        Reverse_Recursive(p, p->next);
+        p->next = q;
+    } else {
+        head = q;
+    }
+}
+
+Node* concat(Node* L1, Node* L2) {
+    if(L1 == 0 && L2 != 0) return L2;
+    if(L2 == 0 && L1 != 0) return L1;
+    if(L1 == 0 && L1 == 0) return nullptr;
+    Node* t = L1;
+    while(t->next != 0) {
+        t = t->next;
+    }
+    t->next = L2;
+    L2 = 0;
+    return L1;
+}
+
+Node* merge_sorted(Node* L1, Node* L2) {
+
+}
 
 int main() {
     int A[10] = {22, 33, 11, 9, 99, 770, 10, 8, 18, 3};
@@ -419,5 +469,34 @@ int main() {
     cout << ">==>Removing duplicates from a sorted linked list." <<endl;
     remove_duplicates(L2);
     display_I(L2);
+
+
+    /*
+    Fifth Tukdi
+        - Reverse Linked List Using Sliding Pointer Algorithm
+        - Reverse Linked List Using Recursion
+        - Concatenate Two LL
+        - Merge two Sorted Linked List
+    */
+    cout << "Reversing using sliding pointers" << endl;
+    display_I(L1);
+    L1 = reverse_using_sliding_ptrs(L1);
+    display_I(L1);
+
+    // cout << "Reversing LL using Recursion" << endl;
+    // Reverse_Recursive(L1, L1->next);
+    // display_I(head);
+    cout << ">==>Concatenating Two Lists." << endl;
+    L1 = concat(L1, L2);
+    display_I(L1);
+
+   /*
+    Sixth Tukdi
+        - Check if LL has a loop
+        - Finding Middle Element
+        - Finding Intersection
+    */
+
+
     return 0;
 }
