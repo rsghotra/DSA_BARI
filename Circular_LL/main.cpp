@@ -106,6 +106,45 @@ Node* insert_at(Node* ptr, int pos, int val) {
     return ptr;
 }
 
+/*
+    Delete from
+*/
+Node* delete_from(Node* ptr, int pos) {
+    //delete ke liye ek node se ek pehle phunchna hai-so pos-2 and similarly algo changes accordingly
+    Node* pqr = ptr;
+    if(!ptr) return nullptr;
+    if(pos==1) {
+        if(ptr->next == ptr) {
+            //single node circular LL
+            cout << "Node with value: " << ptr->data << "has been removed." << endl;
+            ptr = 0;
+            return ptr;
+        }
+        while(pqr->next!=ptr) {
+            pqr = pqr->next;
+        }
+        pqr->next = ptr->next;
+        ptr=0;
+        ptr = pqr->next;
+    } else {
+        for(int i=0;(i<pos-2 && pqr->next!=ptr);i++) {
+            pqr = pqr->next;
+        }
+        if(pqr->next == ptr) {
+            cout << "Invalid index supplied for deletion" << endl;
+            return ptr;
+        } else {
+            //check if the node to be deleted is the last node
+            Node* q = pqr->next;
+            pqr->next = q->next;
+            cout << "Node with value: " << q->data << " has been removed." << endl;
+            q=0;
+        }
+    }
+    return ptr;
+}
+
+
 int main() {
     int A[10] = {3, 9, 11, 13, 19, 21, 24, 47, 59, 61};
     cout << ">==>Creating circular ll using array." << endl;
@@ -135,6 +174,9 @@ int main() {
     L3 = insert_at(L3, 1, 4);
     L3 = insert_at(L3, 2, 8);
     L3 = insert_at(L3, 3, 18);
+    display_iterative(L3);
+
+    L3 = delete_from(L3, 3);
     display_iterative(L3);
     return 0;
 }
