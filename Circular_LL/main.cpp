@@ -12,6 +12,7 @@ Node* create_cll_array(int[], int);
 Node* insert_at(Node*, int, int);
 Node* insert_last(Node*, int);
 Node* delete_at(Node*, int);
+Node* delete_from(Node*, int);
 
 //==> Functions starts here
 
@@ -176,6 +177,8 @@ int main() {
     L3 = insert_at(L3, 3, 18);
     display_iterative(L3);
 
+
+    cout << ">==>Demonstrating Delete from given position functionality" << endl;
     L3 = delete_from(L3, 3);
     display_iterative(L3);
     return 0;
