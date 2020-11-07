@@ -37,9 +37,18 @@ Node* insert_at_last(Node*, int);
 bool is_sorted(Node*);
 Node* delete_at(Node*, int);
 Node* insert_at(Node*, int, int);
+void remove_duplicates(Node*);
 /*
-=====>Functions STARTS BELOW
+
+/*
+    Fifth Tukdi
+        - Reverse Linked List Using Sliding Pointer Algorithm
+        - Reverse Linked List Using Recursion
+        - Concatenate Two LL
+        - Merge two Sorted Linked List
 */
+//=====>Functions STARTS BELOW
+
 
 /*
     T(n) = O(n+1)
@@ -301,6 +310,29 @@ Node* delete_at(Node* ptr, int pos) {
     return ptr;
 }
 
+/*
+    - REMOVE DUPLICATES FROM A SORTED LINE
+*/
+
+void remove_duplicates(Node* ptr) {
+    if(!ptr) return;
+    if(ptr->next == 0) return;
+    //to avoid the null's next check
+    //now i know there are atleast two nodes in th list
+    Node *p = ptr->next;
+    Node* q = ptr;
+    while(p) {
+        if(q->data == p->data) {
+            q->next = p->next;
+            delete p;
+            p = q->next;
+        } else {
+            q = p;
+            p = p->next;
+        }
+    }
+}
+
 
 int main() {
     int A[10] = {22, 33, 11, 9, 99, 770, 10, 8, 18, 3};
@@ -345,9 +377,12 @@ int main() {
     */
     cout <<">==>Inserting element to Linked List: " << endl;
     Node* L2 = 0;
-    L2 = insert_at_last(L2, 23);
-    L2 = insert_at_last(L2, 26);
-    L2 = insert_at_last(L2, 30);
+    L2 = insert_at_last(L2, 2);
+    L2 = insert_at_last(L2, 2);
+    L2 = insert_at_last(L2, 3);
+    L2 = insert_at_last(L2, 3);
+    L2 = insert_at_last(L2, 4);
+    L2 = insert_at_last(L2, 4);
     display_I(L2);
 
     cout << ">==>Linear search - Iterative." << endl;
@@ -380,5 +415,9 @@ int main() {
     L1 = delete_at(L1, 1);
     L1 = delete_at(L1, 3);
     display_I(L1);
+
+    cout << ">==>Removing duplicates from a sorted linked list." <<endl;
+    remove_duplicates(L2);
+    display_I(L2);
     return 0;
 }
