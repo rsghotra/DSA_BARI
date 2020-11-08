@@ -9,16 +9,16 @@
             "command": "g++",
             "args": [
                 "-g",
-                "${workspaceFolder}/LinkedList_F/main.cpp",
+                "${workspaceFolder}/Polynomial_LL/main.cpp",
                 "-o",
-                "LinkedList_F/main"
+                "Polynomial_LL/main"
             ],
             "problemMatcher":[]
         },
         {
             "label": "run",
             "type":  "shell",
-            "command": "${workspaceFolder}/LinkedList_F/main",
+            "command": "${workspaceFolder}/Polynomial_LL/main",
             "dependsOn":[
                 "build"
             ],
