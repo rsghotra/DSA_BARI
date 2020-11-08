@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stack>
 using namespace std;
 
 struct Node {
@@ -475,6 +476,51 @@ bool is_loop(Node* ptr) {
     } while(p!= 0 && p != q);
     if(p == q) return true;
     if(!p) return false;
+    return false;
+}
+
+Node* make_intersect(Node* L1) {
+    Node* t = L1->next->next->next->next;
+    int A[3] = {3, 9, 11};
+    Node* L2 = create_ll_by_array(A, 3);
+    Node* p = L2;
+    while(p->next)  {
+        p = p->next;
+    }
+    p->next = t;
+    return L2;
+}
+
+int find_intersect(Node* L1, Node* L2) {
+    /*
+        - We will find the intersecting point by first traversing to the very end
+        - Push visiting node's address on to its stack
+        - Take a Peek and if both addresses are same pop
+        - Else, if one of the element is different then the previous element which was popped was the intersecting node.
+    */
+    stack<Node*> S1;
+    stack<Node*> S2;
+    Node* p = L1;
+    Node* q = L2;
+
+    //traverse each list and populate the stack
+    while(p) {
+        S1.push(p);
+        p = p->next;
+    }
+    while(q) {
+        S2.push(q);
+        q = q->next;
+    }
+    Node* last=0;
+    //check here if last node is the intersecting node
+    while(!S1.empty() && !S2.empty() && S1.top() == S2.top()) {
+        last = S1.top();
+        S1.pop();
+        S2.pop();
+    }
+    if(S1.empty() || S2.empty()) return -1;
+    return last->data;
 }
 
 int main() {
@@ -570,7 +616,7 @@ int main() {
         - Concatenate Two LL
         - Merge two Sorted Linked List
     */
-    cout << "Reversing using sliding pointers" << endl;
+    cout << ">==>Reversing using sliding pointers" << endl;
     display_I(L1);
     L1 = reverse_using_sliding_ptrs(L1);
     L1 = reverse_using_sliding_ptrs(L1);
@@ -597,10 +643,27 @@ int main() {
         - Polynomial represenatation
         - Sparse Matrix: Representation, Creation, Display, Add
     */
-    cout << "Displaying middle element of a given LL" << endl;
+    cout << ">==>Displaying middle element of a given LL" << endl;
     display_I(L1);
     cout << find_middle(L1) << endl;
-    cout << "Checking if a LL has loop" << endl;
+    
+    cout << ">==>Finding intersection node of two LL" << endl;
+    Node* L4=0;
+    L4 = make_intersect(L1);
+    display_I(L1);
+    display_I(L4);
+
+    int t  = find_intersect(L1, L4);
+
+    if(t!=-1) {
+        cout << "Intersecting LL detected." << endl;
+        cout << "Lists are intersecting at " << t << endl;
+    } else {
+        cout << "Non-Intersecting list detected" << endl;
+        cout << t << endl;
+    }
+
+    cout << ">==>Checking if a LL has loop" << endl;
     isLoop(L1) ? (cout << "LL contains loop.") : (cout << "LL does not contain loop.");
     cout << endl;
     L1 = make_loop(L1);
