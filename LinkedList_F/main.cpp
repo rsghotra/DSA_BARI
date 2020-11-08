@@ -433,6 +433,50 @@ bool isLoop(Node* ptr) {
     else return false;
 }
 
+int find_middle(Node* ptr) {
+    if(!ptr) return -1;
+    if(!ptr->next) return ptr->data;
+    Node* p = ptr;
+    Node* q = ptr;
+    while(p) {
+        p = p->next;
+        q = q->next;
+        if(p) {
+            p = p->next;
+        }
+    }
+    return q->data;
+}
+
+/*
+    Check for Loop
+*/
+Node* make_loop(Node* ptr) {
+    Node* p = ptr->next->next->next->next;
+    Node* q = ptr;
+    while(q->next) {
+        q = q->next;
+    }
+    q->next = p;
+    return ptr;
+}
+
+bool is_loop(Node* ptr) {
+    Node* p = ptr;
+    Node* q = ptr;
+
+    if(!ptr) return false;
+    do {
+        q = q->next;
+        p = p->next;
+        if(p) {
+            p = p->next;
+        }
+    } while(p!= 0 && p != q);
+    if(p == q) return true;
+    if(!p) return false;
+}
+
 int main() {
     int A[10] = {3, 9, 11, 13, 19, 21, 24, 47, 59, 61};
     /*
@@ -546,30 +590,21 @@ int main() {
     // L1 = concat(L1, L2);
     // display_I(L1);
    /*
-    Sixth Tukdi
-        - Check if LL has a loop
+    Algo Tukdi
         - Finding Middle Element
+        - Check if LL has a loop
         - Finding Intersection
-    */
-//    cout << "Finding LOOP in a Linked List" << endl;
-//    Node* t = L1->next->next->next->next;
-//    Node* p = L1;
-//    while(p->next){
-//        p=p->next;
-//    }
-//    p->next=t;
-//     if(isLoop(L2)) {
-//         cout << "Loop Exists." << endl;
-//         return;
-//     } else {
-//         cout << "No Loop found" << endl;
-//         return;
-//     }
-
-   /*
-    Seventh Tukdi
-        - Sparse Matrix: Representation, Creation, Display, Add
         - Polynomial represenatation
-   */
+        - Sparse Matrix: Representation, Creation, Display, Add
+    */
+    cout << "Displaying middle element of a given LL" << endl;
+    display_I(L1);
+    cout << find_middle(L1) << endl;
+    cout << "Checking if a LL has loop" << endl;
+    isLoop(L1) ? (cout << "LL contains loop.") : (cout << "LL does not contain loop.");
+    cout << endl;
+    L1 = make_loop(L1);
+    isLoop(L1) ? (cout << "LL contains loop.") : (cout << "LL does not contain loop.");
+    cout << endl;
     return 0;
 }

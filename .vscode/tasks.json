@@ -9,16 +9,16 @@
             "command": "g++",
             "args": [
                 "-g",
-                "${workspaceFolder}/Doubly_LL/main.cpp",
+                "${workspaceFolder}/LinkedList_F/main.cpp",
                 "-o",
-                "Doubly_LL/main"
+                "LinkedList_F/main"
             ],
             "problemMatcher":[]
         },
         {
             "label": "run",
             "type":  "shell",
-            "command": "${workspaceFolder}/Doubly_LL/main",
+            "command": "${workspaceFolder}/LinkedList_F/main",
             "dependsOn":[
                 "build"
             ],
