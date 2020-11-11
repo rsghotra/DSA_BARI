@@ -9,16 +9,16 @@
             "command": "g++",
             "args": [
                 "-g",
-                "${workspaceFolder}/ParanthesisMatching_1/main.cpp",
+                "${workspaceFolder}/ExpressionBalancing_2/main.cpp",
                 "-o",
-                "ParanthesisMatching_1/main"
+                "ExpressionBalancing_2/main"
             ],
             "problemMatcher":[]
         },
         {
             "label": "run",
             "type":  "shell",
-            "command": "${workspaceFolder}/ParanthesisMatching_1/main",
+            "command": "${workspaceFolder}/ExpressionBalancing_2/main",
             "dependsOn":[
                 "build"
             ],
