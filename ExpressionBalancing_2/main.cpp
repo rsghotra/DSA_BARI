@@ -197,13 +197,61 @@ char* infix_to_postfix_basic(const char* exp) {
     return postfix;
 }
 
+int evaluate_postfix(char* exp) {
+    /*
+        POINTS:
+            - NOW - WE WILL PUSH OPERANDS INSTEAD OF OPERATORS
+            - a = b * c; Order of RHS is important
+            - Hence, at the time of popping out. We must remember LIFO
+            - Popped out element will be SECOND OPERAND ON RHS. FIRST OPERAND WILL BE POPPED OUT SECOND
+    */
+   Node* stk = 0;
+   int fTerm, sTerm;
+   //we can use for loop here cecuse i will be changing in ever iteration.
+   for(int i=0;exp[i]!='\0';i++) {
+       if(isOperand_basic(exp[i])) {
+           //simply push onto stack but subtract the ASI CODE
+           stk=push(stk,exp[i]-'0');
+       } else {
+           //watchout - secondTerm will come out first
+           sTerm = stackTop(stk);
+           stk = pop(stk);
+           fTerm = stackTop(stk);
+           stk=pop(stk);
+           int r;
+           //time to make a switch case:
+           switch (exp[i])
+           {
+           case '*':
+                r=fTerm*sTerm;
+               break;
+           case '/':
+                r=fTerm/sTerm;
+                break;
+            case '+':
+                r = fTerm+sTerm;
+                break;
+            case '-':
+                r = fTerm-sTerm;
+                break;
+           default:
+               break;
+           }
+           stk=push(stk, r);
+       }
+   }
+    int out = stackTop(stk);
+    delete stk;
+    return out;
+}
+
 int main() {
-    const char* exp_basic = "a+b*c-d/e";
+    const char* exp_basic = "3*5+6/2-4";
     isBalanced_basic(exp_basic) ? (cout << "Basic Expression is balanced.\n"):(cout<<"Basic Expression is not balanced.\n");
 
     char* post_basic = infix_to_postfix_basic(exp_basic);
-    cout << ">==>INFIX TO POSTFIX - BASIC: " << post_basic << endl;
-
+    cout << ">==>INFIX TO POSTFIX COVERSION- BASIC: " << post_basic << endl;
+    cout << ">==>POSTFIX EVALUATION BASIC: " << evaluate_postfix(post_basic) << endl;
     const char* exp_comp = "{([a+b]*[c-d]/e)}";
     isBalanced_comp(exp_comp) ? (cout << "Comp Expression is balanced.\n"):(cout<<"Comp Expression is not balanced.\n");
     return 0;
