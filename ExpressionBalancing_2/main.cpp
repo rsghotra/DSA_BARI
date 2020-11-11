@@ -197,6 +197,88 @@ char* infix_to_postfix_basic(const char* exp) {
     return postfix;
 }
 
+bool isOperand_comp(char ch) {
+    if(ch == '+'|| ch=='-'||ch == '/'|| ch=='*' || ch=='^' || ch=='(' ||ch==')') return 0;
+    return 1;
+}
+
+int out_stack_precedence(char ch) {
+    /*
+        *,/ = 2
+        +,- = 1
+        else = 0 // will handle the scenario when stack is empty. Therefore, incoming operator will always be pushed in.
+    */
+   if(ch == '(') return 7;
+   if(ch == ')') return 0;
+   if(ch == '^') return 6;
+   if(ch == '*' || ch == '/') return 3;
+   if(ch == '+' || ch == '-') return 1;
+   return -1;
+}
+
+int in_stack_precedence(char ch) {
+    /*
+        *,/ = 2
+        +,- = 1
+        else = 0 // will handle the scenario when stack is empty. Therefore, incoming operator will always be pushed in.
+    */
+   if(ch == '(') return 0;
+   if(ch == '^') return 5;
+   if(ch == '*' || ch == '/') return 4;
+   if(ch == '+' || ch == '-') return 2;
+   return -1;
+}
+
+char* infix_to_postfix_comprehensive(const char* exp) {
+    /*
+        ALGO:
+            BASIC INFIX TO POSTFIX ALGO DOES NOT WORK FOR R-L ASSOCIATIVE and for BRACKETS TOO
+            FOR THIS ALGO YOU WILL NEED TO BUILD YOUR OWN PRECEDENCE TABLE:
+
+        Associativity    Symbol      Out_of_Stack_Precedence     In-Stack Precedence
+            L-R           +,-               1                           2
+            L-R           *,/               3                           4
+            R-L            ^                6                           5
+            L-R            (                7                           0
+            L-R            )                0                           NA(neverpushed into stack)
+
+        REST OF ALGO BEHAVIOUR IS SIMILAR WITH ONE PITFALL
+            - FOR '(' and ')' we do not WANT TO SEND TO POSTFIX EXPRESSION - HENCE MUST SKIP IT
+
+    */
+    char* postfix = new char[strlen(exp) + 1];
+    int i=0,j=0;
+    Node* stk = 0;
+
+    //same as infix while loop will be needed
+    while(exp[i]!='\0') {
+        if(isOperand_comp(exp[i])) {
+            postfix[j++] = exp[i++];
+        } else {
+            if(isEmpty(stk) || out_stack_precedence(exp[i]) > in_stack_precedence(stackTop(stk))) {
+                stk=push(stk, exp[i++]);
+            } else if(out_stack_precedence(exp[i]) < in_stack_precedence(stackTop(stk))) {
+                postfix[j++] = stackTop(stk);
+                stk = pop(stk);
+            } else {
+                //when precedence is EQUAL which WILL ONLY HAPPEN in CASE OF ( and )
+                // IN THIS CASE WATCH OUT:
+                // WE WANT TO POPOUT BUT DO NOT WANT TO SEND THE CHAR TO OUTPUT
+                //INCREMENT i
+                stk=pop(stk);
+                i++;
+            }
+        }
+    }
+    //watch out when emptying
+    while(!isEmpty(stk)) {
+        postfix[j++] = stackTop(stk);
+        stk = pop(stk);
+    }
+    postfix[j] = '\0'; //converted from char array to C-string
+    return postfix;
+}
+
 int evaluate_postfix(char* exp) {
     /*
         POINTS:
@@ -254,5 +336,9 @@ int main() {
     cout << ">==>POSTFIX EVALUATION BASIC: " << evaluate_postfix(post_basic) << endl;
     const char* exp_comp = "{([a+b]*[c-d]/e)}";
     isBalanced_comp(exp_comp) ? (cout << "Comp Expression is balanced.\n"):(cout<<"Comp Expression is not balanced.\n");
+
+
+    const char* exp_comp3 = "((a+b)*c)-d^e^f";
+    cout << ">==>INFIX TO POSFIX COMPREHENSIVE: " << infix_to_postfix_comprehensive(exp_comp3) << endl;
     return 0;
 }
