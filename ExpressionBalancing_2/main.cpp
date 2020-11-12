@@ -327,6 +327,36 @@ int evaluate_postfix(char* exp) {
     return out;
 }
 
+// Problem Statement
+// Write a function for finding the mth last node in a singly linked list.
+
+// For example, given list:
+// N1 -> N2 -> N3 -> N4 -> N5 -> N6
+
+// and 
+// m = 3
+
+// The function returns N4
+
+// You can assume you have some kind of Node class with a Next property, with which to define a linked list.
+
+// struct Node {
+//     int data;
+//     Node* next;
+// };
+
+Node* mLastNode(Node* head,Node* ptr, int m) {
+    static int count = 0;
+    if(m<0) return nullptr;
+    if(!head) nullptr;
+    if(!ptr) return nullptr;
+    mLastNode(head, ptr->next, m);
+    count++;
+    if(count == m) {
+        return ptr;
+    }
+}
+
 int main() {
     const char* exp_basic = "3*5+6/2-4";
     isBalanced_basic(exp_basic) ? (cout << "Basic Expression is balanced.\n"):(cout<<"Basic Expression is not balanced.\n");

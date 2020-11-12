@@ -9,16 +9,16 @@
             "command": "g++",
             "args": [
                 "-g",
-                "${workspaceFolder}/ExpressionBalancing_2/main.cpp",
+                "${workspaceFolder}/Queue_Using_Array/main.cpp",
                 "-o",
-                "ExpressionBalancing_2/main"
+                "Queue_Using_Array/main"
             ],
             "problemMatcher":[]
         },
         {
             "label": "run",
             "type":  "shell",
-            "command": "${workspaceFolder}/ExpressionBalancing_2/main",
+            "command": "${workspaceFolder}/Queue_Using_Array/main",
             "dependsOn":[
                 "build"
             ],
