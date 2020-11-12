@@ -9,16 +9,16 @@
             "command": "g++",
             "args": [
                 "-g",
-                "${workspaceFolder}/Queue_LL/main.cpp",
+                "${workspaceFolder}/Queue_Stk/main.cpp",
                 "-o",
-                "Queue_LL/main"
+                "Queue_Stk/main"
             ],
             "problemMatcher":[]
         },
         {
             "label": "run",
             "type":  "shell",
-            "command": "${workspaceFolder}/Queue_LL/main",
+            "command": "${workspaceFolder}/Queue_Stk/main",
             "dependsOn":[
                 "build"
             ],
