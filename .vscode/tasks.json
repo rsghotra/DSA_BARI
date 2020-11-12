@@ -9,16 +9,16 @@
             "command": "g++",
             "args": [
                 "-g",
-                "${workspaceFolder}/CircularQueue/main.cpp",
+                "${workspaceFolder}/Queue_LL/main.cpp",
                 "-o",
-                "CircularQueue/main"
+                "Queue_LL/main"
             ],
             "problemMatcher":[]
         },
         {
             "label": "run",
             "type":  "shell",
-            "command": "${workspaceFolder}/CircularQueue/main",
+            "command": "${workspaceFolder}/Queue_LL/main",
             "dependsOn":[
                 "build"
             ],
