@@ -64,7 +64,6 @@ void Queue::display() {
     for(int i=0;i<this->size;i++) {
         cout << this->Q[i] << " ";
     }
-    cout << endl;
 }
 
 void Queue::enqueue(int x) {
@@ -91,8 +90,14 @@ void enqueue_pq(Queue* q1, Queue* q2, Queue* q3, char x, int priority) {
 
 }
 
-char dequeue_pq(Queue* q1, Queue* q2, Queue* q3, int priority) {
+char dequeue_pq(Queue* q1, Queue* q2, Queue* q3) {
 
+}
+
+void display_pq(Queue* q1, Queue* q2, Queue* q3) {
+    q1->display();
+    q2->display();
+    q3->display();
 }
 
 int main() {
@@ -105,5 +110,22 @@ int main() {
 
     //Enqueueing in PQ
     enqueue_pq(&q1,&q2,&q3,'A', 1);
-
+    enqueue_pq(&q1,&q2,&q3,'B', 1);
+    enqueue_pq(&q1,&q2,&q3,'C', 2);
+    enqueue_pq(&q1,&q2,&q3,'D', 3);
+    cout << "Dequeued: " << dequeue_pq(&q1,&q2,&q3) << endl;
+    cout << "Dequeued: " << dequeue_pq(&q1,&q2,&q3) << endl;
+    cout << "Dequeued: " << dequeue_pq(&q1,&q2,&q3) << endl;
+    enqueue_pq(&q1,&q2,&q3,'E', 2);
+    enqueue_pq(&q1,&q2,&q3,'F', 1);
+    enqueue_pq(&q1,&q2,&q3,'G', 2);
+    enqueue_pq(&q1,&q2,&q3,'H', 3);
+    enqueue_pq(&q1,&q2,&q3,'I', 2);
+    enqueue_pq(&q1,&q2,&q3,'J', 2);
+    enqueue_pq(&q1,&q2,&q3,'K', 3);
+    display_pq(&q1,&q2,&q3);
+    cout << "Dequeued: " << dequeue_pq(&q1,&q2,&q3) << endl;
+    cout << "Dequeued: " << dequeue_pq(&q1,&q2,&q3) << endl;
+    cout << "Dequeued: " << dequeue_pq(&q1,&q2,&q3) << endl;
+    return 0;
 }
