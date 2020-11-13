@@ -34,7 +34,7 @@ class Queue {
         ~Queue();
         bool isFull();
         bool isEmpty();
-        void enqueue(int);
+        void enqueue(char);
         char dequeue();
         void display();
 };
@@ -56,17 +56,17 @@ bool Queue::isEmpty() {
 }
 
 bool Queue::isFull() {
-    if(this->rear == this->front) return true;
+    if(this->rear == this->size-1) return true;
     else return false;
 }
 
 void Queue::display() {
-    for(int i=0;i<this->size;i++) {
+    for(int i=this->front+1;i<=this->rear;i++) {
         cout << this->Q[i] << " ";
     }
 }
 
-void Queue::enqueue(int x) {
+void Queue::enqueue(char x) {
     if(isFull()) {
         cout << "Queue is full. Can't enqueue" << endl;
     } else {
@@ -87,11 +87,35 @@ char Queue::dequeue() {
 }
 
 void enqueue_pq(Queue* q1, Queue* q2, Queue* q3, char x, int priority) {
-
+    switch (priority)
+    {
+    case 1:
+        q1->enqueue(x);
+        break;
+    case 2:
+        q2->enqueue(x);
+        break;
+    case 3:
+        q3->enqueue(x);
+        break;
+    default:
+        cout << "Invalid priority supplied" << endl;
+        break;
+    }
 }
 
 char dequeue_pq(Queue* q1, Queue* q2, Queue* q3) {
-
+    if(!q1->isEmpty()) {
+        return q1->dequeue();
+    }
+    if(!q2->isEmpty()) {
+        return q2->dequeue();
+    }
+    if(!q3->isEmpty()) {
+        return q3->dequeue();
+    }
+    cout << "Priority Queue is EMPTY." << endl;
+    return '0';
 }
 
 void display_pq(Queue* q1, Queue* q2, Queue* q3) {
@@ -127,5 +151,6 @@ int main() {
     cout << "Dequeued: " << dequeue_pq(&q1,&q2,&q3) << endl;
     cout << "Dequeued: " << dequeue_pq(&q1,&q2,&q3) << endl;
     cout << "Dequeued: " << dequeue_pq(&q1,&q2,&q3) << endl;
+    display_pq(&q1,&q2,&q3);
     return 0;
 }

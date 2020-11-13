@@ -9,16 +9,16 @@
             "command": "g++",
             "args": [
                 "-g",
-                "${workspaceFolder}/DEQueue_Array_C++/main.cpp",
+                "${workspaceFolder}/PriorityQueue_Array_C++/main.cpp",
                 "-o",
-                "DEQueue_Array_C++/main"
+                "PriorityQueue_Array_C++/main"
             ],
             "problemMatcher":[]
         },
         {
             "label": "run",
             "type":  "shell",
-            "command": "${workspaceFolder}/DEQueue_Array_C++/main",
+            "command": "${workspaceFolder}/PriorityQueue_Array_C++/main",
             "dependsOn":[
                 "build"
             ],
