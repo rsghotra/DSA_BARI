@@ -15,6 +15,8 @@ using namespace std;
             II.
                 A. Enqueue Element in decreasing order of priority : O(n)
                 B. Dequeue Last Element - O(1)
+
+        In this program we will implement 1.
 */
 
 /*
@@ -26,14 +28,14 @@ class Queue {
         int front;
         int rear;
         int size;
-        int* Q;
+        char* Q;
     public:
         Queue(int);
         ~Queue();
         bool isFull();
         bool isEmpty();
         void enqueue(int);
-        int dequeue();
+        char dequeue();
         void display();
 };
 
@@ -41,7 +43,7 @@ Queue::Queue(int size) {
     this->size = size;
     this->front = -1;
     this->rear = -1;
-    this->Q = new int[this->size];
+    this->Q = new char[this->size];
 }
 
 Queue::~Queue() {
@@ -74,8 +76,8 @@ void Queue::enqueue(int x) {
     }
 }
 
-int Queue::dequeue() {
-    int x = -1;
+char Queue::dequeue() {
+    char x = 0;
     if(isEmpty()) {
         cout << "Queue is empty." << endl;
     } else {
@@ -85,14 +87,23 @@ int Queue::dequeue() {
     return x;
 }
 
-void enqueue_pq(Queue* q1, Queue* q2, Queue* q3, int x) {
+void enqueue_pq(Queue* q1, Queue* q2, Queue* q3, char x, int priority) {
 
 }
 
-int dequeue_pq(Queue* q1, Queue* q2, Queue* q3) {
+char dequeue_pq(Queue* q1, Queue* q2, Queue* q3, int priority) {
 
 }
 
 int main() {
+    /*
+        Number of priorities=3
+    */
+    Queue q1(10);
+    Queue q2(10);
+    Queue q3(10);
+
+    //Enqueueing in PQ
+    enqueue_pq(&q1,&q2,&q3,'A', 1);
 
 }
