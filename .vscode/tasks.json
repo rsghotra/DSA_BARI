@@ -9,16 +9,16 @@
             "command": "g++",
             "args": [
                 "-g",
-                "${workspaceFolder}/PriorityQueue_Array_C++/main.cpp",
+                "${workspaceFolder}/CircularQueue_Array_C++/main.cpp",
                 "-o",
-                "PriorityQueue_Array_C++/main"
+                "CircularQueue_Array_C++/main"
             ],
             "problemMatcher":[]
         },
         {
             "label": "run",
             "type":  "shell",
-            "command": "${workspaceFolder}/PriorityQueue_Array_C++/main",
+            "command": "${workspaceFolder}/CircularQueue_Array_C++/main",
             "dependsOn":[
                 "build"
             ],
