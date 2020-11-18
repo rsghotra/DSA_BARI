@@ -9,16 +9,18 @@
             "command": "g++",
             "args": [
                 "-g",
-                "${workspaceFolder}/CircularQueue_Array_C++/main.cpp",
+                "${workspaceFolder}/BinaryTree/main.cpp",
+                "${workspaceFolder}/BinaryTree/Queue.cpp",
+                "${workspaceFolder}/BinaryTree/BinaryTree.cpp",
                 "-o",
-                "CircularQueue_Array_C++/main"
+                "BinaryTree/main"
             ],
             "problemMatcher":[]
         },
         {
             "label": "run",
             "type":  "shell",
-            "command": "${workspaceFolder}/CircularQueue_Array_C++/main",
+            "command": "${workspaceFolder}/BinaryTree/main",
             "dependsOn":[
                 "build"
             ],

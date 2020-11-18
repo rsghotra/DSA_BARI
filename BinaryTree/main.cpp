@@ -12,4 +12,8 @@ using namespace std;
 
 int main() {
     //Initialize Queue
+    BinaryTree* bt = new BinaryTree();
+    bt->CreateTree();
+    bt->InOrder_R();
+    return 0;
 }

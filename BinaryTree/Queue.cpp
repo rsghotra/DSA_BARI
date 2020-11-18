@@ -1,4 +1,4 @@
-#include <Queue.h>
+#include "Queue.h"
 using namespace std;
 
 Queue::Queue(int size) {
@@ -30,4 +30,5 @@ void Queue::enqueue(Node* n) {
 
 Node* Queue::dequeue() {
     if(!isEmpty()) return this->Q[this->front++];
+    else return nullptr;
 }
