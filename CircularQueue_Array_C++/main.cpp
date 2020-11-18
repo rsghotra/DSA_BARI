@@ -1,18 +1,18 @@
-/*
-- Circular Linked List:
-    - PITFALLS:
-        - BOTH FRONT AND REAR STARTS FROM INDEX 0 instead 0f -1 in Linear Queue
-        - FRONT IS ALWAYS EMPTY
-        - DRAMATICALLY INCREASE SPACE UTILIZATION: AT MOST N-1 ELEMENTS COULD BE STORED
-        - CIRCULAR ROATION IS ACHIEVED USING MODULATOR OPERATOR
-        - QUEUE IS FULL: IF (R->NEXT)/SIZE == FRONT ==> THEN Q IS FULL
-        - QUEUE IS EMPTY WHEN (R == F)
-        - EXCELLENT REPRESENTATION OF QUEUE
-        - DISPLAY FUNCTION IS ALSO INTERESTING
+// /*
+// - Circular Linked List:
+//     - PITFALLS:
+//         - BOTH FRONT AND REAR STARTS FROM INDEX 0 instead 0f -1 in Linear Queue
+//         - FRONT IS ALWAYS EMPTY
+//         - DRAMATICALLY INCREASE SPACE UTILIZATION: AT MOST N-1 ELEMENTS COULD BE STORED
+//         - CIRCULAR ROATION IS ACHIEVED USING MODULATOR OPERATOR
+//         - QUEUE IS FULL: IF (R->NEXT)/SIZE == FRONT ==> THEN Q IS FULL
+//         - QUEUE IS EMPTY WHEN (R == F)
+//         - EXCELLENT REPRESENTATION OF QUEUE
+//         - DISPLAY FUNCTION IS ALSO INTERESTING
 
-    - QUEUES - MOST OPTIMALLY IMPLEMENTED IN CIRCULAR FASHION.
-    - DISPLAY - WATCH OUT
-*/
+//     - QUEUES - MOST OPTIMALLY IMPLEMENTED IN CIRCULAR FASHION.
+//     - DISPLAY - WATCH OUT
+// */
 #include<iostream>
 using namespace std;
 
@@ -103,3 +103,39 @@ int main() {
     cq.dequeue();
     return 0;
 }
+
+// #include <iostream>
+// #include <string>
+// #include <vector>
+// using namespace std;
+
+// vector<vector<string>> vect{};
+
+
+// void set(string val, string location ) {
+//   int rowIndex, colIndex;
+//   string out = location.substr(1, location.length());
+//   rowIndex = stoi(out);
+//   colIndex = location[0] - 'A';
+  
+//   vect[rowIndex][colIndex] = val;
+// }
+// string get(string location) {
+//   int rowIndex, colIndex;
+//   string out = location.substr(1, location.length());
+//   rowIndex = stoi(out);
+//   colIndex = location[0] - 'A';
+//   return vect[rowIndex][colIndex];
+// }
+
+
+// // To execute C++, please define "int main()"
+// int main() {
+
+  
+//   set("10", "A1");
+//   set("10", "A2");
+//   cout << get("A1") << endl;
+  
+//   return 0;
+// }
