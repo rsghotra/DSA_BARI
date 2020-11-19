@@ -1,4 +1,5 @@
 #include<iostream>
+#include<stack>
 using namespace std;
 #include "BinaryTree.h"
 #include "Queue.h"
@@ -111,6 +112,30 @@ void BinaryTree::LevelOrder() {
         }
         if(ptr->right) {
             q->enqueue(ptr->right);
+        }
+    }
+}
+
+void BinaryTree::PreOrder_I() {
+    /*
+        - Iterative and Tree Traversal - Stack Will Be Used
+    */
+   //setup
+    stack<Node*> stk; //storer
+    Node* ptr; //traveller
+    //==>Algo finishes when both traveller and storer are null and empty respectively
+    //initialization
+    ptr = this->root;
+
+    while(ptr != 0 || !stk.empty()) {
+        if(ptr!=0) {
+            cout << ptr->val << " ";
+            stk.push(ptr);
+            ptr = ptr->left;
+        } else {
+            ptr = stk.top();
+            stk.pop();
+            ptr = ptr->right;
         }
     }
 }

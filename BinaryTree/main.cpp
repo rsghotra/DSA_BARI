@@ -22,5 +22,7 @@ int main() {
     bt->PostOrder_R();
     cout <<"\nDisplaying Level Order Traversal: ";
     bt->LevelOrder();
+    cout <<"\nDisplaying Pre-Order Iterative: ";
+    bt->PreOrder_I();
     return 0;
 }
