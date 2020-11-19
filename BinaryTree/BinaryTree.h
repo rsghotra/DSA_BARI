@@ -4,19 +4,18 @@
 
 class BinaryTree {
     private:
-        Node* root;
     public:
+        Node* root;
         BinaryTree();
         ~BinaryTree();
         void CreateTree();
-        //void PreOrder_R();
+        void PreOrder(Node*);
+        void PreOrder_R();
         void InOrder(Node*);
         void InOrder_R();
-        // void PostOrder_R();
+        //void PostOrder(Node*);
+        //void PostOrder_R();
         // void LevelOrder_R();
-        // void PreOrder_I();
-        // void InOrder_I();
-        // void PostOrder_I();
         // void LevelOrder_I();
         // int  Height();
         // int  Count();

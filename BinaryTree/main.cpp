@@ -11,9 +11,12 @@ using namespace std;
 */
 
 int main() {
-    //Initialize Queue
     BinaryTree* bt = new BinaryTree();
+    //Tree creation using Level Order Traversal
     bt->CreateTree();
+    cout << "Displaying InOrder Using Recursion: ";
     bt->InOrder_R();
+    cout << "\nDisplaying PreOrder Using Recursion: ";
+    bt->PreOrder_R();
     return 0;
 }

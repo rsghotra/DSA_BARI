@@ -10,8 +10,8 @@
             "args": [
                 "-g",
                 "${workspaceFolder}/BinaryTree/main.cpp",
-                "${workspaceFolder}/BinaryTree/Queue.cpp",
                 "${workspaceFolder}/BinaryTree/BinaryTree.cpp",
+                "${workspaceFolder}/BinaryTree/Queue.cpp",
                 "-o",
                 "BinaryTree/main"
             ],
