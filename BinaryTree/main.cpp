@@ -24,5 +24,9 @@ int main() {
     bt->LevelOrder();
     cout <<"\nDisplaying Pre-Order Iterative: ";
     bt->PreOrder_I();
+    cout <<"\nDisplaying In-Order Iterative: ";
+    bt->InOrder_I();
+    cout <<"\nDisplaying PostOrder Iterative: ";
+    bt->InOrder_I();
     return 0;
 }

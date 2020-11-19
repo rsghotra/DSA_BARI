@@ -140,3 +140,23 @@ void BinaryTree::PreOrder_I() {
     }
 }
 
+void BinaryTree::InOrder_I() {
+    //setup
+    Node* ptr=0; //traveller
+    stack<Node*> stk; //storeror
+
+    //initialization of setup
+    ptr = this->root;
+    while(ptr != 0 || !stk.empty()) {
+        if(ptr!= 0) {
+            stk.push(ptr);
+            ptr = ptr->left;
+        } else {
+            ptr = stk.top();
+            cout << ptr->val << " ";
+            stk.pop();
+            ptr = ptr->right;
+        }
+    }
+}
+
