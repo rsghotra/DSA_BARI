@@ -11,55 +11,47 @@ BinaryTree::~BinaryTree() {
     this->root = 0;
 }
 
-// void BinaryTree::CreateTree() {
-//     Node*t, *p;
-//     int x;
-//     cout << "Enter root value of BT: " << endl;
-//     cin >> x;
-
-//     /*
-//         initial step to create a Queue and create root node;
-//     */
-//    Queue* q = new Queue(100);
-//    t = new Node;
-//    t->left = t->right = 0;
-//    t->val = x;
-//    //set root
-//    this->root = t;
-//    q->enqueue(t);
-
-//    while(!q->isEmpty()) {
-//        /*
-//             - First Left Child
-//             - Then, Right Child
-//        */
-//       p = q->dequeue();
-
-//       cout << "Enter left child of " << p->val << " " << endl;
-//       cin >> x;
-//       if(x != -1) {
-//           t = new Node;
-//           t->val = x;
-//           t->left = t->right = 0;
-//           p->left = t;
-//           q->enqueue(t);
-//       }
-//       cout << "Enter right child of " << p->val << " " << endl;
-//       cin >> x;
-//       if(x!=-1) {
-//           t = new Node;
-//           t->val = x;
-//           t->left = t->right = 0;
-//           p->right = t;
-//           q->enqueue(t);
-//       }
-//    }
-// }
-
 void BinaryTree::CreateTree() {
+    //Data Structure
     Node* ptr; //traveller
     Node* temp; //creator
     int x; //guide = user will be the guide and -1 means no child
+    Queue* q = new Queue(100); //storer
+
+    //Initial Setup Step
+    cout << "Enter root element: " << endl;
+    cin >> x;
+    temp = new Node;
+    temp->val = x;
+    temp->left = temp->right = 0;
+    //initialize root
+    this->root = temp;
+    ptr = temp;
+    q->enqueue(ptr);
+
+    //Repeating Step until the storer is not empty
+    while(!q->isEmpty()) {
+        //game begines. Dequeue: Ask for each node's left child and push the newly created child. Ask for each node's right child
+        ptr = q->dequeue();
+        cout << "Enter left child of " << ptr->val << endl;
+        cin >> x;
+        if(x!=-1) {
+            temp = new Node;
+            temp->val = x;
+            temp->left = temp->right = 0;
+            q->enqueue(temp);
+            ptr->left = temp;
+        }
+        cout << "Enter right child of " << ptr->val << endl;
+        cin >> x;
+        if(x!=-1) {
+            temp = new Node;
+            temp->val = x;
+            temp->left = temp->right = 0;
+            q->enqueue(temp);
+            ptr->right = temp;
+        }
+    }
 }
 
 void BinaryTree::PreOrder(Node* p) {
@@ -84,5 +76,17 @@ void BinaryTree::InOrder(Node* p) {
 
 void BinaryTree::InOrder_R() {
     InOrder(this->root);
+}
+
+void BinaryTree::PostOrder(Node* p) {
+    if(p) {
+        PostOrder(p->left);
+        PostOrder(p->right);
+        cout << p->val << " ";
+    }
+}
+
+void BinaryTree::PostOrder_R() {
+    PostOrder(this->root);
 }
 

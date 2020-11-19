@@ -18,5 +18,7 @@ int main() {
     bt->InOrder_R();
     cout << "\nDisplaying PreOrder Using Recursion: ";
     bt->PreOrder_R();
+    cout << "\nDisplaying PostOrder Using Recursion: ";
+    bt->PostOrder_R();
     return 0;
 }
