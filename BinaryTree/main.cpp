@@ -14,19 +14,19 @@ int main() {
     BinaryTree* bt = new BinaryTree();
     //Tree creation using Level Order Traversal
     bt->CreateTree();
-    cout << "Displaying InOrder Using Recursion: ";
-    bt->InOrder_R();
-    cout << "\nDisplaying PreOrder Using Recursion: ";
-    bt->PreOrder_R();
-    cout << "\nDisplaying PostOrder Using Recursion: ";
-    bt->PostOrder_R();
-    cout <<"\nDisplaying Level Order Traversal: ";
-    bt->LevelOrder();
-    cout <<"\nDisplaying Pre-Order Iterative: ";
-    bt->PreOrder_I();
-    cout <<"\nDisplaying In-Order Iterative: ";
-    bt->InOrder_I();
+    // cout << "Displaying InOrder Using Recursion: ";
+    // bt->InOrder_R();
+    // cout << "\nDisplaying PreOrder Using Recursion: ";
+    // bt->PreOrder_R();
+    // cout << "\nDisplaying PostOrder Using Recursion: ";
+    // bt->PostOrder_R();
+    // cout <<"\nDisplaying Level Order Traversal: ";
+    // bt->LevelOrder();
+    // cout <<"\nDisplaying Pre-Order Iterative: ";
+    // bt->PreOrder_I();
+    // cout <<"\nDisplaying In-Order Iterative: ";
+    // bt->InOrder_I();
     cout <<"\nDisplaying PostOrder Iterative: ";
-    bt->InOrder_I();
+    bt->PostOrder_I();
     return 0;
 }

@@ -1,5 +1,6 @@
 #include<iostream>
 #include<stack>
+#include<cstdint>
 using namespace std;
 #include "BinaryTree.h"
 #include "Queue.h"
@@ -156,6 +157,58 @@ void BinaryTree::InOrder_I() {
             cout << ptr->val << " ";
             stk.pop();
             ptr = ptr->right;
+        }
+    }
+}
+
+void BinaryTree::PostOrder_I() {
+    /*
+        Trickiest of all algorihms
+            - watch out carefull.
+            - Stack is used
+            - Type Casting is used
+            - Negative Address is used
+            - Double pushing of same element is done
+    */
+    /*
+        ALGO:
+            1. Visit Root
+            2. Push Root's Address in INT to Stack
+            3. Go to Root's Left Child
+            4. Print Root's Left Child
+            5. Pop from Stack which will be root
+            6. Push Negative address of root on to stack
+            7. Go to root's right child
+            8. Print root's right child
+            9. Pop from Stack - if negative address then Print
+    */
+
+   //Setup
+    Node* ptr=0; // Traveller
+    stack<long int> stk;//storer
+    long int  temp; //smuggler
+
+    //Initialization
+    ptr = this->root;
+
+    //Repetitive steps
+    while(ptr!= 0 || !stk.empty()) {
+        if(ptr != 0) {
+            // addr = reinterpret_cast<std::uintptr_t>(ptr);
+            stk.push(reinterpret_cast<std::uintptr_t>(ptr));
+            ptr = ptr->left;
+        } else {
+            temp = stk.top();
+            stk.pop();
+            if(temp < 0) {
+                temp = (-1)*(temp);
+                ptr = reinterpret_cast<Node*>(temp);
+                cout << ptr->val << " ";
+                ptr=0;
+            } else {
+                stk.push(-temp);
+                ptr = (reinterpret_cast<Node*>(temp))->right;;
+            }
         }
     }
 }

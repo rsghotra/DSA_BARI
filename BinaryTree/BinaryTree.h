@@ -18,7 +18,7 @@ class BinaryTree {
         void LevelOrder();
         void PreOrder_I();
         void InOrder_I();
-        // void PostOrder_I();
+        void PostOrder_I();
         // int  Height();
         // int  Count();
         // int  Sum();
