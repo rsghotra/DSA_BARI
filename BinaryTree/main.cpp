@@ -20,5 +20,7 @@ int main() {
     bt->PreOrder_R();
     cout << "\nDisplaying PostOrder Using Recursion: ";
     bt->PostOrder_R();
+    cout <<"\nDisplaying Level Order Traversal: ";
+    bt->LevelOrder();
     return 0;
 }

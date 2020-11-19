@@ -90,3 +90,28 @@ void BinaryTree::PostOrder_R() {
     PostOrder(this->root);
 }
 
+void BinaryTree::LevelOrder() {
+    /*
+        Level Order: Tree is filled Level By Level; Just Like Creation of Tree - Queue is used
+    */
+    //Setup
+    Node* ptr; //traveller
+    Queue* q = new Queue(100); //storer; Algo finishes when Storer is empty
+
+    //Initialization of Setup
+    ptr = this->root;
+    q->enqueue(ptr);
+
+    //Repeating Step
+    while(!q->isEmpty()) {
+        ptr = q->dequeue();
+        cout << ptr->val << " ";
+        if(ptr->left) {
+            q->enqueue(ptr->left);
+        }
+        if(ptr->right) {
+            q->enqueue(ptr->right);
+        }
+    }
+}
+
