@@ -24,10 +24,50 @@ class BST {
 
 
 Node* BST::Insert_I(Node* ptr, int key) {
+    /*
+        - Because it is a case of Tail Recursion - we will not need any stack
+    */
+    //setup
+    Node* tail = 0; //follower
+    Node* temp = 0; //creator
 
+    //initialization of actors
+    temp = new Node;
+    temp->val = key;
+    temp->left = temp->right = 0;
+
+    //repetitive step
+    //special case - when root node is null - means it will be the first node
+    if(ptr == 0) {
+        ptr = temp;
+        return ptr;
+    }
+    //As incoming will not be root node, now it is time to find the righteous placei in BST.
+    while(ptr!=0) {
+        tail = ptr;
+        if(ptr->val > key) {
+            ptr = ptr->left;
+        } else if(ptr->val < key) {
+            ptr = ptr->right;
+        } else {
+            cout << "Duplicate value find. Can't insert as it is a BST" << endl;
+            return ptr;
+        }
+    }
+    if(tail->val > temp->val) {
+        //means the child must be its left child
+        tail->left = temp;
+    } else {
+        tail->right = temp;
+    }
+    //though this is redundant
+    return tail;
 }
 
 Node* BST::Insert_R(Node* ptr, int key) {
+    /*
+        Tail Recursion
+    */
     Node* temp = 0;
     if(ptr == 0) {
         //insertion will happen here
@@ -36,17 +76,13 @@ Node* BST::Insert_R(Node* ptr, int key) {
         temp->left = temp->right = 0;
         return temp;
     } else {
-        
-        if(temp->val < ptr->val) {
+        if(ptr->val > key) {
             ptr->left = Insert_R(ptr->left, key);
-        } else if(temp->val > ptr->val) {
+        } else if(ptr->val < key) {
             ptr->right = Insert_R(ptr->right, key);
-        } else {
-            cout << "Duplicate value found." << endl;
-            return nullptr;
         }
+        return ptr;
     }
-
 }
 
 void BST::GenerateBSTUsingPreOrder(int preOrder[], int n) {
@@ -105,15 +141,17 @@ void BST::InOrder(Node* p) {
 } 
 
 int main() {
-    int pre[8] = {30,20,10,15,25,40,50,45};
-    BST* bst1 = new BST();
-    bst1->GenerateBSTUsingPreOrder(pre, 8);
-    bst1->InOrder(bst1->root);
-    cout << endl;
+    // int pre[8] = {30,20,10,15,25,40,50,45};
+    // BST* bst1 = new BST();
+    // bst1->GenerateBSTUsingPreOrder(pre, 8);
+    // bst1->InOrder(bst1->root);
+    // cout << endl;
     BST* bst2 = new BST();
     bst2->root = bst2->Insert_R(bst2->root, 20);
     bst2->Insert_R(bst2->root, 30);
     bst2->Insert_R(bst2->root, 40);
+    bst2->Insert_I(bst2->root, 10);
+    bst2->Insert_I(bst2->root, 50);
     bst2->InOrder(bst2->root);
     return 0;
 }
