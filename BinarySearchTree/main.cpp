@@ -9,7 +9,6 @@ struct Node {
 };
 
 class BST {
-        
     public:
         Node* root;
         BST() {
@@ -17,8 +16,38 @@ class BST {
         }
         void GenerateBSTUsingPreOrder(int[], int);
         void InOrder(Node*);
+        Node* Insert_I(Node*, int);
+        Node* Insert_R(Node*, int);
+        //Node* Search_I(Node*, int);
+        //Node* Search_R(Node*, int);
 };
 
+
+Node* BST::Insert_I(Node* ptr, int key) {
+
+}
+
+Node* BST::Insert_R(Node* ptr, int key) {
+    Node* temp = 0;
+    if(ptr == 0) {
+        //insertion will happen here
+        temp = new Node;
+        temp->val = key;
+        temp->left = temp->right = 0;
+        return temp;
+    } else {
+        
+        if(temp->val < ptr->val) {
+            ptr->left = Insert_R(ptr->left, key);
+        } else if(temp->val > ptr->val) {
+            ptr->right = Insert_R(ptr->right, key);
+        } else {
+            cout << "Duplicate value found." << endl;
+            return nullptr;
+        }
+    }
+
+}
 
 void BST::GenerateBSTUsingPreOrder(int preOrder[], int n) {
     stack<Node*> stk;
@@ -77,8 +106,14 @@ void BST::InOrder(Node* p) {
 
 int main() {
     int pre[8] = {30,20,10,15,25,40,50,45};
-    BST* bst = new BST();
-    bst->GenerateBSTUsingPreOrder(pre, 8);
-    bst->InOrder(bst->root);
+    BST* bst1 = new BST();
+    bst1->GenerateBSTUsingPreOrder(pre, 8);
+    bst1->InOrder(bst1->root);
+    cout << endl;
+    BST* bst2 = new BST();
+    bst2->root = bst2->Insert_R(bst2->root, 20);
+    bst2->Insert_R(bst2->root, 30);
+    bst2->Insert_R(bst2->root, 40);
+    bst2->InOrder(bst2->root);
     return 0;
 }

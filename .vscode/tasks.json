@@ -9,18 +9,16 @@
             "command": "g++",
             "args": [
                 "-g",
-                "${workspaceFolder}/BinaryTree/main.cpp",
-                "${workspaceFolder}/BinaryTree/BinaryTree.cpp",
-                "${workspaceFolder}/BinaryTree/Queue.cpp",
+                "${workspaceFolder}/BinarySearchTree/main.cpp",
                 "-o",
-                "BinaryTree/main"
+                "BinarySearchTree/main"
             ],
             "problemMatcher":[]
         },
         {
             "label": "run",
             "type":  "shell",
-            "command": "${workspaceFolder}/BinaryTree/main",
+            "command": "${workspaceFolder}/BinarySearchTree/main",
             "dependsOn":[
                 "build"
             ],
