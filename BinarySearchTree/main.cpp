@@ -18,10 +18,38 @@ class BST {
         void InOrder(Node*);
         Node* Insert_I(Node*, int);
         Node* Insert_R(Node*, int);
-        //Node* Search_I(Node*, int);
-        //Node* Search_R(Node*, int);
+        Node* Search_I(Node*, int);
+        Node* Search_R(Node*, int);
 };
 
+Node* BST::Search_I(Node* ptr, int key) {
+    if(ptr == 0) return nullptr;
+    while(ptr!= 0) {
+        if(ptr->val == key) {
+            return ptr;
+        }
+        if(ptr->val > key) {
+            ptr = ptr->left;
+        } else {
+            ptr = ptr->right;
+        }
+    }
+    return nullptr;
+}
+
+Node* BST::Search_R(Node* ptr, int key) {
+    if(ptr == 0) {
+        return nullptr;
+    }
+    if(ptr->val == key) {
+        return ptr;
+    }
+    if(ptr->val > key) {
+        return Search_R(ptr->left, key);
+    } else {
+        return Search_R(ptr->right, key);
+    }
+}
 
 Node* BST::Insert_I(Node* ptr, int key) {
     /*
@@ -114,7 +142,8 @@ void BST::GenerateBSTUsingPreOrder(int preOrder[], int n) {
             i++;
         } else {
             /*
-                Two conditions: we must ensure if the incoming is ACTUALLY a RIGHT CHILD OF CURRENT NODE. IF NOT THEN LOOK FOR ITS RIGHTEOUS PLACE 
+                Two conditions: we must ensure if the incoming is ACTUALLY a RIGHT CHILD OF CURRENT NODE. 
+                IF NOT THEN LOOK FOR ITS RIGHTEOUS PLACE 
             */
            if((preOrder[i] > ptr->val)&&(stk.empty() || preOrder[i] < stk.top()->val)) {
                temp = new Node;
@@ -153,5 +182,17 @@ int main() {
     bst2->Insert_I(bst2->root, 10);
     bst2->Insert_I(bst2->root, 50);
     bst2->InOrder(bst2->root);
+    if(bst2->Search_I(bst2->root, 40)) {
+        cout << "\nElement 40 found." << endl;
+    } else {
+        cout << "Element not found." << endl;
+    }
+
+    if(bst2->Search_R(bst2->root, 60)) {
+        cout << "Element 40 found." << endl;
+    } else {
+        cout << "Element not found." << endl;
+    }
+
     return 0;
 }
