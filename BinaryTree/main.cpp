@@ -30,5 +30,7 @@ int main() {
     bt->PostOrder_I();
     cout << "\nDisplaying count of number of nodes: ";
     cout << bt->Count();
+    cout << "\nDisplaying sum of data of all of the nodes: ";
+    cout << bt->Sum();
     return 0;
 }

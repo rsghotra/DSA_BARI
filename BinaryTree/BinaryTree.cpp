@@ -97,7 +97,7 @@ void BinaryTree::LevelOrder() {
         Level Order: Tree is filled Level By Level; Just Like Creation of Tree - Queue is used
     */
     //Setup
-    Node* ptr; //traveller
+    Node* ptr=0; //traveller
     Queue* q = new Queue(100); //storer; Algo finishes when Storer is empty
 
     //Initialization of Setup
@@ -123,7 +123,7 @@ void BinaryTree::PreOrder_I() {
     */
    //setup
     stack<Node*> stk; //storer
-    Node* ptr; //traveller
+    Node* ptr=0; //traveller
     //==>Algo finishes when both traveller and storer are null and empty respectively
     //initialization
     ptr = this->root;
@@ -241,5 +241,16 @@ int BinaryTree::Count(Node* ptr) {
 
 int BinaryTree::Count() {
     return Count(this->root);
+}
+
+int BinaryTree::Sum(Node* ptr) {
+    if(ptr == 0) {
+        return 0;
+    }
+    return Sum(ptr->left) + Sum(ptr->right) + ptr->val;
+}
+
+int BinaryTree::Sum() {
+    return Sum(this->root);
 }
 

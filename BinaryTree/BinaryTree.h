@@ -21,8 +21,9 @@ class BinaryTree {
         void PostOrder_I();
         int Count(Node*);
         int  Count();
+        int Sum(Node*);
+        int  Sum();
         // int Height();
-        // int  Sum();
         // int  CountLeafNodes();
         // int  CountNonLeafNodes();
         // int  CountDeg2Nodes();
