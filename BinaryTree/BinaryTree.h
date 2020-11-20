@@ -4,13 +4,14 @@
 
 class BinaryTree {
     private:
-        void PreOrder(Node*);
         void InOrder(Node*);
         void PostOrder(Node*);
         int  Count(Node*);
         int  Sum(Node*);
         int  CountLeafNodes(Node*);
-        int  CountNonLeafNodes(Node*);
+        int  CountDegOneNodes(Node*);
+        int  Height(Node*);
+        int  SearchInorder(int*, int, int, int);
     public:
         Node* root;
         BinaryTree();
@@ -20,18 +21,16 @@ class BinaryTree {
         void InOrder_R();
         void PostOrder_R();
         void LevelOrder();
+        void PreOrder(Node*);
         void PreOrder_I();
         void InOrder_I();
         void PostOrder_I();
         int  Count();
         int  Sum();
         int  CountLeafNodes();
-        int  CountNonLeafNodes();
-        // int Height();
-        
-        // int  CountDeg2Nodes();
-        // int  CountDeg1Nodes();
-        //Node* GenerateBTFromTraversal(int*, int*, int, int);
+        int  CountDegOneNodes();
+        int Height();
+        Node* GenerateBTFromTraversal(int*, int*, int, int);
 };
 
 #endif

@@ -270,19 +270,66 @@ int BinaryTree::CountLeafNodes() {
     return CountLeafNodes(this->root);
 }
 
-int BinaryTree::CountNonLeafNodes(Node* ptr) {
+int BinaryTree::CountDegOneNodes(Node* ptr) {
     if(ptr == 0) {
         return 0;
     }
     //if((ptr->left != 0) ^ (ptr->right != 0))
     if((ptr->left == 0 && ptr->right != 0) || (ptr->left != 0 && ptr->right==0)) // same as XOR; L^R = L'R + LR'
     {
-        return CountNonLeafNodes(ptr->left) + CountNonLeafNodes(ptr->right) + 1;
+        return CountDegOneNodes(ptr->left) + CountDegOneNodes(ptr->right) + 1;
     } else {
-        return CountNonLeafNodes(ptr->left) + CountNonLeafNodes(ptr->right);
+        return CountDegOneNodes(ptr->left) + CountDegOneNodes(ptr->right);
     }
 }
 
-int BinaryTree::CountNonLeafNodes() {
-    return CountNonLeafNodes(this->root);
+int BinaryTree::CountDegOneNodes() {
+    return CountDegOneNodes(this->root);
+}
+
+int BinaryTree::Height(Node* ptr) {
+    int x, y;
+    if(ptr == 0) {
+        return 0;
+    }
+    if(ptr->left == 0 && ptr->right == 0) {
+        return 0;
+    }
+    x = Height(ptr->left);
+    y = Height(ptr->right);
+    if(x > y) {
+        return x + 1;
+    } else {
+        return y + 1;
+    }
+}
+
+int BinaryTree::Height() {
+    return Height(this->root);
+}
+
+int BinaryTree::SearchInorder(int* inorder, int inorderStart, int inorderEnd, int val) {
+    for(int i = inorderStart; i <= inorderEnd;i++) {
+        if(inorder[i] == val) {
+            return i;
+        }
+    }
+}
+
+Node* BinaryTree::GenerateBTFromTraversal(int* inorder, int* preOrder, int inorderStart, int inorderEnd) {
+    if(inorderStart > inorderEnd) {
+        return nullptr;
+    }
+    static int preorderIndex = 0;
+    Node* t = new Node;
+    t->val = preOrder[preorderIndex];
+    preorderIndex++;
+    if(inorderStart == inorderEnd) {
+        return t;
+    }
+
+    int splitIndex = SearchInorder(inorder, inorderStart, inorderEnd, t->val);
+    t->left = GenerateBTFromTraversal(inorder, preOrder, inorderStart, splitIndex-1);
+    t->right = GenerateBTFromTraversal(inorder, preOrder, splitIndex+1, inorderEnd);
+    return t;
 }

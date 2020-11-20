@@ -26,8 +26,8 @@ int main() {
     // bt->PreOrder_I();
     // cout <<"\nDisplaying In-Order Iterative: ";
     // bt->InOrder_I();
-    cout <<"\nDisplaying PostOrder Iterative: ";
-    bt->PostOrder_I();
+    // cout <<"\nDisplaying PostOrder Iterative: ";
+    // bt->PostOrder_I();
     cout << "\nDisplaying count of number of nodes: ";
     cout << bt->Count();
     cout << "\nDisplaying sum of data of all of the nodes: ";
@@ -35,6 +35,16 @@ int main() {
     cout << "\nDisplaying Node with deg(0): Leaf Nodes: ";
     cout << bt->CountLeafNodes();
     cout << "\nDisplaying Node with deg(1): Non-Leaf Nodes: ";
-    cout << bt->CountNonLeafNodes();
+    cout << bt->CountDegOneNodes();
+
+    cout << "\nDisplaying Height of Binary Tree: ";
+    cout << bt->Height();
+
+    //cout << "\nGenerating Binary Tree using PreOrder and InOrder traversals: ";
+    int preorder[] = {4,7,9,6,3,2,5,8,1};
+    int inorder[] = {7,6,9,3,4,5,8,2,1};
+    Node* T = bt->GenerateBTFromTraversal(preorder, inorder, 0, 8);
+    //bt->root = T;
+    //bt->PreOrder_R();
     return 0;
 }
