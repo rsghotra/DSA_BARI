@@ -183,33 +183,63 @@ void BinaryTree::PostOrder_I() {
             9. Pop from Stack - if negative address then Print
     */
 
-   //Setup
-    Node* ptr=0; // Traveller
-    stack<long int> stk;//storer
-    long int  temp; //smuggler
+    /*
+        - Most difficult of all three algorithms
+            - Type casting will be used
+            - reinrepret_cast to Node*
+            - reintrepret cast to uintptr_t
 
-    //Initialization
+        - ALGO:
+            - Visit root
+            - push address in form of int onto stack
+            - go to root's left child
+            - print left child
+            - pop out address from stack
+            - if address is positive - time to go on right children
+            - if address is negative - then  time  to print the root
+            - Algo will go on until the stack is not empty and traveller both are not null
+    */
+
+    Node* ptr=0;//travellor
+    stack<long int> stk; //storeror
+    long int address;
+    //initial step
     ptr = this->root;
 
-    //Repetitive steps
-    while(ptr!= 0 || !stk.empty()) {
+    while(ptr != 0 || !stk.empty()) {
         if(ptr != 0) {
-            // addr = reinterpret_cast<std::uintptr_t>(ptr);
-            stk.push(reinterpret_cast<std::uintptr_t>(ptr));
+            address = reinterpret_cast<std::uintptr_t>(ptr);
+            stk.push(address);
             ptr = ptr->left;
         } else {
-            temp = stk.top();
+            address = stk.top();
             stk.pop();
-            if(temp < 0) {
-                temp = (-1)*(temp);
-                ptr = reinterpret_cast<Node*>(temp);
+            if(address > 0) {
+                ptr = reinterpret_cast<Node*>(address);
+                address = (-1)*(address);
+                stk.push(address);
+                ptr = ptr->right;
+            } else {
+                address = (-1)*(address);
+                ptr = reinterpret_cast<Node*>(address);
                 cout << ptr->val << " ";
                 ptr=0;
-            } else {
-                stk.push(-temp);
-                ptr = (reinterpret_cast<Node*>(temp))->right;;
             }
         }
     }
+}
+
+/*
+    - Following function is in post-order form. Meaning going left - right and then root
+*/
+int BinaryTree::Count(Node* ptr) {
+    if(ptr == 0) {
+        return 0;
+    }
+    return Count(ptr->left) + Count(ptr->right) + 1;
+}
+
+int BinaryTree::Count() {
+    return Count(this->root);
 }
 
