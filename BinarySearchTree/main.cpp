@@ -20,6 +20,10 @@ class BST {
         Node* Insert_R(Node*, int);
         Node* Search_I(Node*, int);
         Node* Search_R(Node*, int);
+        Node* Delete(Node*, int);
+        int   Height(Node*);
+        Node* InOrderPred(Node*);
+        Node* InOrderSucc(Node*);
 };
 
 Node* BST::Search_I(Node* ptr, int key) {
@@ -167,7 +171,76 @@ void BST::InOrder(Node* p) {
         cout <<  p->val << " ";
         InOrder(p->right);
     }
-} 
+}
+
+int BST::Height(Node* ptr) {
+    int x, y;
+    if(ptr == 0) {
+        return 0;
+    }
+    if(ptr->left == 0 && ptr->right == 0) {
+        return 0;
+    }
+    x = Height(ptr->left);
+    y = Height(ptr->right);
+    if(x>y) {
+        return x + 1;
+    } else {
+        return y + 1;
+    }
+}
+
+Node* BST::InOrderPred(Node* ptr) {
+    while(ptr && ptr->right) {
+        ptr = ptr->right;
+    }
+    return ptr;
+}
+
+Node* BST::InOrderSucc(Node* ptr) {
+    while(ptr && ptr->left) {
+        ptr = ptr->left;
+    }
+    return ptr;
+}
+
+Node* BST::Delete(Node* ptr, int key) {
+    Node* temp = 0;
+    if(ptr == 0) {
+        return nullptr;
+    }
+    //delation happen here
+    if(ptr->val == key && ptr->left == 0 && ptr->right == 0) {
+        //edge case if it is the last node of the tree
+        if(ptr == this->root) {
+            this->root = 0;
+        }
+        delete ptr;
+        ptr = 0;
+        return nullptr;
+    }
+    if(ptr->val > key) {
+        ptr->left = Delete(ptr->left, key);
+    } else if(ptr->val < key) {
+        ptr->right = Delete(ptr->right, key);
+    } else {
+        //when the elemenet is found
+        if(Height(ptr->left) > Height(ptr->right)) {
+            // means need to find InOrder Predecessor
+            temp = InOrderPred(ptr->left);
+            //deletion by copying
+            ptr->val = temp->val;
+            //assigned to ptr->left for keeping pattern in the code - though not required
+            ptr->left = Delete(ptr->left, temp->val);
+        } else {
+            //means need to find InOrder Successor
+            temp = InOrderSucc(ptr->right);
+            ptr->val = temp->val;
+            //assigned to ptr->right for keeping pattern in the code - though not required
+            ptr->right = Delete(ptr->right, temp->val);
+        }
+    }
+}
 
 int main() {
     // int pre[8] = {30,20,10,15,25,40,50,45};
@@ -194,5 +267,7 @@ int main() {
         cout << "Element not found." << endl;
     }
 
+    bst2->Delete(bst2->root, 10);
+    bst2->InOrder(bst2->root);
     return 0;
 }
