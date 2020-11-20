@@ -14,6 +14,7 @@ class BST {
         BST() {
             this->root = 0;
         }
+        void GenerateBSTUsingPreOrder_1(int[], int);
         void GenerateBSTUsingPreOrder(int[], int);
         void InOrder(Node*);
         Node* Insert_I(Node*, int);
@@ -118,6 +119,49 @@ Node* BST::Insert_R(Node* ptr, int key) {
 }
 
 void BST::GenerateBSTUsingPreOrder(int preOrder[], int n) {
+    //setup
+    Node* ptr=0;
+    Node* temp=0;
+    stack<Node*> stk;
+    int preOrderIndex = 0;
+    //initialization for Root Node
+    this->root = new Node;
+    this->root->val = preOrder[preOrderIndex];
+    this->root->left = 0;
+    this->root->right = 0;
+    ptr = this->root;
+    preOrderIndex++;
+
+    //repeting steps:
+    while(preOrderIndex < n) {
+        if(ptr->val > preOrder[preOrderIndex]) {
+            temp = new Node;
+            temp->val = preOrder[preOrderIndex];
+            temp->left = temp->right = 0;
+            ptr->left = temp;
+            stk.push(ptr);
+
+            preOrderIndex++;
+            ptr = temp;
+        } else {
+            if((ptr->val < preOrder[preOrderIndex])&& (stk.empty() || stk.top()->val > ptr->val)) {
+                temp = new Node;
+                temp->val = preOrder[preOrderIndex];
+                temp->left = temp->right = 0;
+                ptr->right = temp;
+                preOrderIndex++;
+                ptr = temp;
+            } else {
+                //need to find the righteous place of the node in tree
+                ptr = stk.top();
+                stk.pop();
+            }
+        }
+    }
+}
+
+
+void BST::GenerateBSTUsingPreOrder_1(int preOrder[], int n) {
     stack<Node*> stk;
     Node* ptr; //the traveller
     Node* temp;//the creator
@@ -243,11 +287,11 @@ Node* BST::Delete(Node* ptr, int key) {
 }
 
 int main() {
-    // int pre[8] = {30,20,10,15,25,40,50,45};
-    // BST* bst1 = new BST();
-    // bst1->GenerateBSTUsingPreOrder(pre, 8);
-    // bst1->InOrder(bst1->root);
-    // cout << endl;
+    int pre[8] = {30,20,10,15,25,40,50,45};
+    BST* bst1 = new BST();
+    bst1->GenerateBSTUsingPreOrder(pre, 8);
+    bst1->InOrder(bst1->root);
+    cout << endl;
     BST* bst2 = new BST();
     bst2->root = bst2->Insert_R(bst2->root, 20);
     bst2->Insert_R(bst2->root, 30);
