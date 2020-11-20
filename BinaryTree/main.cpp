@@ -22,15 +22,19 @@ int main() {
     bt->PostOrder_R();
     cout <<"\nDisplaying Level Order Traversal: ";
     bt->LevelOrder();
-    cout <<"\nDisplaying Pre-Order Iterative: ";
-    bt->PreOrder_I();
-    cout <<"\nDisplaying In-Order Iterative: ";
-    bt->InOrder_I();
+    // cout <<"\nDisplaying Pre-Order Iterative: ";
+    // bt->PreOrder_I();
+    // cout <<"\nDisplaying In-Order Iterative: ";
+    // bt->InOrder_I();
     cout <<"\nDisplaying PostOrder Iterative: ";
     bt->PostOrder_I();
     cout << "\nDisplaying count of number of nodes: ";
     cout << bt->Count();
     cout << "\nDisplaying sum of data of all of the nodes: ";
     cout << bt->Sum();
+    cout << "\nDisplaying Node with deg(0): Leaf Nodes: ";
+    cout << bt->CountLeafNodes();
+    cout << "\nDisplaying Node with deg(1): Non-Leaf Nodes: ";
+    cout << bt->CountNonLeafNodes();
     return 0;
 }

@@ -200,30 +200,30 @@ void BinaryTree::PostOrder_I() {
             - Algo will go on until the stack is not empty and traveller both are not null
     */
 
-    Node* ptr=0;//travellor
-    stack<long int> stk; //storeror
-    long int address;
-    //initial step
+    Node* ptr=0; // Traveller
+    stack<long int> stk;//storer
+    long int  temp; //smuggler
+
+    //Initialization
     ptr = this->root;
 
-    while(ptr != 0 || !stk.empty()) {
+    //Repetitive steps
+    while(ptr!= 0 || !stk.empty()) {
         if(ptr != 0) {
-            address = reinterpret_cast<std::uintptr_t>(ptr);
-            stk.push(address);
+            // addr = reinterpret_cast<std::uintptr_t>(ptr);
+            stk.push(reinterpret_cast<std::uintptr_t>(ptr));
             ptr = ptr->left;
         } else {
-            address = stk.top();
+            temp = stk.top();
             stk.pop();
-            if(address > 0) {
-                ptr = reinterpret_cast<Node*>(address);
-                address = (-1)*(address);
-                stk.push(address);
-                ptr = ptr->right;
-            } else {
-                address = (-1)*(address);
-                ptr = reinterpret_cast<Node*>(address);
+            if(temp < 0) {
+                temp = (-1)*(temp);
+                ptr = reinterpret_cast<Node*>(temp);
                 cout << ptr->val << " ";
                 ptr=0;
+            } else {
+                stk.push(-temp);
+                ptr = (reinterpret_cast<Node*>(temp))->right;
             }
         }
     }
@@ -254,3 +254,35 @@ int BinaryTree::Sum() {
     return Sum(this->root);
 }
 
+int BinaryTree::CountLeafNodes(Node* ptr) {
+    if(ptr == 0) {
+        return 0;
+    }
+    if(ptr->left == 0 && ptr->right == 0) {
+        return CountLeafNodes(ptr->left) + CountLeafNodes(ptr->right) + 1;
+    } else {
+        return CountLeafNodes(ptr->left) + CountLeafNodes(ptr->right);
+    }
+
+}
+
+int BinaryTree::CountLeafNodes() {
+    return CountLeafNodes(this->root);
+}
+
+int BinaryTree::CountNonLeafNodes(Node* ptr) {
+    if(ptr == 0) {
+        return 0;
+    }
+    //if((ptr->left != 0) ^ (ptr->right != 0))
+    if((ptr->left == 0 && ptr->right != 0) || (ptr->left != 0 && ptr->right==0)) // same as XOR; L^R = L'R + LR'
+    {
+        return CountNonLeafNodes(ptr->left) + CountNonLeafNodes(ptr->right) + 1;
+    } else {
+        return CountNonLeafNodes(ptr->left) + CountNonLeafNodes(ptr->right);
+    }
+}
+
+int BinaryTree::CountNonLeafNodes() {
+    return CountNonLeafNodes(this->root);
+}
