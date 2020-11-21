@@ -9,16 +9,16 @@
             "command": "g++",
             "args": [
                 "-g",
-                "${workspaceFolder}/BinarySearchTree/main.cpp",
+                "${workspaceFolder}/CPPMCQ/main.cpp",
                 "-o",
-                "BinarySearchTree/main"
+                "CPPMCQ/main"
             ],
             "problemMatcher":[]
         },
         {
             "label": "run",
             "type":  "shell",
-            "command": "${workspaceFolder}/BinarySearchTree/main",
+            "command": "${workspaceFolder}/CPPMCQ/main",
             "dependsOn":[
                 "build"
             ],
