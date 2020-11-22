@@ -9,16 +9,16 @@
             "command": "g++",
             "args": [
                 "-g",
-                "${workspaceFolder}/AVL/main.cpp",
+                "${workspaceFolder}/CPPMCQ/main.cpp",
                 "-o",
-                "AVL/main"
+                "CPPMCQ/main"
             ],
             "problemMatcher":[]
         },
         {
             "label": "run",
             "type":  "shell",
-            "command": "${workspaceFolder}/AVL/main",
+            "command": "${workspaceFolder}/CPPMCQ/main",
             "dependsOn":[
                 "build"
             ],
