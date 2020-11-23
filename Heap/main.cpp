@@ -14,21 +14,73 @@ using namespace std;
         8. Inserting a Single Element: o(h) == o(logn)
 */
 
-void Insert(int A[], int index) {
-    //index is the first element outside of heap
-    //element to be inserted will be the supplied index element
-    int temp = A[index];
-    int i = index;
-    //keep going until child is bigger than parent or array is not finished
-    //careful i must start from greater than 1 becuase at the end of while loop. if the
-    //incoming element is indeed the largest element - we do not want to traverse until the end
-    while(i > 1 && temp > A[i/2]) {
-        //switch places
-        A[i] = A[i/2];
+// void Insert(int A[], int index) {
+//     //index is the first element outside of heap
+//     //element to be inserted will be the supplied index element
+//     int temp = A[index];
+//     int i = index;
+//     //keep going until child is bigger than parent or array is not finished
+//     //careful i must start from greater than 1 becuase at the end of while loop. if the
+//     //incoming element is indeed the largest element - we do not want to traverse until the end
+//     while(i > 1 && temp > A[i/2]) {
+//         //switch places
+//         A[i] = A[i/2];
+//         i = i/2;
+//     }
+//     //at this point right place is found
+//     A[i] = temp;
+// }
+
+void Insert(int H[], int heapSizePlusOneIndex) {
+    //for insert we check for parents
+    int element = H[heapSizePlusOneIndex];
+    int i = heapSizePlusOneIndex;
+    //i one tak jae
+    while( i > 1 && element > H[i/2]) {
+        H[i] = H[i/2];
         i = i/2;
     }
-    //at this point right place is found
-    A[i] = temp;
+    //self copy will happen if nothing changes from while loop
+    //Else for the case when incoming is the max element
+    H[i] = element;
+}
+
+int Delete(int H[], int currHeapSizeIndex) {
+    /*
+        We can only delete the root element
+    */
+    int temp;
+    int val = H[1];
+    
+    //copying the last element to first element
+    H[1] = H[currHeapSizeIndex];
+
+    //rearrangement with the kids
+    int i = 1;
+    int j = 2*i;
+
+    //because j is the forward pointer - hence termination will be dependent upon this
+    while(j < currHeapSizeIndex - 1) {
+        //find appropriate j
+        if(H[j+1]  > H[j]) {
+            j = j+1;
+        }
+        //if child is bigger than parent
+        if(H[j] > H[i]) {
+            //swapping occurs
+            temp = H[i];
+            H[i] = H[j];
+            H[j] = temp;
+            i = j;
+            j = 2*i;
+        } else {
+            break;
+        }
+    }
+    //Heap Sort Part
+    H[currHeapSizeIndex] = val;
+    //return is not redundant
+    return val;
 }
 
 
@@ -66,15 +118,22 @@ void print(vector<int> vect) {
 }
 
 int main() {
-    int A[] = {0, 10, 20, 30, 25, 5, 40, 35};
-    //Index 0 - DISCARDING
-    //Index 1 - is the first element of HEAP
+    /*
+        - ZEROTH INDEX - WE WILL NOT USE IT FOR BINARY HEAP IMPLEMENTATION
+    */
+    int n = 8;
+    int H[8] = {0,10,20,30,25,5,40,35};
+    //index i = 1 is already part of single element max heap
     int i = 2;
-    for(i; i <=7; i++) {
-        Insert(A, i);
+    for(int i = 2; i < n; i++) {
+        Insert(H, i);
     }
-    print(A, 8);
-    vector<int> v;
-    CreateHeap_V(v, A, 8);
-    print(v);
+    //printing heap
+    print(H, 8);
+
+    //deleting elements from Heap
+    for(int j = n-1; j >= 1; j--) {
+        Delete(H, j);
+    }
+    print(H,8);
 }
