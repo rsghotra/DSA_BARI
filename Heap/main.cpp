@@ -122,18 +122,18 @@ int main() {
         - ZEROTH INDEX - WE WILL NOT USE IT FOR BINARY HEAP IMPLEMENTATION
     */
     int n = 8;
-    int H[8] = {0,10,20,30,25,5,40,35};
+    int A[8] = {0,10,20,30,25,5,40,35};
     //index i = 1 is already part of single element max heap
     int i = 2;
     for(int i = 2; i < n; i++) {
-        Insert(H, i);
+        Insert(A, i);
     }
     //printing heap
-    print(H, 8);
+    print(A, 8);
 
     //deleting elements from Heap
     for(int j = n-1; j >= 1; j--) {
-        Delete(H, j);
+        Delete(A, j);
     }
-    print(H,8);
+    print(A,8);
 }

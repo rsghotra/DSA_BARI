@@ -9,16 +9,16 @@
             "command": "g++",
             "args": [
                 "-g",
-                "${workspaceFolder}/Heap/main.cpp",
+                "${workspaceFolder}/Heapify/main.cpp",
                 "-o",
-                "Heap/main"
+                "Heapify/main"
             ],
             "problemMatcher":[]
         },
         {
             "label": "run",
             "type":  "shell",
-            "command": "${workspaceFolder}/Heap/main",
+            "command": "${workspaceFolder}/Heapify/main",
             "dependsOn":[
                 "build"
             ],
