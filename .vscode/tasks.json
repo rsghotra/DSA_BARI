@@ -9,16 +9,16 @@
             "command": "g++",
             "args": [
                 "-g",
-                "${workspaceFolder}/Hashing_DoubleHashing/main.cpp",
+                "${workspaceFolder}/Hashing_Chaining/main.cpp",
                 "-o",
-                "Hashing_DoubleHashing/main"
+                "Hashing_Chaining/main"
             ],
             "problemMatcher":[]
         },
         {
             "label": "run",
             "type":  "shell",
-            "command": "${workspaceFolder}/Hashing_DoubleHashing/main",
+            "command": "${workspaceFolder}/Hashing_Chaining/main",
             "dependsOn":[
                 "build"
             ],

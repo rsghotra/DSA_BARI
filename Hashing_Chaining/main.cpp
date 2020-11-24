@@ -1,106 +1,133 @@
-#include <iostream>
-#include "Chains.h"
-
+#include<iostream>
+#define SIZE 10
 using namespace std;
 
+/*
+    ==> Open Hashing Techniquw - Chaining
+    - Important Points
+        - Infinited Hash Table Size
+        - H(x) = x%size;
+        - Avg successful search = 1+lambda/2
+        - Avg Unsuccessful search = 1 + lambda
+        - Load Factor > 1
+        - Number of elements = 100
+        - Hash table size = 10
+*/
 
-
-struct Node {
-    Node* next;
-    int data;
+class Node {
+    public:
+        int data;
+        Node* next;
 };
 
-int hash(int key) {
-    return key%10;
-}
+class HashTable {
+    public:
+        //Just lile int* Q[]
+        Node** HT;
+        HashTable();
+        int Hash(int key);
+        void Insert(int key);
+        int Search(int key);
+        ~HashTable();
+        void print(); 
+};
 
-Node* Search(Node* ptr, int key) {
-    if(ptr==0) return nullptr;
-    while(ptr) {
-        if(ptr->data == key)
-            return ptr;
-        ptr = ptr->next;
+void HashTable::print() {
+    Node* p = 0;
+    if(HT != 0) {
+        for(int i = 0 ; i < SIZE; i++) {
+            p = HT[i];
+            if(p == 0) cout << "XXXXX" << " ";
+            while(p != 0) {
+                cout << p->data << " ";
+                p = p->next;
+            }
+            cout << endl;
+        }
     }
-    return nullptr;
 }
-// void Delete(Node* ptr, int key) {
-//     int x;
-//     Node* p = 0;
-//     if(ptr == 0) {
-//         return;
-//     }
-//     if(ptr->data == key) {
-//         //Deleting head is a special case
-//         p= ptr;
-//         ptr = ptr->next;
-//         if(p == root) {
-//             root == ptr;
-//         }
-//         delete p;
-//     } else {
-//         p = ptr;
-//         Node* q = 0;
-//         while(p->next->data != key) {
-//             q = p;
-//             p = p->next;
-//         }
-//         if(!p) {
-//             return;
-//         } else {
-//             q->next = p->next;
-//             delete p;
-//         }
-//     }
-// }
 
-void SortedInsert(Node** HT, int key) {
-	int hIdx = ::hash(key);
-	Node* t = new Node;
-	t->data = key;
-	t->next = nullptr;
-	// Case: No nodes in the linked list
-	if (HT[hIdx] == nullptr){
-		HT[hIdx] = t;
-	} else {
-		Node* p = HT[hIdx];
-		Node *q=HT[hIdx];
-		// Traverse to find insert position
-		while (p && p->data < key){
-			q=p;
-			p = p->next;
-		}
-		// Case: insert position is first
-		if (q == HT[hIdx]){
-			t->next = HT[hIdx];
-			HT[hIdx] = t;
-		} else {
-			t->next = q->next;
-			q->next = t;
+HashTable::HashTable() {
+    HT = new Node*[SIZE];
+    for(int i = 0; i < SIZE; i++) {
+        HT[i] = 0;
+    }
+}
+
+HashTable::~HashTable() {
+	for (int i=0; i<SIZE; i++){
+		Node* p = HT[i];
+		while (HT[i]){
+			HT[i] = HT[i]->next;
+			delete p;
+			p = HT[i];
 		}
 	}
+	delete [] HT;
 }
 
-void Insert(Node* H[], int key) {
-    //getting index //using scope resolution to remove ambiguity
-    int index = ::hash(key);
+int HashTable::Hash(int key) {
+    return key%SIZE;
+}
 
-    //insert in a sorted linked list location
-    SortedInsert(&H[index], key);
+int HashTable::Search(int key) {
+    int index = Hash(key);
+    if(HT[index]) {
+        Node* ptr = HT[index];
+        while(ptr) {
+            if(ptr->data == key) {
+                return ptr->data;
+            }
+            ptr = ptr->next;
+        }
+    }
+    return -1;
+}
 
+void HashTable::Insert(int key) {
+    int index = Hash(key);
+    Node* temp = new Node;
+    temp->data = key;
+    temp->next = 0;
+
+    if(HT[index] == nullptr) {//spot is empty 
+        HT[index] = temp;
+    }else {
+        Node* ptr = HT[index];
+        Node* qtr = 0;
+        //handling head insertion
+        if(ptr->data > key) {
+            temp->next = ptr;
+            ptr = temp;
+            HT[index] = temp;
+        } else {
+            while(ptr && ptr->data < key) {
+                qtr = ptr;
+                ptr = ptr->next;
+            }
+            temp->next = qtr->next;
+            qtr->next = temp;
+        }
+    }
 }
 
 int main() {
-    //create a Hash Table and initialize it
-    Node* HT[10];
-    int i;
+    int A[9] = {16, 12, 25, 39, 6, 122, 5, 68, 75};
+    HashTable HT;
 
-    for(i=0; i< 10; i++) {
-        HT[i] = 0;
+    for(int i = 0; i < 9; i++) {
+        HT.Insert(A[i]);
     }
 
-    Insert(HT, 12);
-    Insert(HT, 22);
-    Insert(HT, 42);
+    HT.print();
 
+    cout << "Successful Search" << endl;
+	int key = 6;
+	int value = HT.Search(key);
+	cout << "Key: " << key << ", Value: " << value << endl;
+	cout << "Unsuccessful Search" << endl;
+	key = 95;
+	value = HT.Search(key);
+	cout << "Key: " << key << ", Value: " << value << endl;
     return 0;
 }
