@@ -9,16 +9,16 @@
             "command": "g++",
             "args": [
                 "-g",
-                "${workspaceFolder}/Hashing_LinerProbing/main.cpp",
+                "${workspaceFolder}/Hashing_Quadratic/main.cpp",
                 "-o",
-                "Hashing_LinerProbing/main"
+                "Hashing_Quadratic/main"
             ],
             "problemMatcher":[]
         },
         {
             "label": "run",
             "type":  "shell",
-            "command": "${workspaceFolder}/Hashing_LinerProbing/main",
+            "command": "${workspaceFolder}/Hashing_Quadratic/main",
             "dependsOn":[
                 "build"
             ],
