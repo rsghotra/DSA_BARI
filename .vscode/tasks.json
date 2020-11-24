@@ -9,16 +9,16 @@
             "command": "g++",
             "args": [
                 "-g",
-                "${workspaceFolder}/BFS_AdjacencyMatrix/main.cpp",
+                "${workspaceFolder}/DFS_AdjacencyMatrix_Recursive/main.cpp",
                 "-o",
-                "BFS_AdjacencyMatrix/main"
+                "DFS_AdjacencyMatrix_Recursive/main"
             ],
             "problemMatcher":[]
         },
         {
             "label": "run",
             "type":  "shell",
-            "command": "${workspaceFolder}/BFS_AdjacencyMatrix/main",
+            "command": "${workspaceFolder}/DFS_AdjacencyMatrix_Recursive/main",
             "dependsOn":[
                 "build"
             ],

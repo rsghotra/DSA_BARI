@@ -9,7 +9,7 @@
             "name": "(gdb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/BFS_AdjacencyMatrix/main.exe",
+            "program": "${workspaceFolder}/DFS_AdjacencyMatrix_Recursive/main.exe",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
