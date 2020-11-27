@@ -1,22 +1,19 @@
 #include<iostream>
 #include<iomanip>
-#include<array>
-
+#include<ctime>
+#include<random>
 using namespace std;
 
 int main() {
-    /*
-        - Array declaration and initialization using for loop
-    */
-    array<int, 5> n;
+    //engine generates psuedo random number
+    default_random_engine engine{static_cast<unsigned int>(time(0))};
+    //psuedo random number is converted to proper type and range
+    uniform_int_distribution<unsigned int> randomInt{1,6};
 
-    for(size_t i{0}; i < n.size(); ++i) {
-        n[i] = 0;
-    }
-    //
-    cout << "Element" << setw(10) << "Value" << endl;
-    for(size_t j{0}; j < n.size(); ++j) {
-        cout << setw(7) << j << setw(10) << n[j] << endl;
+    //loop 10 times
+    for(unsigned int i{1}; i <= 10; i++) {
+        cout << setw(10) << randomInt(engine);
+        if(i%5 == 0) cout << endl;
     }
     return 0;
 }
