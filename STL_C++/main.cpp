@@ -1,19 +1,15 @@
 #include<iostream>
 #include<iomanip>
-#include<cstdlib> //contains function prototype for rand
 using namespace std;
 
+inline double cube(const double side) {
+    return side * side * side;
+}
+
 int main() {
-    unsigned int seed{0};
+    double sideValue;
+    cout << "Enter th eside length of the cube: ";
+    cin >> sideValue;
 
-    cout << "Enter seed ";
-    cin >> seed;
-
-    //seed the random number generator
-    srand(seed);
-
-    for(unsigned int roll{1}; roll <= 10; ++roll) {
-        cout << setw(10) << (1+rand()%6);
-        if(roll%5==0) cout << endl;
-    }
+    cout << "Volume of cube with side " << sideValue << " is " << cube(sideValue) << endl;
 }
