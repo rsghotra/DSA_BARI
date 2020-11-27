@@ -1,25 +1,45 @@
 #include<iostream>
 #include<iomanip>
-#include<ctime>
-#include<random>
 #include<array>
 using namespace std;
 
+void staticArrayInit();
+void automaticArrayInit();
+
+const size_t arraySize{3};
+
 int main() {
-    //create random engine and seed it with time
-    default_random_engine engine{static_cast<unsigned int>(time(0))};
-    uniform_int_distribution<unsigned int> randomInt{1,6};
+    cout << "First call to each function:\n";
+    staticArrayInit();
+    automaticArrayInit();
 
-    const size_t arraySize = 7;
-    array<unsigned int, arraySize> frequency{0}; //initialized to zero
+    cout << "\nSecond call to each function:\n";
+    staticArrayInit();
+    automaticArrayInit();
+    cout << endl;
+}
 
-    for(size_t roll{1}; roll <= 60'000'000; ++roll) {
-        frequency[randomInt(engine)] += 1;
+void staticArrayInit(void) {
+    //c++ initialized the static array elemented to 0
+    static array<int, arraySize> array1;
+    cout << "\nValues on entereing staticArrayInit:\n";
+    for(size_t i{0}; i<arraySize;++i) {
+        cout << "array["<<i<<"] = "<<array1[i] << " ";
     }
+    cout << "\nValues on exiting staticArrayInit:\n";
+    for(size_t i{0}; i<arraySize;++i) {
+        cout << "array["<<i<<"] = "<<(array1[i]+=5) << " ";
+    }
+}
 
-    cout << "Face" << setw(13) << "Frequency" << endl;
-
-    for(size_t face{1}; face < frequency.size(); ++face) {
-        cout << setw(4) << face << setw(13) << frequency[face] << endl;
+void automaticArrayInit() {
+    array<int, arraySize> array2{1,2,3};
+    cout << "\nValues on entereing automaticArrayInit:\n";
+    for(size_t i{0}; i<arraySize;++i) {
+        cout << "array["<<i<<"] = "<<array2[i] << " ";
+    }
+    cout << "\nValues on exiting automaticArrayInit:\n";
+    for(size_t i{0}; i<arraySize;++i) {
+        cout << "array["<<i<<"] = "<<(array2[i]+=5) << " ";
     }
 }
