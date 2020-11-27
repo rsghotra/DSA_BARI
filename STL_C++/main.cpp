@@ -1,15 +1,25 @@
 #include<iostream>
 #include<iomanip>
+#include<ctime>
+#include<random>
+#include<array>
 using namespace std;
 
-inline double cube(const double side) {
-    return side * side * side;
-}
-
 int main() {
-    double sideValue;
-    cout << "Enter th eside length of the cube: ";
-    cin >> sideValue;
+    //create random engine and seed it with time
+    default_random_engine engine{static_cast<unsigned int>(time(0))};
+    uniform_int_distribution<unsigned int> randomInt{1,6};
 
-    cout << "Volume of cube with side " << sideValue << " is " << cube(sideValue) << endl;
+    const size_t arraySize = 7;
+    array<unsigned int, arraySize> frequency{0}; //initialized to zero
+
+    for(size_t roll{1}; roll <= 60'000'000; ++roll) {
+        frequency[randomInt(engine)] += 1;
+    }
+
+    cout << "Face" << setw(13) << "Frequency" << endl;
+
+    for(size_t face{1}; face < frequency.size(); ++face) {
+        cout << setw(4) << face << setw(13) << frequency[face] << endl;
+    }
 }

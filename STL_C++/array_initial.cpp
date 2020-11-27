@@ -8,43 +8,26 @@ int main() {
     /*
         - Array declaration and initialization using for loop
     */
-    array<int, 5> n;
-
-    for(size_t i{0}; i < n.size(); ++i) {
+    const size_t arraySize{5};
+    array<int,arraySize> n;
+    //array initialization using for loop
+    for(size_t i{0}; i<arraySize; ++i) {
         n[i] = 0;
     }
-    //
+
     cout << "Element" << setw(10) << "Value" << endl;
-    for(size_t j{0}; j < n.size(); ++j) {
-        cout << setw(7) << j << setw(10) << n[j] << endl;
+
+    for(size_t j{0}; j < arraySize; ++j) {
+        cout << setw(7) << j << setw(10) << n[j] << endl; 
     }
 
-    //initializing using initializer list
-    array<int, 6>n2{10,15,20,25,30};
-    cout << "Element" <<setw(10) << "Value" << endl;
-    for(size_t i{0}; i < n2.size(); ++i) {
-        cout << setw(7) << i << setw(10) << n2[i] << endl;
+    array<int, arraySize +1> n2{2,3,4,5,6};
+    int sum{0};
+    cout << "Element" << setw(10) << "Value" << endl;
+    for(size_t k{0}; k < arraySize+1; ++k) {
+        cout << setw(7) << k << setw(10) << n2[k] << endl;
+        sum+= n2[k];
     }
-
-    //array of const size
-    const size_t arraySize = 5;
-    array<int, arraySize> n3{}; //initialized to zero all elements
-    for(size_t i{0}; i <  n3.size(); ++i) {
-        n3[i] = 2 + 2 * i;
-    }
-
-    cout << "Element" <<setw(10) << "Value" << endl;
-    for(size_t i{0}; i < n3.size(); ++i) {
-        cout << setw(7) << i << setw(10) << n3[i] << endl;
-    }
-
-    size_t total{0};
-
-    for(size_t i{0}; i < n3.size(); ++i) {
-        total += n3[i];
-    }
-
-    cout << "Total of Array Elements: " << total << endl;
-
+    cout << "Total of array elements: " << sum << endl;
     return 0;
 }
