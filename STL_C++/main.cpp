@@ -1,19 +1,19 @@
 #include<iostream>
 #include<iomanip>
-#include<ctime>
-#include<random>
+#include<cstdlib> //contains function prototype for rand
 using namespace std;
 
 int main() {
-    //engine generates psuedo random number
-    default_random_engine engine{static_cast<unsigned int>(time(0))};
-    //psuedo random number is converted to proper type and range
-    uniform_int_distribution<unsigned int> randomInt{1,6};
+    unsigned int seed{0};
 
-    //loop 10 times
-    for(unsigned int i{1}; i <= 10; i++) {
-        cout << setw(10) << randomInt(engine);
-        if(i%5 == 0) cout << endl;
+    cout << "Enter seed ";
+    cin >> seed;
+
+    //seed the random number generator
+    srand(seed);
+
+    for(unsigned int roll{1}; roll <= 10; ++roll) {
+        cout << setw(10) << (1+rand()%6);
+        if(roll%5==0) cout << endl;
     }
-    return 0;
 }
