@@ -1,105 +1,94 @@
-#include<iostream>
 #include<array>
 #include<string>
+#include<iostream>
 #include<iomanip>
 using namespace std;
 
 class GradeBook {
     public:
+        //check this out static, const, size_t, public
         static const size_t students{10};
-        //const reference to avoid copy
-        GradeBook(const string& name, const array<int, students>& gradesArray): courseName{name}, grades{gradesArray} {}
-        void setCourseName(const string& name) {
-            courseName = name;
-        }
-        const string& getCourseName() const {
-            return courseName;
-        }
-        void displayMessage() const {
-            cout << "Welcome to the gradebook for\n" << getCourseName() << "!" << endl;
-        }
-        void outputGradesArray() const {
-            cout << "\nThe grades are:\n"<< endl;
-            //because i need subscript notation
-            for(size_t i{0}; i < grades.size();++i) {
-                cout << setw(20) << "Student    " << (i+1) << ": " << setw(5) << grades[i] << endl;
+        static const size_t tests{3};
+            GradeBook(const string& name, const array<array<int, tests>, students>& a) : courseName{name}, grades{a}{}
+
+            void setCourseName(const string& name) {
+                courseName = name;
             }
+
+            //==>Watch out const return function to retrieve course name
+            const string& getCourseName() const {
+                return courseName;
+            }
+
+            void displayMessage() const {
+                cout << "Welcome to the gradebook for\n" << getCourseName() << "!" << endl;
+            }
+
+            double getAverage(const array<int, tests>& a) const {
+                int total{0};
+                for(int grade: a) {
+                    total+= grade;
+                }
+                return static_cast<double>(total)/a.size();
+            }
+
+            //outputs the contents of the grade array
+        void outputGrades() const {
+            cout << "\nThe grades are:\n\n";
+            cout << "               ";
+
+            for(size_t test{0}; test < tests; ++test) {
+                cout << "Test" << setw(2) << tests + 1;
+            }
+
+            cout << "Average" << endl;
+
+            for(size_t student{0}; student < students; ++student) {
+                cout << "Student" << setw(2) << student+1;
+
+                for(size_t test{0}; test < grades[student].size(); ++test) {
+                    cout << setw(8) << grades[student][test];
+                }
+
+                //calculate average
+                double average = getAverage(grades[student]);
+                cout << setw(9) << setprecision(2) << fixed << average << endl;
+            }
+
         }
+
         void processGrades() const {
-            outputGradesArray();
-            cout << setprecision(2) << fixed;
-            cout << "\nClass average is " << getAverage() << endl;
-            cout <<"Lowest grade is " << getMinimum() 
-                << "\nHighest grade is " << getMaximum() << endl;
-            outputBarChart();
+            outputGrades();
+            cout << "\nLowest grade in the grade book is " << getMinimum()
+                << "\nHighest grade in the grade book is " << getMaximum()
+                << endl;
         }
 
         int getMinimum() const {
-            int lowGrade{100};
+            int lowestGrade{100};
 
-            for(int grade: grades) {
-                if(grade < lowGrade) {
-                    lowGrade = grade;
+            for(const auto& student: grades) {
+                for(const auto& grade: student) {
+                    if(grade < lowestGrade) {
+                        lowestGrade = grade;
+                    }
                 }
             }
-            return lowGrade;
+            return lowestGrade;
         }
+        int getMaximum() const {
+            int highestGrade{0};
 
-        int getMaximum() const  {
-            int highGrade{0};
-
-            for(int grade: grades) {
-                if(grade > highGrade) {
-                    highGrade = grade;
+            for(const auto& student: grades) {
+                for(const auto& grade: student) {
+                    if(highestGrade < grade) {
+                        highestGrade = grade;
+                    }
                 }
             }
-            return highGrade;
+            return highestGrade;
         }
-
-        double getAverage() const {
-            int total{0};
-            for(int grade: grades) {
-                total += grade;
-            }
-            return static_cast<double>(total)/grades.size();
-        }
-
-        void outputBarChart() const {
-            cout <<"\nGrade distribution:" << endl;
-            const size_t frequencySize{11};
-            array<unsigned int, frequencySize> frequence{};
-
-            for(int grade: grades) {
-                ++frequence[grade/10];
-            }
-            for(size_t i{0}; i < grades.size(); ++i) {
-                if(i == 0) {
-                    cout << "0-9: ";
-                }
-                if(i == 10) {
-                    cout << "  100: ";
-                }
-                else {
-                    cout << i * 10 << "-" << (i*10)+9 << ": ";
-                }
-
-                for(size_t j = 0; j < frequence[i]; ++j) {
-                    cout << "*";
-                }
-
-                cout << endl;
-            }
-        }
-
-    private:
-        string courseName;
-        array<int, students> grades;
+        private:
+            string courseName;
+            array<array<int, tests>, students> grades;
 };
-
-int main() {
-    const array<int, GradeBook::students> grades {87,68,94,100,83,78,85,91,76,87};
-    string courseName{"CS101 Introduction to C++ Programming"};
-    GradeBook myGradeBook(courseName, grades);
-    myGradeBook.displayMessage();
-    myGradeBook.processGrades();
-}

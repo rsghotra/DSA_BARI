@@ -1,50 +1,92 @@
 #include<iostream>
 #include<iomanip>
-#include<array>
+#include<vector>
+#include<stdexcept>
 using namespace std;
 
-const size_t rows{2};
-const size_t cols{3};
-void printArray(const array<array<int, cols>, rows>&);
-int sum(const array<array<int, cols>, rows>& a);
+void inputVector(vector<int>& vect) {
+    for(int& item: vect) {
+        cin >> item;
+    }
+}
+
+//output vector contents
+void outputVector(const vector<int>& vect) {
+    for(int item: vect) {
+        cout << item << " ";
+    }
+    cout << endl;
+}
 
 int main() {
-    array<array<int, cols>, rows> array1{1,2,3,4,5,6};
-    array<array<int, cols>, rows> array2{1,2,3,4};
+    vector<int> vect1(7);
+    vector<int> vect2(10);
 
-    cout << "Values in the array by row1 are: " << endl;
-    printArray(array1);
+    cout <<"Size of vect1"<<setw(2)<<vect1.size()
+        <<"\nvector after initialization:";
+    outputVector(vect1);
 
-    cout << "Values in the array2 by row are: " << endl;
-    printArray(array2);
-    cout << "Sum of all elements if the 2D array " << sum(array1) << endl;
-    return 0;
-}
+    cout <<"Size of vect2"<<setw(2)<<vect2.size()
+        <<"\nvector after initialization:";
+    outputVector(vect2);
 
-void printArray(const array<array<int, cols>, rows>& a) {
-    //for printing a 2'D array -you must use auto keyword
-    /*
-        Three things happening here:
-            - const
-            - auto
-            - reference
-    */
-   //why you are looking for index. It is a range based for loop
-    for(const auto& row: a) {
-        for(const auto& element: row) {
-            cout << element << ' ';
-        }
-        cout << endl;
+    cout << "\nEnter 17 integers:"<< endl;
+    inputVector(vect1);
+    inputVector(vect2);
+
+    cout<<"\nAfter input, the vectors contain:\n"
+        <<"vect1: ";
+    outputVector(vect1);
+    cout <<"vect2: ";
+    outputVector(vect2);
+
+    cout <<"\nEvaluating: vect1 != vect2" << endl;
+    if(vect1 != vect2) {
+        cout <<"vect1 and vect2 are not equal" << endl;
     }
-}
+    //copy constructor
+    //create new vect3 and initialize it using vect1 and then print its content and size
+    vector<int> vect3{vect1}; //copy constructor
 
-int sum(const array<array<int, cols>, rows>& a) {
-    int total = 0;
+    cout <<"\nSize of vect3"<<setw(2)<<vect3.size()
+        <<"\nvector after initialization: ";
+    outputVector(vect3);
 
-    for(const auto& row: a) {
-        for(const auto& element: row) {
-            total+=element;
-        }
+
+    cout <<"\nAssigning vect2 to vect1: " << endl;
+    vect1=vect2;
+
+    cout<<"vect1: ";
+    outputVector(vect1);
+    cout<<"vect2: ";
+    outputVector(vect2);
+
+    cout<<"\nEvaluating: vect1 == vect2" << endl;
+
+    if(vect1==vect2) {
+        cout<<"vect1 and vect2 are equal"<<endl;
     }
-    return total;
+    //using square bracket as rvalue
+    cout <<"\nvect1[5] is " << vect1[5];
+    //use square bracket as lvalue
+    cout <<"\n\nAssigning 1000 to vect1[5]" << endl;
+    vect1[5] = 1000;
+    cout <<"vect1: ";
+    outputVector(vect1);
+
+    //attempting to use out of range subscript
+    try {
+        cout <<"\nAttempt to display vect1.at(15)" << endl;
+        cout << vect1.at(15) << endl; //ERROR out of range
+    }
+    catch(out_of_range& ex) {
+        cerr <<"An exception occurred: " << ex.what() << endl;
+    }
+
+    //changing the size of a vector
+    cout <<"\nCurrent vect3 size is " << vect3.size() << endl;
+    vect3.push_back(1000);// add 100 to end of the vector
+    cout <<"\nNew vect3 size is " << vect3.size() << endl;
+    cout <<"\nvect3 now contains: ";
+    outputVector(vect3);
 }
