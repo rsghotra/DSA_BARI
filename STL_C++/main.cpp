@@ -1,49 +1,50 @@
 #include<iostream>
 #include<iomanip>
 #include<array>
-#include<string>
-#include<algorithm>
 using namespace std;
 
-/*
-    - void sort(array.begin(), array.end())
-        - Sort specifies the range of elements which needed to
-            be sorted
-    - bool binary_search(array.begin(), array.end(), key)
-        - binary_search only tells us if the element is present
-            or not. It does not give us the positoin of the array
-    - int find(array.begin(), array.end() gives us the postion loactaion)
-*/
+const size_t rows{2};
+const size_t cols{3};
+void printArray(const array<array<int, cols>, rows>&);
+int sum(const array<array<int, cols>, rows>& a);
 
 int main() {
-    const size_t arraySize{7};
-    array<string, arraySize> colors{"red","orange","yellow","green",
-        "blue", "indigo", "violet"};
+    array<array<int, cols>, rows> array1{1,2,3,4,5,6};
+    array<array<int, cols>, rows> array2{1,2,3,4};
 
-    cout <<"Output Original Array: \n";
-    for(string color: colors) {
-        cout << color << " ";
-    }
-    cout << endl;
-    sort(colors.begin(), colors.end());
+    cout << "Values in the array by row1 are: " << endl;
+    printArray(array1);
 
-    //output sorted array
-    cout <<"\nSorted array:\n";
-    for(string color: colors) {
-        cout << color << " ";
-    }
-    cout << endl;
+    cout << "Values in the array2 by row are: " << endl;
+    printArray(array2);
+    cout << "Sum of all elements if the 2D array " << sum(array1) << endl;
+    return 0;
+}
 
-    bool found{binary_search(colors.begin(), colors.end(), "indigo")};
-    if(found) {
-        cout << "\n\nindigo found in colors" << endl;
-    } else {
-        cout << "\n\nindigo was not found in colors" << endl;
+void printArray(const array<array<int, cols>, rows>& a) {
+    //for printing a 2'D array -you must use auto keyword
+    /*
+        Three things happening here:
+            - const
+            - auto
+            - reference
+    */
+   //why you are looking for index. It is a range based for loop
+    for(const auto& row: a) {
+        for(const auto& element: row) {
+            cout << element << ' ';
+        }
+        cout << endl;
     }
-    found = binary_search(colors.begin(), colors.end(), "cyan");
-    if(found) {
-        cout << "\ncyan found in colors" << endl;
-    } else {
-        cout << "\ncyan was not found in colors" << endl;
+}
+
+int sum(const array<array<int, cols>, rows>& a) {
+    int total = 0;
+
+    for(const auto& row: a) {
+        for(const auto& element: row) {
+            total+=element;
+        }
     }
+    return total;
 }
