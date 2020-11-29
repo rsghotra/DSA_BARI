@@ -9,7 +9,18 @@ using namespace std;
 
 class Time {
     public:
+        explicit Time(int = 0, int = 0, int = 0);
         void setTime(int, int, int);
+        void setHour(int);
+        void setMinute(int);
+        void setSecond(int);
+
+        unsigned int getHour() const { return hour;}
+        unsigned int getMinute() const;
+        unsigned int getSecond() const;
+
+        unsigned int& badSetHour(int); //dangerous reference return
+
         std::string toUniversalString() const;
         std::string toStandardString() const;
     private:
@@ -18,14 +29,48 @@ class Time {
         unsigned int second{0};
 };
 
-void Time::setTime(int h, int m, int s) {
-    if((h >=0 && h < 24) && (m >= 0 && m < 60) && (s >= 0 && s < 60)) {
-        hour = h;
+//poor practice - returning a reference to a private data member
+unsigned int& Time::badSetHour(int hh) {
+    if(hh >= 0 && hh < 24) {
+        hour = hh;
+    } else {
+        throw invalid_argument("house must be between 0-23");
+    }
+    return hour;
+}
+
+void Time::setHour(int h) {
+    if((h>=0 && h < 24)) {
+        this->hour = h;
+    } else {
+        throw invalid_argument("hour must be 0-23");
+    }
+}
+
+void Time::setMinute(int m) {
+    if((m>=0 && m < 60)) {
         minute = m;
+    } else {
+        throw invalid_argument("Out of bound minute");
+    }
+}
+
+void Time::setSecond(int s) {
+    if((s>=0 && s < 60)) {
         second = s;
     } else {
-        throw invalid_argument("Out of bound");
+        throw invalid_argument("Out of bound minute");
     }
+}
+
+Time::Time(int hour, int minute, int second) {
+    setTime(hour, minute, second);
+}
+
+void Time::setTime(int h, int m, int s) {
+    setHour(h);
+    setMinute(m);
+    setSecond(s);
 }
 
 string Time::toUniversalString() const {
@@ -58,8 +103,43 @@ int main() {
     } catch(invalid_argument& ex) {
         cerr << "Exception: " << ex.what() << "\n\n";
     }
-
     displayTime("After attempting to set an invalid time: ", t);
+
+    Time t1;
+    Time t2{2};
+    Time t3{21, 34};
+    Time t4{12,25,42};
+
+    cout << "Constructed with:\n\n";
+    displayTime("t1: all arguments defaulted", t1);
+    displayTime("t2: hour specified; minute and second defaulted", t2);
+    displayTime("t3: hour and minute specified; second defaulted", t3);
+    displayTime("t4: hour, minute and second specified", t4);
+
+    try {
+        Time t5{56,57, 99};
+    } catch(invalid_argument& ex) {
+        cerr << "Exception while initializing t5:" << ex.what() << endl;
+    }
+
+    /*
+
+    */
+    Time t6;
+    unsigned int& hourRef = t6.badSetHour(20);
+    cout << "Valid hour before modification: " << hourRef;
+    hourRef = 30;
+    cout << "\nInvalid hour after modification: " << t6.getHour();
+
+    // Dangerous: Function call that returns                        
+   // a reference can be used as an lvalue!                        
+   t.badSetHour(12) = 74; // assign another invalid value to hour
+
+   cout << "\n\n*************************************************\n"
+      << "POOR PROGRAMMING PRACTICE!!!!!!!!\n"
+      << "t.badSetHour(12) as an lvalue, invalid hour: "
+      << t.getHour()
+      << "\n*************************************************" << endl;
 }
 
 
