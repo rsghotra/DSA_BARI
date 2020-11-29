@@ -1,92 +1,58 @@
 #include<iostream>
 #include<iomanip>
-#include<vector>
-#include<stdexcept>
+#include<string>
 using namespace std;
 
-void inputVector(vector<int>& vect) {
-    for(int& item: vect) {
-        cin >> item;
-    }
+/*
+    - Constructors and Destructors for Global, Local and Static objects of classes
+        - Constructors for Global objects is called first before anything else
+        - Local objects destriuctor will NOT be called if program is terminates with exit or abort function
+        - Static objects DESTRUCTOR will not be called if program terminates with abort
+*/
+
+#ifndef CREATE_H
+#define CREATE_H
+
+#endif
+
+class CreateAndDestroy {
+    public:
+        CreateAndDestroy(int, string);
+        ~CreateAndDestroy();
+    private:
+        int objectID;
+        string message;
+};
+
+CreateAndDestroy::CreateAndDestroy(int ID, string messageString) : objectID{ID}, message{messageString} {
+    cout << "Object " << objectID << "  constructor runs    " << message << endl;
+}
+CreateAndDestroy::~CreateAndDestroy() {
+    cout << (objectID == 1 || objectID == 6? "\n":"");
+    cout << "Object " << objectID << " destructor runs      " << message << endl;
 }
 
-//output vector contents
-void outputVector(const vector<int>& vect) {
-    for(int item: vect) {
-        cout << item << " ";
-    }
-    cout << endl;
-}
+void create();
+CreateAndDestroy first{1, "(global before main)"};
 
 int main() {
-    vector<int> vect1(7);
-    vector<int> vect2(10);
+    cout <<"\nMAIN FUNCTION: EXECUTION BEGINS" << endl;
+    CreateAndDestroy second{2, "(local in main)"};
+    static CreateAndDestroy third{3, "(local static in main)"};
 
-    cout <<"Size of vect1"<<setw(2)<<vect1.size()
-        <<"\nvector after initialization:";
-    outputVector(vect1);
+    create();
 
-    cout <<"Size of vect2"<<setw(2)<<vect2.size()
-        <<"\nvector after initialization:";
-    outputVector(vect2);
-
-    cout << "\nEnter 17 integers:"<< endl;
-    inputVector(vect1);
-    inputVector(vect2);
-
-    cout<<"\nAfter input, the vectors contain:\n"
-        <<"vect1: ";
-    outputVector(vect1);
-    cout <<"vect2: ";
-    outputVector(vect2);
-
-    cout <<"\nEvaluating: vect1 != vect2" << endl;
-    if(vect1 != vect2) {
-        cout <<"vect1 and vect2 are not equal" << endl;
-    }
-    //copy constructor
-    //create new vect3 and initialize it using vect1 and then print its content and size
-    vector<int> vect3{vect1}; //copy constructor
-
-    cout <<"\nSize of vect3"<<setw(2)<<vect3.size()
-        <<"\nvector after initialization: ";
-    outputVector(vect3);
+    cout << "\n MAIN FUNCTION: EXECUTION RESUMES" << endl;
+    CreateAndDestroy fourth{4, "(local in main)"};
+    cout <<"\nMAIN FUNCTION: EXECUTION ENDS" << endl;
+}
 
 
-    cout <<"\nAssigning vect2 to vect1: " << endl;
-    vect1=vect2;
 
-    cout<<"vect1: ";
-    outputVector(vect1);
-    cout<<"vect2: ";
-    outputVector(vect2);
-
-    cout<<"\nEvaluating: vect1 == vect2" << endl;
-
-    if(vect1==vect2) {
-        cout<<"vect1 and vect2 are equal"<<endl;
-    }
-    //using square bracket as rvalue
-    cout <<"\nvect1[5] is " << vect1[5];
-    //use square bracket as lvalue
-    cout <<"\n\nAssigning 1000 to vect1[5]" << endl;
-    vect1[5] = 1000;
-    cout <<"vect1: ";
-    outputVector(vect1);
-
-    //attempting to use out of range subscript
-    try {
-        cout <<"\nAttempt to display vect1.at(15)" << endl;
-        cout << vect1.at(15) << endl; //ERROR out of range
-    }
-    catch(out_of_range& ex) {
-        cerr <<"An exception occurred: " << ex.what() << endl;
-    }
-
-    //changing the size of a vector
-    cout <<"\nCurrent vect3 size is " << vect3.size() << endl;
-    vect3.push_back(1000);// add 100 to end of the vector
-    cout <<"\nNew vect3 size is " << vect3.size() << endl;
-    cout <<"\nvect3 now contains: ";
-    outputVector(vect3);
+void create() {
+    cout << "\nCREATE FUNCTION: EXECUTION BEGINS" << endl;
+    CreateAndDestroy fifth{5, "(local in create)"};
+    static CreateAndDestroy sixth{6, "(local static in create)"};
+    CreateAndDestroy seventh{7, "(local in create)"};
+    cout << "\nCREATE FUNCTION: EXECUTION ENDS" << endl;
 }
