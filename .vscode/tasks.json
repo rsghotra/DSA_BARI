@@ -10,6 +10,7 @@
             "args": [
                 "-g",
                 "${workspaceFolder}/Inheritence/CommissionEmployee.cpp",
+                "${workspaceFolder}/Inheritence/BasePlusCommissionEmployee.cpp",
                 "${workspaceFolder}/Inheritence/main.cpp",
                 "-o",
                 "Inheritence/main"
