@@ -9,16 +9,17 @@
             "command": "g++",
             "args": [
                 "-g",
-                "${workspaceFolder}/STL_C++/main.cpp",
+                "${workspaceFolder}/Inheritence/CommissionEmployee.cpp",
+                "${workspaceFolder}/Inheritence/main.cpp",
                 "-o",
-                "STL_C++/main"
+                "Inheritence/main"
             ],
             "problemMatcher":[]
         },
         {
             "label": "run",
             "type":  "shell",
-            "command": "${workspaceFolder}/STL_C++/main",
+            "command": "${workspaceFolder}/Inheritence/main",
             "dependsOn":[
                 "build"
             ],
