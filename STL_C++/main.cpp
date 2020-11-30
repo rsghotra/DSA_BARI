@@ -1,38 +1,158 @@
-#include<string>
 #include<iostream>
+#include<string>
+#include<stdexcept>
 #include<sstream>
+#include<iomanip>
 using namespace std;
-#ifndef DATE_H
-#define DATE_H
+#ifndef TIME_H
+#define TIME_H
 
-class Date {
-    private:
-        unsigned int month;
-        unsigned int day;
-        unsigned int year;
+class Time {
     public:
-        explicit Date(unsigned int = 1, unsigned int = 1, unsigned int = 2000);
-        string toString() const;
+        explicit Time(int = 0, int = 0, int = 0);
+        void setTime(int, int, int);
+        void setHour(int);
+        void setMinute(int);
+        void setSecond(int);
+
+        unsigned int getHour() const { return hour;}
+        unsigned int getMinute() const {return minute;}
+        unsigned int getSecond() const;
+
+        unsigned int& badSetHour(int); //dangerous reference return
+
+        std::string toUniversalString() const;
+        std::string toStandardString();
+    private:
+        unsigned int hour{0};
+        unsigned int minute{0};
+        unsigned int second{0};
 };
 
-Date::Date(unsigned int m, unsigned int d, unsigned int y): month{m}, year{y}, day{d}{}
+//poor practice - returning a reference to a private data member
+unsigned int& Time::badSetHour(int hh) {
+    if(hh >= 0 && hh < 24) {
+        hour = hh;
+    } else {
+        throw invalid_argument("house must be between 0-23");
+    }
+    return hour;
+}
 
-//prints data in mm/dd/yyyy format
-string Date::toString() const {
+void Time::setHour(int h) {
+    if((h>=0 && h < 24)) {
+        this->hour = h;
+    } else {
+        throw invalid_argument("hour must be 0-23");
+    }
+}
+
+void Time::setMinute(int m) {
+    if((m>=0 && m < 60)) {
+        minute = m;
+    } else {
+        throw invalid_argument("Out of bound minute");
+    }
+}
+
+void Time::setSecond(int s) {
+    if((s>=0 && s < 60)) {
+        second = s;
+    } else {
+        throw invalid_argument("Out of bound minute");
+    }
+}
+
+Time::Time(int hour, int minute, int second) {
+    setTime(hour, minute, second);
+}
+
+void Time::setTime(int h, int m, int s) {
+    setHour(h);
+    setMinute(m);
+    setSecond(s);
+}
+
+string Time::toUniversalString() const {
     ostringstream output;
-    output << month << "/" << day << "/" << year;
+    output << setfill('0') << setw(2) << hour << ":"
+        << setw(2) << minute << ":" << setw(2) << second;
+    return output.str(); //return formatted string
+}
+
+string Time::toStandardString() {
+    ostringstream output;
+    output << ((hour == 0 || hour == 12) ? 12 : hour%12) << ":" << setfill('0') << setw(2) << minute << ":" << setw(2)
+        << second << (hour < 12 ? " AM" : " PM");
     return output.str();
 }
 
-int main() {
-    Date date1{7,4,2004};
-    Date date2;
-
-    cout << "date1 = " << date1.toString()
-        << "\ndate2 = " << date2.toString() << "\n\n";
-
-    date2 = date1;
-    cout << "After default member wise assignment, date2 = " << date2.toString() << endl;
+void displayTime(const string& message, Time& time) {
+    cout << message << "\nUniversal time: " << time.toUniversalString()
+        << "\nStandard time: " << time.toStandardString() << "\n\n";
 }
+
+int main() {
+    Time t;
+    displayTime("Initial time: ", t);
+    t.setTime(13,27,6);
+    displayTime("After setTime:", t);
+
+    try {
+        t.setTime(99, 99, 99);
+    } catch(invalid_argument& ex) {
+        cerr << "Exception: " << ex.what() << "\n\n";
+    }
+    displayTime("After attempting to set an invalid time: ", t);
+
+    Time t1;
+    Time t2{2};
+    Time t3{21, 34};
+    Time t4{12,25,42};
+
+    cout << "Constructed with:\n\n";
+    displayTime("t1: all arguments defaulted", t1);
+    displayTime("t2: hour specified; minute and second defaulted", t2);
+    displayTime("t3: hour and minute specified; second defaulted", t3);
+    displayTime("t4: hour, minute and second specified", t4);
+
+    try {
+        Time t5{56,57, 99};
+    } catch(invalid_argument& ex) {
+        cerr << "Exception while initializing t5:" << ex.what() << endl;
+    }
+
+    /*
+
+    */
+    Time t6;
+    unsigned int& hourRef = t6.badSetHour(20);
+    cout << "Valid hour before modification: " << hourRef;
+    hourRef = 30;
+    cout << "\nInvalid hour after modification: " << t6.getHour();
+
+    // Dangerous: Function call that returns                        
+   // a reference can be used as an lvalue!                        
+   t.badSetHour(12) = 74; // assign another invalid value to hour
+
+   cout << "\n\n*************************************************\n"
+      << "POOR PROGRAMMING PRACTICE!!!!!!!!\n"
+      << "t.badSetHour(12) as an lvalue, invalid hour: "
+      << t.getHour()
+      << "\n*************************************************" << endl;
+
+    
+    Time wakeup{6,45,0}; // non-const object
+    const Time noon{12,0,0}; //const object
+                                    //OBJECT            MEMBER FUNCTION
+    wakeup.setHour(18);             //non-const         non-const
+    //noon.setHour(12);             //const             non-const
+    wakeup.getHour();               //non-const         non-const
+    noon.getMinute();               //const             non-const
+    noon.toUniversalString();       //const             non-const
+    //noon.toStandardString();      //const             non-const     
+    return 0;
+}
+
 
 #endif
