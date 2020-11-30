@@ -1,158 +1,70 @@
-#include<iostream>
-#include<string>
-#include<stdexcept>
-#include<sstream>
-#include<iomanip>
+#include <iostream>
+#include <string> 
 using namespace std;
-#ifndef TIME_H
-#define TIME_H
-
-class Time {
-    public:
-        explicit Time(int = 0, int = 0, int = 0);
-        void setTime(int, int, int);
-        void setHour(int);
-        void setMinute(int);
-        void setSecond(int);
-
-        unsigned int getHour() const { return hour;}
-        unsigned int getMinute() const {return minute;}
-        unsigned int getSecond() const;
-
-        unsigned int& badSetHour(int); //dangerous reference return
-
-        std::string toUniversalString() const;
-        std::string toStandardString();
-    private:
-        unsigned int hour{0};
-        unsigned int minute{0};
-        unsigned int second{0};
-};
-
-//poor practice - returning a reference to a private data member
-unsigned int& Time::badSetHour(int hh) {
-    if(hh >= 0 && hh < 24) {
-        hour = hh;
-    } else {
-        throw invalid_argument("house must be between 0-23");
-    }
-    return hour;
-}
-
-void Time::setHour(int h) {
-    if((h>=0 && h < 24)) {
-        this->hour = h;
-    } else {
-        throw invalid_argument("hour must be 0-23");
-    }
-}
-
-void Time::setMinute(int m) {
-    if((m>=0 && m < 60)) {
-        minute = m;
-    } else {
-        throw invalid_argument("Out of bound minute");
-    }
-}
-
-void Time::setSecond(int s) {
-    if((s>=0 && s < 60)) {
-        second = s;
-    } else {
-        throw invalid_argument("Out of bound minute");
-    }
-}
-
-Time::Time(int hour, int minute, int second) {
-    setTime(hour, minute, second);
-}
-
-void Time::setTime(int h, int m, int s) {
-    setHour(h);
-    setMinute(m);
-    setSecond(s);
-}
-
-string Time::toUniversalString() const {
-    ostringstream output;
-    output << setfill('0') << setw(2) << hour << ":"
-        << setw(2) << minute << ":" << setw(2) << second;
-    return output.str(); //return formatted string
-}
-
-string Time::toStandardString() {
-    ostringstream output;
-    output << ((hour == 0 || hour == 12) ? 12 : hour%12) << ":" << setfill('0') << setw(2) << minute << ":" << setw(2)
-        << second << (hour < 12 ? " AM" : " PM");
-    return output.str();
-}
-
-void displayTime(const string& message, Time& time) {
-    cout << message << "\nUniversal time: " << time.toUniversalString()
-        << "\nStandard time: " << time.toStandardString() << "\n\n";
-}
 
 int main() {
-    Time t;
-    displayTime("Initial time: ", t);
-    t.setTime(13,27,6);
-    displayTime("After setTime:", t);
+    string s1{"happy"};
+    string s2{" birthday"};
+    string s3;
 
-    try {
-        t.setTime(99, 99, 99);
-    } catch(invalid_argument& ex) {
-        cerr << "Exception: " << ex.what() << "\n\n";
-    }
-    displayTime("After attempting to set an invalid time: ", t);
+    cout << "s1 is \"" << s1 << "\"; s2 is \"" << s2
+        << "\"; s3 is \"" << s3 << '\"'
+        << "\n\nThe results of comparing s2 and s1:" << boolalpha
+        << "\n\nS2==S1 yields " << (s2 == s1)
+        << "\n\nS2!=S1 yields " << (s2 != s1)
+        << "\n\nS2>S1 yields " << (s2 > s1)
+        << "\n\nS2<S1 yields " << (s2 < s1)
+        << "\n\nS2>=S1 yields " << (s2 >= s1)
+        << "\n\nS2<=S1 yields " << (s2 <= s1);
 
-    Time t1;
-    Time t2{2};
-    Time t3{21, 34};
-    Time t4{12,25,42};
+    //test string function emptu
+    cout << "\n\nTesting s3.empty():\n";
 
-    cout << "Constructed with:\n\n";
-    displayTime("t1: all arguments defaulted", t1);
-    displayTime("t2: hour specified; minute and second defaulted", t2);
-    displayTime("t3: hour and minute specified; second defaulted", t3);
-    displayTime("t4: hour, minute and second specified", t4);
-
-    try {
-        Time t5{56,57, 99};
-    } catch(invalid_argument& ex) {
-        cerr << "Exception while initializing t5:" << ex.what() << endl;
+    if(s3.empty()) {
+        cout << "s3 is empty; assigning s1 to s3;\n";
+        s3 = s1; 
+        cout << "s3 is \"" << s3 << "\"";
     }
 
-    /*
+    //string concatenation
+    cout << "\n\ns1+=s2 yields s1 = ";
+    s1+=s2;
+    cout << s1;
 
-    */
-    Time t6;
-    unsigned int& hourRef = t6.badSetHour(20);
-    cout << "Valid hour before modification: " << hourRef;
-    hourRef = 30;
-    cout << "\nInvalid hour after modification: " << t6.getHour();
+    //test conatenation with c-string
+    // test string concatenation with a C string
+    cout << "\n\ns1 += \" to you\" yields\n";
+    s1 += " to you";
+    cout << "s1 = " << s1;
 
-    // Dangerous: Function call that returns                        
-   // a reference can be used as an lvalue!                        
-   t.badSetHour(12) = 74; // assign another invalid value to hour
+    // test string concatenation with a C++14 string-object literal
+    cout << "\n\ns1 += \", have a great day!\" yields\n";
 
-   cout << "\n\n*************************************************\n"
-      << "POOR PROGRAMMING PRACTICE!!!!!!!!\n"
-      << "t.badSetHour(12) as an lvalue, invalid hour: "
-      << t.getHour()
-      << "\n*************************************************" << endl;
+    s1 += ", have a great day!"s;
+    cout << "s1 = " << s1;
 
+    //test substr "to end of string" option
+    cout << "The substring of s1 starting at\n"
+        << "location 15,s1.substr(15), is:\n" << s1.substr(15) << endl;
     
-    Time wakeup{6,45,0}; // non-const object
-    const Time noon{12,0,0}; //const object
-                                    //OBJECT            MEMBER FUNCTION
-    wakeup.setHour(18);             //non-const         non-const
-    //noon.setHour(12);             //const             non-const
-    wakeup.getHour();               //non-const         non-const
-    noon.getMinute();               //const             non-const
-    noon.toUniversalString();       //const             non-const
-    //noon.toStandardString();      //const             non-const     
-    return 0;
+    string s4{s1};
+    cout << "\ns4 = " << s4 << "\n\n";
+
+    cout << "assigning s4 to s4\n";
+    s4 = s4;
+    cout << "s4 = " << s4;
+
+    // test using overloaded subscript operator to crate lvalue
+    s1[0] = 'H';
+    s1[6] = 'B';
+
+    cout << "\n\ns1 after s1[0] = 'H' and s1[6] = 'B' is:\n" 
+      << s1 << "\n\n";
+
+    try {
+        cout << "Attempt to assign 'd' to s1.at(100) yields:\n";
+        s1.at(100) = 'd';
+    } catch(out_of_range& ex) {
+        cout << "An exception occurred: " << ex.what() << endl;
+    }
 }
-
-
-#endif
