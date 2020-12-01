@@ -9,18 +9,20 @@
             "command": "g++",
             "args": [
                 "-g",
-                "${workspaceFolder}/Inheritence/CommissionEmployee.cpp",
-                "${workspaceFolder}/Inheritence/BasePlusCommissionEmployee.cpp",
-                "${workspaceFolder}/Inheritence/main.cpp",
+                "${workspaceFolder}/Polymorphism/Employee.cpp",
+                "${workspaceFolder}/Polymorphism/SalariedEmployee.cpp",
+                "${workspaceFolder}/Polymorphism/CommissionEmployee.cpp",
+                "${workspaceFolder}/Polymorphism/BasePlusCommissionEmployee.cpp",
+                "${workspaceFolder}/Polymorphism/main.cpp",
                 "-o",
-                "Inheritence/main"
+                "Polymorphism/main"
             ],
             "problemMatcher":[]
         },
         {
             "label": "run",
             "type":  "shell",
-            "command": "${workspaceFolder}/Inheritence/main",
+            "command": "${workspaceFolder}/Polymorphism/main",
             "dependsOn":[
                 "build"
             ],

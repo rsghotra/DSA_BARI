@@ -3,7 +3,7 @@
 #include <string>
 using namespace std;
 class CommissionEmployee {
-protected:
+private:
     string firstName;
     string lastName;
     string socialSecurityNumber;
