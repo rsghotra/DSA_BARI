@@ -9,17 +9,16 @@
             "command": "g++",
             "args": [
                 "-g",
-                "${workspaceFolder}/DeckOfCards/DeckOfCards.cpp",
-                "${workspaceFolder}/DeckOfCards/main.cpp",
+                "${workspaceFolder}/String_CL/main.cpp",
                 "-o",
-                "DeckOfCards/main"
+                "String_CL/main"
             ],
             "problemMatcher":[]
         },
         {
             "label": "run",
             "type":  "shell",
-            "command": "${workspaceFolder}/DeckOfCards/main",
+            "command": "${workspaceFolder}/String_CL/main",
             "dependsOn":[
                 "build"
             ],
