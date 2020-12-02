@@ -1,5 +1,5 @@
 /*
-    3. Substring
+    4. Substring
         a. substr: string1.substr(startIndex, numberofChars); produce a new string
 */
 #include<iostream>
