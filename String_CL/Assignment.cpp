@@ -13,17 +13,19 @@
 
     6. String Charactersitics
 
-    7. Replacing Characters
+    7. Search and Find
 
-    8. Inserting Characters
+    8. Replacing & Erase Characters
 
-    9. Conversion to C-Strings
+    9. Inserting Characters
 
-    10. Iterators
+    10. Conversion to C-Strings
 
-    11. String Stream Processing
+    11. Iterators
 
-    12. Numeric Conversions
+    12. String Stream Processing
+
+    13. Numeric Conversions
 */
 
 /*
