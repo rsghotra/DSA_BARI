@@ -9,20 +9,16 @@
             "command": "g++",
             "args": [
                 "-g",
-                "${workspaceFolder}/Polymorphism/Employee.cpp",
-                "${workspaceFolder}/Polymorphism/SalariedEmployee.cpp",
-                "${workspaceFolder}/Polymorphism/CommissionEmployee.cpp",
-                "${workspaceFolder}/Polymorphism/BasePlusCommissionEmployee.cpp",
-                "${workspaceFolder}/Polymorphism/main.cpp",
+                "${workspaceFolder}/Money/main.cpp",
                 "-o",
-                "Polymorphism/main"
+                "Money/main"
             ],
             "problemMatcher":[]
         },
         {
             "label": "run",
             "type":  "shell",
-            "command": "${workspaceFolder}/Polymorphism/main",
+            "command": "${workspaceFolder}/Money/main",
             "dependsOn":[
                 "build"
             ],
