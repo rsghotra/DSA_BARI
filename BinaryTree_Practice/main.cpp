@@ -1,5 +1,6 @@
 #include<iostream>
 #include<queue>
+#include<stack>
 #include<iomanip>
 using namespace std;
 //linked representation
@@ -24,7 +25,10 @@ class BinaryTree {
         void PostOrder(Node*) const;
         void PreOrder() const{cout <<"\nPreOrder: ";PreOrder(this->root);cout <<"\n"<< endl;};
         void InOrder() const{cout <<"\nInOrder: ";InOrder(this->root);cout <<"\n"<< endl;};
-        void PostOrder() const{cout <<"\nInOrder: ";PostOrder(this->root);cout<<"\n"<<endl;};
+        void PostOrder() const{cout <<"\nPostOrder: ";PostOrder(this->root);cout<<"\n"<<endl;};
+        void PreOrder_i() const;
+        void InOrder_i() const;
+        void PostOrder_i() const;
 };
 
 BinaryTree::BinaryTree() {
@@ -100,6 +104,63 @@ void BinaryTree::PostOrder(Node* ptr) const {
     }
 }
 
+void BinaryTree::LevelOrder() const {
+    //non recursive; Queue will be used
+    Node* ptr=0;
+    if(!(this->root)) return;
+    queue<Node*> Q;
+    Q.push(this->root);
+    cout << "Level Order: " << endl;
+    while(!Q.empty()) {
+        ptr = Q.front();
+        Q.pop();
+
+        cout << ptr->data << " ";
+        if(ptr->left) {
+            Q.push(ptr->left);
+        }
+        if(ptr->right) {
+            Q.push(ptr->right);
+        }
+    }
+    cout << endl;
+}
+
+void BinaryTree::InOrder_i() const {
+    Node* ptr = this->root;
+    stack<Node*> stk;
+
+    while( ptr!= 0 || !stk.empty()) {
+        if(ptr) {
+            stk.push(ptr);
+            ptr = ptr->left;
+        } else { //ptr == 0; stack must be non-empty
+            ptr = stk.top();
+            stk.pop();
+            cout << ptr->data << " ";
+            ptr = ptr->right;
+        }   
+    }
+    cout << endl;
+}
+
+void BinaryTree::PreOrder_i() const {
+    Node* ptr = this->root;
+    stack<Node*> stk;
+    while(ptr != 0 || !stk.empty()) {
+        if(ptr) {
+            cout << ptr->data << " ";
+            stk.push(ptr);
+            ptr = ptr->left;
+        } else {
+            ptr = stk.top();
+            stk.pop();
+            ptr = ptr->right;
+        }
+    }
+    cout << endl;
+}
+
 int main() {
     BinaryTree bt;
     bt.Create();
@@ -107,5 +168,13 @@ int main() {
     bt.InOrder();
     bt.PreOrder();
     bt.PostOrder();
+    bt.LevelOrder();
+
+
+    cout << "\n\n>==PreOrder Iterative: " << endl;
+    bt.PreOrder_i();
+
+    cout << ">==InOrder Iterative: " << endl;
+    bt.InOrder_i();
     return 0;
 }
