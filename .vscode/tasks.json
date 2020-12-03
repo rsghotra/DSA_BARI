@@ -9,16 +9,16 @@
             "command": "g++",
             "args": [
                 "-g",
-                "${workspaceFolder}/String_CL/main.cpp",
+                "${workspaceFolder}/CString/main.cpp",
                 "-o",
-                "String_CL/main"
+                "CString/main"
             ],
             "problemMatcher":[]
         },
         {
             "label": "run",
             "type":  "shell",
-            "command": "${workspaceFolder}/String_CL/main",
+            "command": "${workspaceFolder}/CString/main",
             "dependsOn":[
                 "build"
             ],
