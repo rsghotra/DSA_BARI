@@ -9,16 +9,16 @@
             "command": "g++",
             "args": [
                 "-g",
-                "${workspaceFolder}/CString/main.cpp",
+                "${workspaceFolder}/BinaryTree_Practice/main.cpp",
                 "-o",
-                "CString/main"
+                "BinaryTree_Practice/main"
             ],
             "problemMatcher":[]
         },
         {
             "label": "run",
             "type":  "shell",
-            "command": "${workspaceFolder}/CString/main",
+            "command": "${workspaceFolder}/BinaryTree_Practice/main",
             "dependsOn":[
                 "build"
             ],
