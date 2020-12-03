@@ -161,6 +161,33 @@ void BinaryTree::PreOrder_i() const {
     cout << endl;
 }
 
+void BinaryTree::PostOrder_i() const {
+    stack<long int> stk;
+    Node* ptr = this->root;
+    int addr;
+    while(ptr != 0 || !stk.empty()) {
+        if(ptr != 0) {
+            addr = reinterpret_cast<uintptr_t>(ptr);
+            stk.push(addr);
+            ptr = ptr->left;
+        }
+        else {
+            //ptr is null - reaching leaf node; Now key work
+            addr = stk.top();
+            stk.pop();
+            if(addr < 0) {
+                ptr = reinterpret_cast<Node*>((-1)* (addr));
+                cout << ptr->data << " ";
+                ptr=0;
+            } else {
+                ptr = reinterpret_cast<Node*>(addr);
+                stk.push(-addr);
+                ptr = ptr->right;
+            }
+        }
+    }
+}
+
 int main() {
     BinaryTree bt;
     bt.Create();
@@ -176,5 +203,8 @@ int main() {
 
     cout << ">==InOrder Iterative: " << endl;
     bt.InOrder_i();
+
+    cout << ">==Postorder Iterative: " << endl;
+    bt.PostOrder_i();
     return 0;
 }
