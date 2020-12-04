@@ -9,16 +9,16 @@
             "command": "g++",
             "args": [
                 "-g",
-                "${workspaceFolder}/BinaryTree_Practice/main.cpp",
+                "${workspaceFolder}/BST_Practice/main.cpp",
                 "-o",
-                "BinaryTree_Practice/main"
+                "BST_Practice/main"
             ],
             "problemMatcher":[]
         },
         {
             "label": "run",
             "type":  "shell",
-            "command": "${workspaceFolder}/BinaryTree_Practice/main",
+            "command": "${workspaceFolder}/BST_Practice/main",
             "dependsOn":[
                 "build"
             ],
