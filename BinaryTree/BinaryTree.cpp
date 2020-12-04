@@ -316,6 +316,7 @@ int BinaryTree::SearchInorder(int* inorder, int inorderStart, int inorderEnd, in
     }
 }
 
+//// Reference: https://algorithms.tutorialhorizon.com/make-a-binary-tree-from-given-inorder-and-preorder-traveral/
 Node* BinaryTree::GenerateBTFromTraversal(int* inorder, int* preOrder, int inorderStart, int inorderEnd) {
     if(inorderStart > inorderEnd) {
         return nullptr;

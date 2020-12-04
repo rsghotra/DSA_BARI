@@ -30,6 +30,7 @@ class BinaryTree {
         int  CountLeafNodes();
         int  CountDegOneNodes();
         int Height();
+        // Reference: https://algorithms.tutorialhorizon.com/make-a-binary-tree-from-given-inorder-and-preorder-traveral/
         Node* GenerateBTFromTraversal(int*, int*, int, int);
 };
 

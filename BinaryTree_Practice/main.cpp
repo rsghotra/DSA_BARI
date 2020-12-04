@@ -1,6 +1,8 @@
 #include<iostream>
 #include<queue>
 #include<stack>
+#include<array>
+#include<vector>
 #include<iomanip>
 using namespace std;
 //linked representation
@@ -29,6 +31,14 @@ class BinaryTree {
         void PreOrder_i() const;
         void InOrder_i() const;
         void PostOrder_i() const;
+        int  SearchInorder(const vector<int>& inorder, int start, int end, int val);
+        Node* GenerateBT(const vector<int>& inorder, const vector<int>& preorder, int inorderStart, int inorderEnd);
+        int Height(Node*) const;
+        int Sum(const Node* root) const;
+        int CountNodes(const Node* root) const;
+        int CountDegree0Nodes(const Node* root) const;
+        int CountDegree1Nodes(const Node* root) const;
+        int CountDegree2Nodes(const Node* root) const;
 };
 
 BinaryTree::BinaryTree() {
@@ -164,7 +174,7 @@ void BinaryTree::PreOrder_i() const {
 void BinaryTree::PostOrder_i() const {
     stack<long int> stk;
     Node* ptr = this->root;
-    int addr;
+    long int addr;
     while(ptr != 0 || !stk.empty()) {
         if(ptr != 0) {
             addr = reinterpret_cast<uintptr_t>(ptr);
@@ -188,6 +198,125 @@ void BinaryTree::PostOrder_i() const {
     }
 }
 
+int BinaryTree::SearchInorder(const vector<int>& inorder, int start, int end, int val) {
+    int index;
+    for(int i{start}; i < end; ++i) {
+        if(inorder[i] == val) {
+            index = i;
+            break;
+        }
+    }
+    return index;
+}
+
+Node* BinaryTree::GenerateBT(const vector<int>& inorder, const vector<int>& preorder, int inOrderStart, int inOrderEnd) {
+    static int preIndex = 0;
+
+    //terminating condition
+    if(inOrderStart > inOrderEnd) {
+        return nullptr;
+    }
+
+    //Each element of preorder will be considered as root
+    Node* root = new Node; 
+    root->data = preorder[preIndex];
+    preIndex++;
+
+    //if dealing with leaf node
+    if(inOrderStart == inOrderEnd) {
+        root->left = 0;
+        root->right = 0;
+        return root;
+    } 
+
+    int splitIndex = SearchInorder(inorder, inOrderStart, inOrderEnd, root->data);
+    root->left = GenerateBT(inorder, preorder, inOrderStart, splitIndex-1);
+    root->right = GenerateBT(inorder, preorder, splitIndex+1, inOrderEnd);
+    return root;
+}
+
+
+int BinaryTree::Height(Node* root) const {
+    //base conditions
+    if(root == 0) return 0;
+    if(root->left == 0 && root->right == 0) return 0;
+
+    //most of the trees algos are implemented in postorder form
+    int leftSubTreeHeight = Height(root->left);
+    int rightSubTreeHeight = Height(root->right);
+
+    if(leftSubTreeHeight > rightSubTreeHeight) {
+        return leftSubTreeHeight + 1; 
+    } else {
+        return rightSubTreeHeight + 1;
+    }
+}
+
+int BinaryTree::CountDegree0Nodes(const Node* root) const {
+    if(root == 0) {
+        return 0;
+    }
+    int leftSideCount = CountDegree0Nodes(root->left);
+    int rightSideCount = CountDegree0Nodes(root->right);
+
+    if(root->left == 0 && root->right == 0) {
+        return leftSideCount + rightSideCount + 1;
+    } else {
+        return leftSideCount + rightSideCount;
+    }
+}
+
+int BinaryTree::CountDegree2Nodes(const Node* root) const {
+    if(root == 0) {
+        return 0;
+    }
+    int leftSideCount = CountDegree2Nodes(root->left);
+    int rightSideCount = CountDegree2Nodes(root->right);
+
+    //leaf node detected
+    if(root->left != 0 && root->right != 0) {
+        return leftSideCount + rightSideCount + 1;
+    } else {
+        return leftSideCount + rightSideCount;
+    }
+}
+
+int BinaryTree::CountDegree1Nodes(const Node* root) const {
+    if(root == 0) {
+        return 0;
+    }
+
+    int leftSideCount = CountDegree1Nodes(root->left);
+    int rightSideCount = CountDegree1Nodes(root->right);
+
+    if(root->left != 0 ^ root->right != 0) {
+        return leftSideCount + rightSideCount + 1;
+    } else {
+        return leftSideCount + rightSideCount;
+    }
+}
+
+int BinaryTree::CountNodes(const Node* root) const {
+    if(root == 0) {
+        return 0;
+    }
+    int leftNodes = CountNodes(root->left);
+    int rightNodes = CountNodes(root->right);
+
+    return leftNodes + rightNodes + 1;
+}
+
+int BinaryTree::Sum(const Node* root) const {
+    if(root == 0) {
+        return 0;
+    }
+
+    int leftNodeSum = Sum(root->left);
+    int rightNodeSum = Sum(root->right);
+
+    return leftNodeSum + rightNodeSum + root->data;
+}
+
 int main() {
     BinaryTree bt;
     bt.Create();
@@ -206,5 +335,28 @@ int main() {
 
     cout << ">==Postorder Iterative: " << endl;
     bt.PostOrder_i();
+
+    vector<int> inorder{7,6,9,3,4,5,8,2,1};
+    vector<int> preorder{4,7,9,6,3,2,5,8,1};
+    bt.root = bt.GenerateBT(inorder, preorder, 0, inorder.size() - 1);
+
+    cout << "\n\n>==>Generated Tree Traversal: " << endl;
+    cout << "\n\n>==PreOrder Iterative: " << endl;
+    bt.PreOrder_i();
+
+    cout << ">==InOrder Iterative: " << endl;
+    bt.InOrder_i();
+
+    cout << ">==Postorder Iterative: " << endl;
+    bt.PostOrder_i();
+
+    cout << "\n\n>==>Simple Tree Functions: " << endl;
+
+    cout << "Height of Tree: " << bt.Height(bt.root) << endl;
+    cout << "Sum of Tree: " << bt.Sum(bt.root) << endl;
+    cout << "Number Nodes of Tree: " << bt.CountNodes(bt.root) << endl;
+    cout << "Degree 0 Nodes: " << bt.CountDegree0Nodes(bt.root) << endl;
+    cout << "Degree 1 Nodes: " << bt.CountDegree1Nodes(bt.root) << endl;
+    cout << "Degree 2 Nodes: " << bt.CountDegree2Nodes(bt.root) << endl;
     return 0;
 }
