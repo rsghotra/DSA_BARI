@@ -9,16 +9,16 @@
             "command": "g++",
             "args": [
                 "-g",
-                "${workspaceFolder}/BST_Insert/main.cpp",
+                "${workspaceFolder}/BST+DELETE/main.cpp",
                 "-o",
-                "BST_Insert/main"
+                "BST+DELETE/main"
             ],
             "problemMatcher":[]
         },
         {
             "label": "run",
             "type":  "shell",
-            "command": "${workspaceFolder}/BST_Insert/main",
+            "command": "${workspaceFolder}/BST+DELETE/main",
             "dependsOn":[
                 "build"
             ],
