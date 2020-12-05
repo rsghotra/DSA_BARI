@@ -9,16 +9,16 @@
             "command": "g++",
             "args": [
                 "-g",
-                "${workspaceFolder}/CreateBT_Iterative/main.cpp",
+                "${workspaceFolder}/TreeTraversals_Iterative/main.cpp",
                 "-o",
-                "CreateBT_Iterative/main"
+                "TreeTraversals_Iterative/main"
             ],
             "problemMatcher":[]
         },
         {
             "label": "run",
             "type":  "shell",
-            "command": "${workspaceFolder}/CreateBT_Iterative/main",
+            "command": "${workspaceFolder}/TreeTraversals_Iterative/main",
             "dependsOn":[
                 "build"
             ],
