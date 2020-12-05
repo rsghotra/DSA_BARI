@@ -9,16 +9,16 @@
             "command": "g++",
             "args": [
                 "-g",
-                "${workspaceFolder}/Kruskal/main.cpp",
+                "${workspaceFolder}/BFS_Graph/main.cpp",
                 "-o",
-                "Kruskal/main"
+                "BFS_Graph/main"
             ],
             "problemMatcher":[]
         },
         {
             "label": "run",
             "type":  "shell",
-            "command": "${workspaceFolder}/Kruskal/main",
+            "command": "${workspaceFolder}/BFS_Graph/main",
             "dependsOn":[
                 "build"
             ],
