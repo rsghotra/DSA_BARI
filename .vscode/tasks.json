@@ -9,16 +9,16 @@
             "command": "g++",
             "args": [
                 "-g",
-                "${workspaceFolder}/GenerateBT_Recursive/main.cpp",
+                "${workspaceFolder}/CreateBT_Iterative/main.cpp",
                 "-o",
-                "GenerateBT_Recursive/main"
+                "CreateBT_Iterative/main"
             ],
             "problemMatcher":[]
         },
         {
             "label": "run",
             "type":  "shell",
-            "command": "${workspaceFolder}/GenerateBT_Recursive/main",
+            "command": "${workspaceFolder}/CreateBT_Iterative/main",
             "dependsOn":[
                 "build"
             ],
