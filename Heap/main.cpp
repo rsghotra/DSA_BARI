@@ -58,8 +58,8 @@ int Delete(int H[], int currHeapSizeIndex) {
     //rearrangement with the kids
     int i = 1;
     int j = 2*i;
-
-    //because j is the forward pointer - hence termination will be dependent upon this
+    //AT THIS POINT HEAP SIZE IS REDUCED TO currHeapSizeIndex - 1
+    //because j is the forward pointer.
     while(j < currHeapSizeIndex - 1) {
         //find appropriate j
         if(H[j+1]  > H[j]) {

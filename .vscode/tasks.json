@@ -9,16 +9,16 @@
             "command": "g++",
             "args": [
                 "-g",
-                "${workspaceFolder}/BST_Practice/main.cpp",
+                "${workspaceFolder}/Kruskal/main.cpp",
                 "-o",
-                "BST_Practice/main"
+                "Kruskal/main"
             ],
             "problemMatcher":[]
         },
         {
             "label": "run",
             "type":  "shell",
-            "command": "${workspaceFolder}/BST_Practice/main",
+            "command": "${workspaceFolder}/Kruskal/main",
             "dependsOn":[
                 "build"
             ],
