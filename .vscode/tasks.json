@@ -9,16 +9,16 @@
             "command": "g++",
             "args": [
                 "-g",
-                "${workspaceFolder}/BFS_Graph/main.cpp",
+                "${workspaceFolder}/GenerateBT_Recursive/main.cpp",
                 "-o",
-                "BFS_Graph/main"
+                "GenerateBT_Recursive/main"
             ],
             "problemMatcher":[]
         },
         {
             "label": "run",
             "type":  "shell",
-            "command": "${workspaceFolder}/BFS_Graph/main",
+            "command": "${workspaceFolder}/GenerateBT_Recursive/main",
             "dependsOn":[
                 "build"
             ],
