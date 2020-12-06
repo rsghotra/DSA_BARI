@@ -9,16 +9,16 @@
             "command": "g++",
             "args": [
                 "-g",
-                "${workspaceFolder}/GenerateBST_Itearative/main.cpp",
+                "${workspaceFolder}/SparseMatrix/main.cpp",
                 "-o",
-                "GenerateBST_Itearative/main"
+                "SparseMatrix/main"
             ],
             "problemMatcher":[]
         },
         {
             "label": "run",
             "type":  "shell",
-            "command": "${workspaceFolder}/GenerateBST_Itearative/main",
+            "command": "${workspaceFolder}/SparseMatrix/main",
             "dependsOn":[
                 "build"
             ],
