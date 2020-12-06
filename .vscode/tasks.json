@@ -9,16 +9,16 @@
             "command": "g++",
             "args": [
                 "-g",
-                "${workspaceFolder}/SparseMatrix/main.cpp",
+                "${workspaceFolder}/PermutationOfString/main.cpp",
                 "-o",
-                "SparseMatrix/main"
+                "PermutationOfString/main"
             ],
             "problemMatcher":[]
         },
         {
             "label": "run",
             "type":  "shell",
-            "command": "${workspaceFolder}/SparseMatrix/main",
+            "command": "${workspaceFolder}/PermutationOfString/main",
             "dependsOn":[
                 "build"
             ],

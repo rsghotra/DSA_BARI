@@ -89,21 +89,62 @@ Sparse* Add(Sparse* sp1, Sparse* sp2) {
 }
 
 Sparse* Multiply(Sparse* sp1, Sparse* sp2) {
-
+    if(sp1->n == sp2->m) {
+        //new matrix initialization
+        Sparse* sp3 = new Sparse();
+        sp3->m = sp1->m;
+        sp3->n = sp2->n;
+        sp3->E = new Element[sp1->num_of_non_zeros+sp2->num_of_non_zeros];
+        int i = 0; //track first
+        int j = 0; //track second
+        int k = 0; //track third
+        int sum;
+        //multiplicatoin of matrices is controlled by
+        //row of Matrix 1
+        //col of Matrix 2
+        for(int u = 1; u <= sp1->m; u++) {
+            for(int v = 1; v <= sp2->n; v++) {
+                sp3->E[k].i = u;
+                sp3->E[k].j = v;
+                sp3->E[k].data = sum;
+                k++;
+            }
+            for(int i = 0; i < sp1->num_of_non_zeros; i++) {
+                if(sp1->E[i].i == u) {
+                    sum =0;
+                    for(j=0; j< sp2->num_of_non_zeros; j++) {
+                        if(sp1->E[i].i == sp2->E[j].j) {
+                            sum += sp1->E[i].data * sp2->E[j].data;
+                        }
+                    }
+                    sp3->E[k].i = sp1->E[i].i;
+                    sp3->E[k].j = sp1->E[j].j;
+                    sp3->E[k].data = sum;
+                    k++;
+                    sp3->num_of_non_zeros++;
+                }
+            }
+        }
+        return sp3;
+    }
+    cout << "\nMultiplictation of Matrix is possible only if: A: MxN and B: NxP ==> C: MxP." << endl;
+    return nullptr;
 }
 
 void Print(Sparse* sp) {
     int k=0;
-    for(int i{1}; i<=sp->m; ++i) {
-        for(int j{1}; j <= sp->n; ++j) {
-            if(sp->E[k].i == i && sp->E[k].j == j) {
-                cout << sp->E[k].data << " ";
-                k++;
-            } else {
-                cout <<  "0 ";
+    if(sp) {
+        for(int i{1}; i<=sp->m; ++i) {
+            for(int j{1}; j <= sp->n; ++j) {
+                if(sp->E[k].i == i && sp->E[k].j == j) {
+                    cout << sp->E[k].data << " ";
+                    k++;
+                } else {
+                    cout <<  "0 ";
+                }
             }
+            cout << endl;
         }
-        cout << endl;
     }
 }
 
@@ -121,8 +162,7 @@ int main() {
     Sparse* s3 = Add(&s1, &s2);
     cout << "\nPrinting Addition of two sparse matrix." << endl;
     Print(s3);
-    // cout << "\nPrinting Multiplication of two sparse matrix." << endl;
-    // Print(s3);
-    // s3 = Multiply(&s1, &s2);
-
+    cout << "\nPrinting Multiplication of two sparse matrix." << endl;
+    Sparse* s4 = Multiply(&s1, &s2);
+    Print(s4);
 }
