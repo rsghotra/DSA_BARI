@@ -9,16 +9,16 @@
             "command": "g++",
             "args": [
                 "-g",
-                "${workspaceFolder}/BST+DELETE/main.cpp",
+                "${workspaceFolder}/GenerateBST_Itearative/main.cpp",
                 "-o",
-                "BST+DELETE/main"
+                "GenerateBST_Itearative/main"
             ],
             "problemMatcher":[]
         },
         {
             "label": "run",
             "type":  "shell",
-            "command": "${workspaceFolder}/BST+DELETE/main",
+            "command": "${workspaceFolder}/GenerateBST_Itearative/main",
             "dependsOn":[
                 "build"
             ],

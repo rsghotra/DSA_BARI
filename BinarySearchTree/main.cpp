@@ -194,7 +194,7 @@ void BST::GenerateBSTUsingPreOrder_1(int preOrder[], int n) {
                 IF NOT THEN LOOK FOR ITS RIGHTEOUS PLACE 
             */
            if((preOrder[i] > ptr->val)&&(stk.empty() || preOrder[i] < stk.top()->val)) {
-               temp = new Node;
+                temp = new Node;
                 temp->val = preOrder[i];
                 temp->left = temp->right = 0;
                 ptr->right = temp;
