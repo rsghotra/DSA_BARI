@@ -1,6 +1,7 @@
 #include<iostream>
 #include<vector>
 #include<stack>
+#include<algorithm>
 using namespace std;
 
 struct Node {
@@ -120,6 +121,34 @@ Node* Delete(Node* ptr, int data) {
     }
 }
 
+int Diameter(Node* root) {
+    if(root == 0) 
+        return 0;
+    
+    int heightLeft = Height(root->left);
+    int heightRight = Height(root->right);
+
+    int leftDia = Diameter(root->left);
+    int rightDia = Diameter(root->right);
+    int rootDia = heightLeft + heightRight + 1;
+    return max(leftDia, max(rightDia, rootDia));
+}
+
+void hasPath(Node* root, int sum) {
+    static string path = "";
+    // if(root->data > sum) {
+    //     return;
+    // } else {
+    //     path += " " + root->data;
+    //     sum = sum - root->data;
+    //     if(sum == 0) {
+    //         cout << path << endl;
+    //     }
+    //     hasPath(root->left, sum);
+    //     hasPath(root->right, sum);
+    // }
+}
+
 int main() {
     vector<int> vect{2, 6, 12, 9, 4, 17, 22};
     Node* root = 0;
@@ -130,9 +159,34 @@ int main() {
     }
 
     Inorder(root);
-    Delete(root, 12);
-    cout << endl;
-    Inorder(root);
+    // Delete(root, 12);
+    // cout << endl;
+    // Inorder(root);
+    cout << "\nDiameter is: ";
+    cout << Diameter(root) << endl;
+    cout << "Paths: " << endl;
+    hasPath(root, 10);
     return 0;
 
 }
+
+// int main() {
+// 	int k = 15;
+// 	int array[]{5, 7, 9, 11, 13, 4};
+	
+// 	int H[100] = {0};
+	
+// 	for(int i{0}; i < 6; i++) {
+// 		H[array[i]] = i+1;
+// 	}
+// 	//k-array[0]
+// 	for(int j = 0; j < 6; j++)
+// 	{
+// 		int firstVal = array[j];
+// 		int secondVal = array[H[k-array[j]] - 1];
+// 		if(firstVal + secondVal == k) {
+// 			cout << j << " " << H[k-array[j]] - 1 << endl;
+// 			break;
+// 		}
+// 	}
+// }

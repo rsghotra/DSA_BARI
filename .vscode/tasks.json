@@ -9,16 +9,16 @@
             "command": "g++",
             "args": [
                 "-g",
-                "${workspaceFolder}/PermutationOfString/main.cpp",
+                "${workspaceFolder}/BST+DELETE/main.cpp",
                 "-o",
-                "PermutationOfString/main"
+                "BST+DELETE/main"
             ],
             "problemMatcher":[]
         },
         {
             "label": "run",
             "type":  "shell",
-            "command": "${workspaceFolder}/PermutationOfString/main",
+            "command": "${workspaceFolder}/BST+DELETE/main",
             "dependsOn":[
                 "build"
             ],

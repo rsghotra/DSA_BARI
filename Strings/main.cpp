@@ -656,3 +656,22 @@ int main() {
     }
     return 0;
 }
+
+void Perm(char S[], int k) {
+    static int visited[10]{0};
+    static char result[10]{};
+
+    if(S[k] == '\0') {
+        result[k] = '\0';
+        cout << result << endl;
+    } else {
+        for(int i = 0; S[i] != '\0'; i++) {
+            if(visited[i] == 0) {
+                result[k] = S[i];
+                visited[i] = 1;
+                Perm(S, k+1);
+                visited[i] = 0;
+            }
+        }
+    }
+}

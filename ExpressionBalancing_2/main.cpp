@@ -345,6 +345,32 @@ int evaluate_postfix(char* exp) {
 //     Node* next;
 // };
 
+int fib(int n) {
+    static int fArrat[10];
+
+    if(n <=1) {
+        fArrat[n] = n;
+        return fArrat[n];
+    }
+    if(fArrat[n-2] == 0) {
+        fArrat[n-2] = fib(n-2);
+
+    }
+     if(fArrat[n-1] == 0) {
+        fArrat[n-1] = fib(n-1);
+        
+    }
+    fArrat[n] = fArrat[n-1] + fArrat[n-2];
+    return fArrat[n];
+}
+
+int c(int n, int r) {
+    if(r == 0 || r == n) {
+        return 1;
+    }
+    return c(n-1, r-1) + c(n-1, r);
+}
+
 Node* mLastNode(Node* head,Node* ptr, int m) {
     static int count = 0;
     if(m<0) return nullptr;
